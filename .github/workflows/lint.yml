@@ -828,7 +828,7 @@ jobs:
 
       - name: Set up Go
         if: steps.check-go.outputs.found == 'true'
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: "1.23"
           cache: false  # golangci-lint-action 自行管理缓存，避免冲突
@@ -3251,7 +3251,7 @@ jobs:
 
       - name: Set up Go (for checkmake)
         if: steps.check.outputs.count != '0'
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: 'stable'
 
