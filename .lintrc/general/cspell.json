@@ -265,7 +265,9 @@
     "Seiyu",
     "seiyu",
     "meilisearch",
-    "Colada"
+    "Colada",
+    "delelte",
+    "Delelte"
   ],
 
   "flagWords": [
@@ -323,9 +325,8 @@
   "ignorePaths": [
     "node_modules",
     ".git/**",
-    "dist",
-    "build",
-    "src/generated/**",
+    "dist/**",
+    "build/**",
     "coverage",
     ".next",
     ".nuxt",

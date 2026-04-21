@@ -429,7 +429,7 @@ jobs:
         run: |
           mapfile -t JS_FMT_FILES < <(find . \
             \( -name "*.js" -o -name "*.jsx" -o -name "*.mjs" -o -name "*.cjs" \) \
-            ! -path "./.github/*" ! -path "./.lintrc/*" ! -path "./node_modules/*" 2>/dev/null)
+            ! -path "./.github/*" ! -path "./.lintrc/*" ! -path "./node_modules/*" ! -path "./dist/*" 2>/dev/null)
           if [ ${#JS_FMT_FILES[@]} -gt 0 ]; then
             npx prettier --config .lintrc/frontend/prettier/.prettierrc \
               --ignore-path .lintrc/frontend/prettier/.prettierignore \
@@ -441,7 +441,7 @@ jobs:
         run: |
           mapfile -t JS_FILES < <(find . \
             \( -name "*.js" -o -name "*.jsx" -o -name "*.mjs" -o -name "*.cjs" \) \
-            ! -path "./.github/*" ! -path "./.lintrc/*" ! -path "./node_modules/*" 2>/dev/null)
+            ! -path "./.github/*" ! -path "./.lintrc/*" ! -path "./node_modules/*" ! -path "./dist/*" 2>/dev/null)
           npx eslint --max-warnings 0 --config .lintrc/frontend/javascript/.eslintrc-js.json "${JS_FILES[@]}"
 
   typescript-lint:
@@ -492,16 +492,23 @@ jobs:
       - name: Prettier (format check)
         if: steps.check-ts.outputs.found == 'true'
         run: |
-          npx prettier --config .lintrc/frontend/prettier/.prettierrc \
-            --ignore-path .lintrc/frontend/prettier/.prettierignore \
-            --check "**/*.ts" "**/*.tsx"
+          mapfile -t TS_FMT_FILES < <(find . \
+            \( -name "*.ts" -o -name "*.tsx" \) \
+            ! -path "./.github/*" ! -path "./.lintrc/*" ! -path "./node_modules/*" \
+            ! -path "./dist/*" ! -path "./src/generated/*" 2>/dev/null)
+          if [ ${#TS_FMT_FILES[@]} -gt 0 ]; then
+            npx prettier --config .lintrc/frontend/prettier/.prettierrc \
+              --ignore-path .lintrc/frontend/prettier/.prettierignore \
+              --check "${TS_FMT_FILES[@]}"
+          fi
 
       - name: ESLint (static analysis)
         if: steps.check-ts.outputs.found == 'true'
         run: |
           mapfile -t TS_FILES < <(find . \
             \( -name "*.ts" -o -name "*.tsx" \) \
-            ! -path "./.github/*" ! -path "./node_modules/*" 2>/dev/null)
+            ! -path "./.github/*" ! -path "./.lintrc/*" ! -path "./node_modules/*" \
+            ! -path "./dist/*" ! -path "./src/generated/*" 2>/dev/null)
           npx eslint --max-warnings 0 --config .lintrc/frontend/typescript/.eslintrc-ts.json "${TS_FILES[@]}"
 
       - name: TypeScript type check
@@ -3078,11 +3085,12 @@ jobs:
       - name: Check Node.js licenses
         run: |
           if [ -f "package.json" ]; then
+            PKG_NAME=$(node -e "const p=require('./package.json');console.log(p.name+'@'+p.version)")
             npx license-checker \
               --onlyAllow \
               "MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;CC0-1.0;CC-BY-4.0;Unlicense;0BSD;Python-2.0;PSF-2.0" \
               --excludePrivatePackages \
-              --excludePackages "bangumi-api-client"
+              --excludePackages "$PKG_NAME"
           else
             echo "No package.json found, skipping Node.js license check."
           fi

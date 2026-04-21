@@ -12,8 +12,10 @@ export { client };
 export function configureBangumiClient(accessToken: string, userAgent: string): void {
   client.setConfig({
     baseUrl: 'https://api.bgm.tv',
+    // auth callback is only invoked for endpoints that declare a security scheme,
+    // so the Bearer token is never sent to unauthenticated endpoints.
+    auth: () => accessToken,
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
       'User-Agent': userAgent,
     },
   });

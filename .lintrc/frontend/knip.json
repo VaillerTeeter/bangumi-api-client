@@ -36,12 +36,32 @@
     "eslint.config.*",
     "prettier.config.*",
     "tailwind.config.*",
-    "postcss.config.*"
+    "postcss.config.*",
+    ".lintrc/**",
+    "src/generated/**"
   ],
 
-  "ignoreDependencies": ["@types/*"],
+  "ignoreDependencies": ["@types/*", "@hey-api/client-fetch", "tsx"],
 
-  "ignoreBinaries": [],
+  "ignoreBinaries": [
+    "0BSD",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "CC-BY-4.0",
+    "CC0-1.0",
+    "ISC",
+    "MIT",
+    "PSF-2.0",
+    "Python-2.0",
+    "Unlicense",
+    "commitlint",
+    "cspell",
+    "eslint",
+    "license-checker",
+    "prettier",
+    "stylelint"
+  ],
 
   "includeEntryExports": true,
 

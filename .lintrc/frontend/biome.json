@@ -321,6 +321,19 @@
           "performance": {
             "noBarrelFile": "off",
             "noReExportAll": "off"
+          },
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["openapi-ts.config.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
           }
         }
       }
