@@ -23,16 +23,18 @@
 
     "declaration": false,
     "sourceMap": false,
-    "removeComments": false
-  },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.vue"],
+    "removeComments": false,
+
+    "types": ["node"],
+  "include": ["../../../**/*.ts", "../../../**/*.tsx", "../../../**/*.vue"],
   "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-    ".github",
-    "coverage",
-    "**/*.spec.ts",
-    "**/*.test.ts"
+    "../../../node_modules",
+    "../../../dist",
+    "../../../build",
+    "../../../.github",
+    "../../../coverage",
+    "../../../src/generated",
+    "../../../**/*.spec.ts",
+    "../../../**/*.test.ts"
   ]
 }
