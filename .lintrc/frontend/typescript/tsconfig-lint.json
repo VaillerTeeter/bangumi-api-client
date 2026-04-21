@@ -25,7 +25,8 @@
     "sourceMap": false,
     "removeComments": false,
 
-    "types": ["node"],
+    "types": ["node"]
+  },
   "include": ["../../../**/*.ts", "../../../**/*.tsx", "../../../**/*.vue"],
   "exclude": [
     "../../../node_modules",

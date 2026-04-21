@@ -43,13 +43,7 @@
 
   "ignoreDependencies": ["@hey-api/client-fetch", "tsx"],
 
-  "ignoreBinaries": [
-    "commitlint",
-    "cspell",
-    "eslint",
-    "prettier",
-    "stylelint"
-  ],
+  "ignoreBinaries": ["commitlint", "cspell", "eslint", "prettier", "stylelint"],
 
   "exclude": [],
 

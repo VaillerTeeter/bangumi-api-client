@@ -10,12 +10,7 @@
     "generate": "openapi-ts",
     "prepublishOnly": "yarn build"
   },
-  "keywords": [
-    "bangumi",
-    "api",
-    "client",
-    "typescript"
-  ],
+  "keywords": ["bangumi", "api", "client", "typescript"],
   "author": "VaillerTeeter",
   "license": "GPL-3.0-only",
   "devDependencies": {
