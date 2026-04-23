@@ -1,5 +1,10 @@
 import type { Client } from '../generated/client/index.js';
-import type { Person, PersonCharacter, PersonDetail, V0RelatedSubject } from '../generated/types.gen.js';
+import type {
+  Person,
+  PersonCharacter,
+  PersonDetail,
+  V0RelatedSubject,
+} from '../generated/types.gen.js';
 
 /** `searchPersons` 的可选参数。 */
 export interface SearchPersonsOptions {
@@ -36,7 +41,10 @@ export class PersonAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -54,7 +62,12 @@ export class PersonAPI {
   async searchPersons(
     keyword: string,
     options: SearchPersonsOptions = {},
-  ): Promise<{ data: SearchPersonsResult | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: SearchPersonsResult | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { career, limit, offset } = options;
     const filter = career !== undefined ? { career } : undefined;
     const result = await this.client.post<SearchPersonsResult>({
@@ -77,7 +90,12 @@ export class PersonAPI {
    */
   async getPersonById(
     personId: number,
-  ): Promise<{ data: PersonDetail | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PersonDetail | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<PersonDetail>({
       url: '/v0/persons/{person_id}',
       path: { person_id: personId },
@@ -98,7 +116,12 @@ export class PersonAPI {
   async getPersonImageById(
     personId: number,
     type: 'small' | 'grid' | 'large' | 'medium',
-  ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    imageUrl: string | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<undefined>({
       url: '/v0/persons/{person_id}/image',
       path: { person_id: personId },
@@ -106,7 +129,12 @@ export class PersonAPI {
     });
     const imageUrl = result.error ? undefined : result.response?.url;
     if (this.debug) console.log('[PersonAPI.getPersonImageById]', imageUrl);
-    return { imageUrl, error: result.error, response: (result as never as { response: Response }).response, request: (result as never as { request: Request }).request };
+    return {
+      imageUrl,
+      error: result.error,
+      response: (result as never as { response: Response }).response,
+      request: (result as never as { request: Request }).request,
+    };
   }
 
   /**
@@ -120,12 +148,18 @@ export class PersonAPI {
    */
   async getRelatedSubjectsByPersonId(
     personId: number,
-  ): Promise<{ data: V0RelatedSubject[] | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: V0RelatedSubject[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<V0RelatedSubject[]>({
       url: '/v0/persons/{person_id}/subjects',
       path: { person_id: personId },
     });
-    if (this.debug) console.log('[PersonAPI.getRelatedSubjectsByPersonId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[PersonAPI.getRelatedSubjectsByPersonId]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -140,12 +174,21 @@ export class PersonAPI {
    */
   async getRelatedCharactersByPersonId(
     personId: number,
-  ): Promise<{ data: PersonCharacter[] | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PersonCharacter[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<PersonCharacter[]>({
       url: '/v0/persons/{person_id}/characters',
       path: { person_id: personId },
     });
-    if (this.debug) console.log('[PersonAPI.getRelatedCharactersByPersonId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[PersonAPI.getRelatedCharactersByPersonId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 

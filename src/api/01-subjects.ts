@@ -1,5 +1,12 @@
 import type { Client } from '../generated/client/index.js';
-import type { RelatedCharacter, RelatedPerson, Subject, SubjectCategory, SubjectType, V0SubjectRelation } from '../generated/types.gen.js';
+import type {
+  RelatedCharacter,
+  RelatedPerson,
+  Subject,
+  SubjectCategory,
+  SubjectType,
+  V0SubjectRelation,
+} from '../generated/types.gen.js';
 
 /** 每日放送星期信息。 */
 export interface CalendarWeekday {
@@ -174,7 +181,10 @@ export class SubjectAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -188,10 +198,20 @@ export class SubjectAPI {
    *
    * @returns `data` — 按星期排列的放送数据数组（共 7 项）
    */
-  async getCalendar(): Promise<{ data: CalendarEntry[] | undefined; error: unknown; response: Response; request: Request }> {
+  async getCalendar(): Promise<{
+    data: CalendarEntry[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<CalendarEntry[]>({ url: '/calendar' });
     if (result.data) {
-      result.data = (result.data as unknown as Array<{ weekday: CalendarWeekday; items: Array<Record<string, unknown>> }>).map((entry) => ({
+      result.data = (
+        result.data as unknown as Array<{
+          weekday: CalendarWeekday;
+          items: Array<Record<string, unknown>>;
+        }>
+      ).map((entry) => ({
         weekday: entry.weekday,
         items: entry.items.map(normalizeSubject),
       }));
@@ -216,14 +236,20 @@ export class SubjectAPI {
    */
   async searchSubjects(
     options: SearchSubjectsOptions,
-  ): Promise<{ data: SearchSubjectsResult | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: SearchSubjectsResult | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { limit, offset, keyword, sort, filter } = options;
     const result = await this.client.post<SearchSubjectsResult>({
       url: '/v0/search/subjects',
       body: { keyword, sort, filter },
       query: { limit, offset },
     });
-    if (this.debug) console.log('[SubjectAPI.searchSubjects]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[SubjectAPI.searchSubjects]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -246,7 +272,12 @@ export class SubjectAPI {
    */
   async getSubjects(
     options: GetSubjectsOptions,
-  ): Promise<{ data: GetSubjectsResult | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: GetSubjectsResult | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { type, cat, series, platform, sort, year, month, limit, offset } = options;
     const result = await this.client.get<GetSubjectsResult>({
       url: '/v0/subjects',
@@ -273,7 +304,8 @@ export class SubjectAPI {
       url: '/v0/subjects/{subject_id}',
       path: { subject_id: subjectId },
     });
-    if (this.debug) console.log('[SubjectAPI.getSubjectById]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[SubjectAPI.getSubjectById]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -292,7 +324,12 @@ export class SubjectAPI {
   async getSubjectImageById(
     subjectId: number,
     type: 'small' | 'grid' | 'large' | 'medium' | 'common',
-  ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    imageUrl: string | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<undefined>({
       url: '/v0/subjects/{subject_id}/image',
       path: { subject_id: subjectId },
@@ -300,7 +337,12 @@ export class SubjectAPI {
     });
     const imageUrl = result.error ? undefined : result.response?.url;
     if (this.debug) console.log('[SubjectAPI.getSubjectImageById]', imageUrl);
-    return { imageUrl, error: result.error, response: (result as never as { response: Response }).response, request: (result as never as { request: Request }).request };
+    return {
+      imageUrl,
+      error: result.error,
+      response: (result as never as { response: Response }).response,
+      request: (result as never as { request: Request }).request,
+    };
   }
 
   /**
@@ -315,12 +357,21 @@ export class SubjectAPI {
    */
   async getRelatedPersonsBySubjectId(
     subjectId: number,
-  ): Promise<{ data: RelatedPerson[] | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: RelatedPerson[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<RelatedPerson[]>({
       url: '/v0/subjects/{subject_id}/persons',
       path: { subject_id: subjectId },
     });
-    if (this.debug) console.log('[SubjectAPI.getRelatedPersonsBySubjectId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[SubjectAPI.getRelatedPersonsBySubjectId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -337,12 +388,21 @@ export class SubjectAPI {
    */
   async getRelatedCharactersBySubjectId(
     subjectId: number,
-  ): Promise<{ data: RelatedCharacter[] | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: RelatedCharacter[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<RelatedCharacter[]>({
       url: '/v0/subjects/{subject_id}/characters',
       path: { subject_id: subjectId },
     });
-    if (this.debug) console.log('[SubjectAPI.getRelatedCharactersBySubjectId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[SubjectAPI.getRelatedCharactersBySubjectId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -358,12 +418,21 @@ export class SubjectAPI {
    */
   async getRelatedSubjectsBySubjectId(
     subjectId: number,
-  ): Promise<{ data: V0SubjectRelation[] | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: V0SubjectRelation[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<V0SubjectRelation[]>({
       url: '/v0/subjects/{subject_id}/subjects',
       path: { subject_id: subjectId },
     });
-    if (this.debug) console.log('[SubjectAPI.getRelatedSubjectsBySubjectId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[SubjectAPI.getRelatedSubjectsBySubjectId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 }

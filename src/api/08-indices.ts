@@ -1,5 +1,11 @@
 import type { Client } from '../generated/client/index.js';
-import type { Index, IndexBasicInfo, IndexSubject, IndexSubjectAddInfo, IndexSubjectEditInfo } from '../generated/types.gen.js';
+import type {
+  Index,
+  IndexBasicInfo,
+  IndexSubject,
+  IndexSubjectAddInfo,
+  IndexSubjectEditInfo,
+} from '../generated/types.gen.js';
 
 /**
  * Bangumi 目录模块（Index）的高层 API 封装。
@@ -23,7 +29,10 @@ export class IndexAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -35,7 +44,12 @@ export class IndexAPI {
    * @returns `Index`
    * @throws 401 — 未登录
    */
-  async newIndex(): Promise<{ data: Index | undefined; error: unknown; response: Response; request: Request }> {
+  async newIndex(): Promise<{
+    data: Index | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.post<Index>({
       url: '/v0/indices',
       body: {},
@@ -53,7 +67,9 @@ export class IndexAPI {
    * @returns `Index`
    * @throws 404 — 目录不存在
    */
-  async getIndexById(indexId: number): Promise<{ data: Index | undefined; error: unknown; response: Response; request: Request }> {
+  async getIndexById(
+    indexId: number,
+  ): Promise<{ data: Index | undefined; error: unknown; response: Response; request: Request }> {
     const result = await this.client.get<Index>({
       url: '/v0/indices/{index_id}',
       path: { index_id: indexId },
@@ -74,7 +90,10 @@ export class IndexAPI {
    * @throws 401 — 未登录
    * @throws 404 — 目录不存在
    */
-  async editIndexById(indexId: number, body?: IndexBasicInfo): Promise<{ data: Index | undefined; error: unknown; response: Response; request: Request }> {
+  async editIndexById(
+    indexId: number,
+    body?: IndexBasicInfo,
+  ): Promise<{ data: Index | undefined; error: unknown; response: Response; request: Request }> {
     const result = await this.client.put<Index>({
       url: '/v0/indices/{index_id}',
       path: { index_id: indexId },
@@ -99,13 +118,24 @@ export class IndexAPI {
   async getIndexSubjects(
     indexId: number,
     options?: { type?: number; limit?: number; offset?: number },
-  ): Promise<{ data: { total: number; limit: number; offset: number; data: IndexSubject[] } | undefined; error: unknown; response: Response; request: Request }> {
-    const result = await this.client.get<{ total: number; limit: number; offset: number; data: IndexSubject[] }>({
+  ): Promise<{
+    data: { total: number; limit: number; offset: number; data: IndexSubject[] } | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
+    const result = await this.client.get<{
+      total: number;
+      limit: number;
+      offset: number;
+      data: IndexSubject[];
+    }>({
       url: '/v0/indices/{index_id}/subjects',
       path: { index_id: indexId },
       query: options,
     });
-    if (this.debug) console.log('[IndexAPI.getIndexSubjects]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[IndexAPI.getIndexSubjects]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -130,7 +160,8 @@ export class IndexAPI {
       body,
       headers: { 'Content-Type': 'application/json' },
     });
-    if (this.debug) console.log('[IndexAPI.addSubjectToIndex]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[IndexAPI.addSubjectToIndex]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -157,7 +188,8 @@ export class IndexAPI {
       body,
       headers: { 'Content-Type': 'application/json' },
     });
-    if (this.debug) console.log('[IndexAPI.editIndexSubject]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[IndexAPI.editIndexSubject]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -179,7 +211,8 @@ export class IndexAPI {
       url: '/v0/indices/{index_id}/subjects/{subject_id}',
       path: { index_id: indexId, subject_id: subjectId },
     });
-    if (this.debug) console.log('[IndexAPI.deleteIndexSubject]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[IndexAPI.deleteIndexSubject]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 

@@ -53,7 +53,7 @@ jobs:
           find . \( -name "*.yml" -o -name "*.yaml" \) \
             ! -path "./.git/*" \
             | grep -v "node_modules\|vendor\|dist" \
-            | xargs yamllint --config .lintrc/general/.yamllint.yml
+            | xargs yamllint --config-file .lintrc/general/.yamllint.yml
 
   # ============================================================
   # TypeScript

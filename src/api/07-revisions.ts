@@ -1,5 +1,11 @@
 import type { Client } from '../generated/client/index.js';
-import type { PagedRevision, PersonRevision, CharacterRevision, SubjectRevision, DetailedRevision } from '../generated/types.gen.js';
+import type {
+  PagedRevision,
+  PersonRevision,
+  CharacterRevision,
+  SubjectRevision,
+  DetailedRevision,
+} from '../generated/types.gen.js';
 
 /** `getPersonRevisions` 的可选参数。 */
 export interface GetPersonRevisionsOptions {
@@ -28,7 +34,10 @@ export class RevisionAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -45,13 +54,19 @@ export class RevisionAPI {
   async getPersonRevisions(
     personId: number,
     options: GetPersonRevisionsOptions = {},
-  ): Promise<{ data: PagedRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PagedRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/persons',
       query: { person_id: personId, limit, offset },
     });
-    if (this.debug) console.log('[RevisionAPI.getPersonRevisions]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[RevisionAPI.getPersonRevisions]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -66,12 +81,21 @@ export class RevisionAPI {
    */
   async getPersonRevisionByRevisionId(
     revisionId: number,
-  ): Promise<{ data: PersonRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PersonRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<PersonRevision>({
       url: '/v0/revisions/persons/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug) console.log('[RevisionAPI.getPersonRevisionByRevisionId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[RevisionAPI.getPersonRevisionByRevisionId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -88,13 +112,19 @@ export class RevisionAPI {
   async getCharacterRevisions(
     characterId: number,
     options: GetPersonRevisionsOptions = {},
-  ): Promise<{ data: PagedRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PagedRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/characters',
       query: { character_id: characterId, limit, offset },
     });
-    if (this.debug) console.log('[RevisionAPI.getCharacterRevisions]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[RevisionAPI.getCharacterRevisions]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -109,12 +139,21 @@ export class RevisionAPI {
    */
   async getCharacterRevisionByRevisionId(
     revisionId: number,
-  ): Promise<{ data: CharacterRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: CharacterRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<CharacterRevision>({
       url: '/v0/revisions/characters/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug) console.log('[RevisionAPI.getCharacterRevisionByRevisionId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[RevisionAPI.getCharacterRevisionByRevisionId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -131,13 +170,19 @@ export class RevisionAPI {
   async getSubjectRevisions(
     subjectId: number,
     options: GetPersonRevisionsOptions = {},
-  ): Promise<{ data: PagedRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PagedRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/subjects',
       query: { subject_id: subjectId, limit, offset },
     });
-    if (this.debug) console.log('[RevisionAPI.getSubjectRevisions]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[RevisionAPI.getSubjectRevisions]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -152,12 +197,21 @@ export class RevisionAPI {
    */
   async getSubjectRevisionByRevisionId(
     revisionId: number,
-  ): Promise<{ data: SubjectRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: SubjectRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<SubjectRevision>({
       url: '/v0/revisions/subjects/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug) console.log('[RevisionAPI.getSubjectRevisionByRevisionId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[RevisionAPI.getSubjectRevisionByRevisionId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -174,13 +228,19 @@ export class RevisionAPI {
   async getEpisodeRevisions(
     episodeId: number,
     options: GetPersonRevisionsOptions = {},
-  ): Promise<{ data: PagedRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PagedRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/episodes',
       query: { episode_id: episodeId, limit, offset },
     });
-    if (this.debug) console.log('[RevisionAPI.getEpisodeRevisions]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[RevisionAPI.getEpisodeRevisions]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -195,12 +255,21 @@ export class RevisionAPI {
    */
   async getEpisodeRevisionByRevisionId(
     revisionId: number,
-  ): Promise<{ data: DetailedRevision | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: DetailedRevision | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<DetailedRevision>({
       url: '/v0/revisions/episodes/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug) console.log('[RevisionAPI.getEpisodeRevisionByRevisionId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[RevisionAPI.getEpisodeRevisionByRevisionId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 }

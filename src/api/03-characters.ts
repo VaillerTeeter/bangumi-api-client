@@ -44,7 +44,10 @@ export class CharacterAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -63,7 +66,12 @@ export class CharacterAPI {
   async searchCharacters(
     keyword: string,
     options: SearchCharactersOptions = {},
-  ): Promise<{ data: SearchCharactersResult | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: SearchCharactersResult | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { nsfw, limit, offset } = options;
     const filter = nsfw !== undefined ? { nsfw } : undefined;
     const result = await this.client.post<SearchCharactersResult>({
@@ -71,7 +79,8 @@ export class CharacterAPI {
       body: { keyword, filter },
       query: { limit, offset },
     });
-    if (this.debug) console.log('[CharacterAPI.searchCharacters]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[CharacterAPI.searchCharacters]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -86,12 +95,18 @@ export class CharacterAPI {
    */
   async getCharacterById(
     characterId: number,
-  ): Promise<{ data: Character | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: Character | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<Character>({
       url: '/v0/characters/{character_id}',
       path: { character_id: characterId },
     });
-    if (this.debug) console.log('[CharacterAPI.getCharacterById]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[CharacterAPI.getCharacterById]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -110,7 +125,12 @@ export class CharacterAPI {
   async getCharacterImageById(
     characterId: number,
     type: 'small' | 'grid' | 'large' | 'medium',
-  ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    imageUrl: string | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<undefined>({
       url: '/v0/characters/{character_id}/image',
       path: { character_id: characterId },
@@ -118,7 +138,12 @@ export class CharacterAPI {
     });
     const imageUrl = result.error ? undefined : result.response?.url;
     if (this.debug) console.log('[CharacterAPI.getCharacterImageById]', imageUrl);
-    return { imageUrl, error: result.error, response: (result as never as { response: Response }).response, request: (result as never as { request: Request }).request };
+    return {
+      imageUrl,
+      error: result.error,
+      response: (result as never as { response: Response }).response,
+      request: (result as never as { request: Request }).request,
+    };
   }
 
   /**
@@ -132,12 +157,21 @@ export class CharacterAPI {
    */
   async getRelatedSubjectsByCharacterId(
     characterId: number,
-  ): Promise<{ data: V0RelatedSubject[] | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: V0RelatedSubject[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<V0RelatedSubject[]>({
       url: '/v0/characters/{character_id}/subjects',
       path: { character_id: characterId },
     });
-    if (this.debug) console.log('[CharacterAPI.getRelatedSubjectsByCharacterId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[CharacterAPI.getRelatedSubjectsByCharacterId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -152,12 +186,21 @@ export class CharacterAPI {
    */
   async getRelatedPersonsByCharacterId(
     characterId: number,
-  ): Promise<{ data: CharacterPerson[] | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: CharacterPerson[] | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<CharacterPerson[]>({
       url: '/v0/characters/{character_id}/persons',
       path: { character_id: characterId },
     });
-    if (this.debug) console.log('[CharacterAPI.getRelatedPersonsByCharacterId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[CharacterAPI.getRelatedPersonsByCharacterId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 

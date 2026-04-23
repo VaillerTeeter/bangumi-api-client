@@ -31,7 +31,10 @@ export class EpisodeAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -50,7 +53,12 @@ export class EpisodeAPI {
   async getEpisodes(
     subjectId: number,
     options: GetEpisodesOptions = {},
-  ): Promise<{ data: GetEpisodesResult | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: GetEpisodesResult | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { type, limit, offset } = options;
     const result = await this.client.get<GetEpisodesResult>({
       url: '/v0/episodes',
@@ -73,12 +81,18 @@ export class EpisodeAPI {
    */
   async getEpisodeById(
     episodeId: number,
-  ): Promise<{ data: EpisodeDetail | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: EpisodeDetail | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<EpisodeDetail>({
       url: '/v0/episodes/{episode_id}',
       path: { episode_id: episodeId },
     });
-    if (this.debug) console.log('[EpisodeAPI.getEpisodeById]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[EpisodeAPI.getEpisodeById]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 }

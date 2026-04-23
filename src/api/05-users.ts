@@ -17,7 +17,10 @@ export class UserAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -56,7 +59,12 @@ export class UserAPI {
   async getUserAvatarByName(
     username: string,
     type: 'small' | 'medium' | 'large',
-  ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    imageUrl: string | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<undefined>({
       url: '/v0/users/{username}/avatar',
       path: { username },
@@ -64,7 +72,12 @@ export class UserAPI {
     });
     const imageUrl = result.error ? undefined : result.response?.url;
     if (this.debug) console.log('[UserAPI.getUserAvatarByName]', imageUrl);
-    return { imageUrl, error: result.error, response: (result as never as { response: Response }).response, request: (result as never as { request: Request }).request };
+    return {
+      imageUrl,
+      error: result.error,
+      response: (result as never as { response: Response }).response,
+      request: (result as never as { request: Request }).request,
+    };
   }
 
   /**
@@ -77,7 +90,12 @@ export class UserAPI {
    * @returns 当前登录用户的完整信息
    * @throws 401 — 未提供有效 Token
    */
-  async getMyself(): Promise<{ data: GetMyselfResponse | undefined; error: unknown; response: Response; request: Request }> {
+  async getMyself(): Promise<{
+    data: GetMyselfResponse | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<GetMyselfResponse>({
       url: '/v0/me',
     });

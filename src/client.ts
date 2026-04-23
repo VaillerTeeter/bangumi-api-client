@@ -12,7 +12,7 @@ import { IndexAPI } from './api/08-indices.js';
 const DEFAULT_BASE_URL = 'https://api.bgm.tv';
 
 const { version: PKG_VERSION } = JSON.parse(
-  readFileSync(new URL('../package.json', import.meta.url), 'utf8')
+  readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
 ) as { version: string };
 
 const DEFAULT_USER_AGENT = `bangumi-api-client/${PKG_VERSION} (https://github.com/VaillerTeeter/bangumi-api-client)`;
@@ -58,11 +58,7 @@ export interface BangumiClient {
  * ```
  */
 export function createBangumiClient(options: BangumiClientOptions = {}): BangumiClient {
-  const {
-    token,
-    baseUrl = DEFAULT_BASE_URL,
-    userAgent = DEFAULT_USER_AGENT,
-  } = options;
+  const { token, baseUrl = DEFAULT_BASE_URL, userAgent = DEFAULT_USER_AGENT } = options;
 
   const headers: Record<string, string> = { 'User-Agent': userAgent };
   if (token) {

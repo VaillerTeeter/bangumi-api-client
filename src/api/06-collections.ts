@@ -1,5 +1,19 @@
 import type { Client } from '../generated/client/index.js';
-import type { EpisodeCollectionType, EpType, Page, PagedUserCharacterCollection, PagedUserPersonCollection, PagedUserCollection, SubjectType, SubjectCollectionType, UserCharacterCollection, UserEpisodeCollection, UserPersonCollection, UserSubjectCollection, UserSubjectCollectionModifyPayload } from '../generated/types.gen.js';
+import type {
+  EpisodeCollectionType,
+  EpType,
+  Page,
+  PagedUserCharacterCollection,
+  PagedUserPersonCollection,
+  PagedUserCollection,
+  SubjectType,
+  SubjectCollectionType,
+  UserCharacterCollection,
+  UserEpisodeCollection,
+  UserPersonCollection,
+  UserSubjectCollection,
+  UserSubjectCollectionModifyPayload,
+} from '../generated/types.gen.js';
 
 /** `getUserCollections` 的可选参数。 */
 export interface GetUserCollectionsOptions {
@@ -47,7 +61,10 @@ export class CollectionAPI {
    * @param client - 由 `@hey-api/client-fetch` 创建的 HTTP 客户端实例
    * @param debug  - 是否开启调试日志（默认 `false`）
    */
-  constructor(private readonly client: Client, debug = false) {
+  constructor(
+    private readonly client: Client,
+    debug = false,
+  ) {
     this.debug = debug;
   }
 
@@ -66,14 +83,20 @@ export class CollectionAPI {
   async getUserCollections(
     username: string,
     options: GetUserCollectionsOptions = {},
-  ): Promise<{ data: PagedUserCollection | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PagedUserCollection | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { subject_type, type, limit, offset } = options;
     const result = await this.client.get<PagedUserCollection>({
       url: '/v0/users/{username}/collections',
       path: { username },
       query: { subject_type, type, limit, offset },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserCollections]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[CollectionAPI.getUserCollections]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -92,12 +115,21 @@ export class CollectionAPI {
   async getUserCollectionBySubjectId(
     username: string,
     subjectId: number,
-  ): Promise<{ data: UserSubjectCollection | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: UserSubjectCollection | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<UserSubjectCollection>({
       url: '/v0/users/{username}/collections/{subject_id}',
       path: { username, subject_id: subjectId },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserCollectionBySubjectId]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[CollectionAPI.getUserCollectionBySubjectId]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -174,14 +206,23 @@ export class CollectionAPI {
   async getUserSubjectEpisodeCollection(
     subjectId: number,
     options: GetUserSubjectEpisodeCollectionOptions = {},
-  ): Promise<{ data: (Page & { data?: UserEpisodeCollection[] }) | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: (Page & { data?: UserEpisodeCollection[] }) | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const { offset, limit, episode_type } = options;
     const result = await this.client.get<Page & { data?: UserEpisodeCollection[] }>({
       url: '/v0/users/-/collections/{subject_id}/episodes',
       path: { subject_id: subjectId },
       query: { offset, limit, episode_type },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserSubjectEpisodeCollection]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[CollectionAPI.getUserSubjectEpisodeCollection]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -206,7 +247,8 @@ export class CollectionAPI {
       path: { subject_id: subjectId },
       body: payload,
     });
-    if (this.debug) console.log('[CollectionAPI.patchUserSubjectEpisodeCollection]', result.response.status);
+    if (this.debug)
+      console.log('[CollectionAPI.patchUserSubjectEpisodeCollection]', result.response.status);
     return result as never;
   }
 
@@ -223,12 +265,18 @@ export class CollectionAPI {
    */
   async getUserEpisodeCollection(
     episodeId: number,
-  ): Promise<{ data: UserEpisodeCollection | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: UserEpisodeCollection | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<UserEpisodeCollection>({
       url: '/v0/users/-/collections/-/episodes/{episode_id}',
       path: { episode_id: episodeId },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserEpisodeCollection]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[CollectionAPI.getUserEpisodeCollection]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -268,12 +316,21 @@ export class CollectionAPI {
    */
   async getUserCharacterCollections(
     username: string,
-  ): Promise<{ data: PagedUserCharacterCollection | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PagedUserCharacterCollection | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<PagedUserCharacterCollection>({
       url: '/v0/users/{username}/collections/-/characters',
       path: { username },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserCharacterCollections]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[CollectionAPI.getUserCharacterCollections]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -290,12 +347,21 @@ export class CollectionAPI {
   async getUserCharacterCollection(
     username: string,
     characterId: number,
-  ): Promise<{ data: UserCharacterCollection | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: UserCharacterCollection | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<UserCharacterCollection>({
       url: '/v0/users/{username}/collections/-/characters/{character_id}',
       path: { username, character_id: characterId },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserCharacterCollection]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log(
+        '[CollectionAPI.getUserCharacterCollection]',
+        JSON.stringify(result.data, null, 2),
+      );
     return result as never;
   }
 
@@ -310,12 +376,18 @@ export class CollectionAPI {
    */
   async getUserPersonCollections(
     username: string,
-  ): Promise<{ data: PagedUserPersonCollection | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: PagedUserPersonCollection | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<PagedUserPersonCollection>({
       url: '/v0/users/{username}/collections/-/persons',
       path: { username },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserPersonCollections]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[CollectionAPI.getUserPersonCollections]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 
@@ -332,12 +404,18 @@ export class CollectionAPI {
   async getUserPersonCollection(
     username: string,
     personId: number,
-  ): Promise<{ data: UserPersonCollection | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<{
+    data: UserPersonCollection | undefined;
+    error: unknown;
+    response: Response;
+    request: Request;
+  }> {
     const result = await this.client.get<UserPersonCollection>({
       url: '/v0/users/{username}/collections/-/persons/{person_id}',
       path: { username, person_id: personId },
     });
-    if (this.debug) console.log('[CollectionAPI.getUserPersonCollection]', JSON.stringify(result.data, null, 2));
+    if (this.debug)
+      console.log('[CollectionAPI.getUserPersonCollection]', JSON.stringify(result.data, null, 2));
     return result as never;
   }
 }

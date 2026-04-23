@@ -22,22 +22,13 @@ export type {
 } from './api/01-subjects.js';
 
 export { EpisodeAPI } from './api/02-episodes.js';
-export type {
-  GetEpisodesOptions,
-  GetEpisodesResult,
-} from './api/02-episodes.js';
+export type { GetEpisodesOptions, GetEpisodesResult } from './api/02-episodes.js';
 
 export { CharacterAPI } from './api/03-characters.js';
-export type {
-  SearchCharactersOptions,
-  SearchCharactersResult,
-} from './api/03-characters.js';
+export type { SearchCharactersOptions, SearchCharactersResult } from './api/03-characters.js';
 
 export { PersonAPI } from './api/04-persons.js';
-export type {
-  SearchPersonsOptions,
-  SearchPersonsResult,
-} from './api/04-persons.js';
+export type { SearchPersonsOptions, SearchPersonsResult } from './api/04-persons.js';
 
 export { UserAPI } from './api/05-users.js';
 

@@ -26,7 +26,6 @@
     "exports": "error",
     "nsExports": "error",
     "classMembers": "error",
-    "nsClassMembers": "error",
     "types": "error",
     "nsTypes": "error",
     "enumMembers": "error",
