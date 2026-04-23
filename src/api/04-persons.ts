@@ -69,14 +69,16 @@ export class PersonAPI {
     request: Request;
   }> {
     const { career, limit, offset } = options;
-    const filter = career !== undefined ? { career } : undefined;
+    const filter = career === undefined ? undefined : { career };
     const result = await this.client.post<SearchPersonsResult>({
       url: '/v0/search/persons',
       body: { keyword, filter },
       query: { limit, offset },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[PersonAPI.searchPersons]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[PersonAPI.searchPersons]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -99,8 +101,10 @@ export class PersonAPI {
       url: '/v0/persons/{person_id}',
       path: { person_id: personId },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[PersonAPI.getPersonById]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[PersonAPI.getPersonById]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -128,8 +132,10 @@ export class PersonAPI {
       query: { type },
     });
     const imageUrl = result.error ? undefined : result.response?.url;
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[PersonAPI.getPersonImageById]', imageUrl);
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[PersonAPI.getPersonImageById]', imageUrl);
+    }
     return {
       imageUrl,
       error: result.error,
@@ -157,9 +163,10 @@ export class PersonAPI {
       url: '/v0/persons/{person_id}/subjects',
       path: { person_id: personId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[PersonAPI.getRelatedSubjectsByPersonId]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -182,12 +189,13 @@ export class PersonAPI {
       url: '/v0/persons/{person_id}/characters',
       path: { person_id: personId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[PersonAPI.getRelatedCharactersByPersonId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -210,8 +218,10 @@ export class PersonAPI {
       url: '/v0/persons/{person_id}/collect',
       path: { person_id: personId },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[PersonAPI.collectPerson]', result.response?.status);
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[PersonAPI.collectPerson]', result.response?.status);
+    }
     return result as never;
   }
 
@@ -234,8 +244,10 @@ export class PersonAPI {
       url: '/v0/persons/{person_id}/collect',
       path: { person_id: personId },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[PersonAPI.uncollectPerson]', result.response?.status);
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[PersonAPI.uncollectPerson]', result.response?.status);
+    }
     return result as never;
   }
 }

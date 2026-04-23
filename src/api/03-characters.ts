@@ -73,15 +73,16 @@ export class CharacterAPI {
     request: Request;
   }> {
     const { nsfw, limit, offset } = options;
-    const filter = nsfw !== undefined ? { nsfw } : undefined;
+    const filter = nsfw === undefined ? undefined : { nsfw };
     const result = await this.client.post<SearchCharactersResult>({
       url: '/v0/search/characters',
       body: { keyword, filter },
       query: { limit, offset },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[CharacterAPI.searchCharacters]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -104,9 +105,10 @@ export class CharacterAPI {
       url: '/v0/characters/{character_id}',
       path: { character_id: characterId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[CharacterAPI.getCharacterById]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -137,8 +139,10 @@ export class CharacterAPI {
       query: { type },
     });
     const imageUrl = result.error ? undefined : result.response?.url;
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[CharacterAPI.getCharacterImageById]', imageUrl);
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[CharacterAPI.getCharacterImageById]', imageUrl);
+    }
     return {
       imageUrl,
       error: result.error,
@@ -166,12 +170,13 @@ export class CharacterAPI {
       url: '/v0/characters/{character_id}/subjects',
       path: { character_id: characterId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[CharacterAPI.getRelatedSubjectsByCharacterId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -194,12 +199,13 @@ export class CharacterAPI {
       url: '/v0/characters/{character_id}/persons',
       path: { character_id: characterId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[CharacterAPI.getRelatedPersonsByCharacterId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -222,8 +228,10 @@ export class CharacterAPI {
       url: '/v0/characters/{character_id}/collect',
       path: { character_id: characterId },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[CharacterAPI.collectCharacter]', result.response?.status);
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[CharacterAPI.collectCharacter]', result.response?.status);
+    }
     return result as never;
   }
 
@@ -246,8 +254,10 @@ export class CharacterAPI {
       url: '/v0/characters/{character_id}/collect',
       path: { character_id: characterId },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[CharacterAPI.uncollectCharacter]', result.response?.status);
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[CharacterAPI.uncollectCharacter]', result.response?.status);
+    }
     return result as never;
   }
 }

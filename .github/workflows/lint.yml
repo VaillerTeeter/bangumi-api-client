@@ -97,15 +97,15 @@ jobs:
             --ignore-path .gitignore \
             "src/**/*.ts"
 
+      - name: Generate API types
+        run: yarn generate
+
       - name: ESLint — static analysis
         run: |
           npx eslint \
             --max-warnings 0 \
             --config .lintrc/frontend/typescript/.eslintrc-ts.json \
             "src/index.ts" "src/client.ts" "src/api/**/*.ts"
-
-      - name: Generate API types
-        run: yarn generate
 
       - name: TypeScript — type check
         run: yarn typecheck

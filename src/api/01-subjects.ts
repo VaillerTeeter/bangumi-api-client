@@ -107,6 +107,56 @@ export interface GetSubjectsResult {
 }
 
 /**
+ * 将原始 images 对象规范化为 `CalendarSubject['images']` 结构。
+ * 字段缺失或 `undefined` 时统一转为 `null`。
+ *
+ * @param raw - 原始 images 对象
+ * @returns 规范化后的图片 URL 对象
+ */
+function normalizeImages(raw: Record<string, unknown>): NonNullable<CalendarSubject['images']> {
+  return {
+    large: (raw.large as string | null | undefined) ?? null,
+    common: (raw.common as string | null | undefined) ?? null,
+    medium: (raw.medium as string | null | undefined) ?? null,
+    small: (raw.small as string | null | undefined) ?? null,
+    grid: (raw.grid as string | null | undefined) ?? null,
+  };
+}
+
+/**
+ * 将原始 rating 对象规范化为 `CalendarSubject['rating']` 结构。
+ *
+ * @param raw - 原始 rating 对象
+ * @returns 规范化后的评分对象
+ */
+function normalizeRating(raw: Record<string, unknown>): NonNullable<CalendarSubject['rating']> {
+  return {
+    total: raw.total as number,
+    count: raw.count as Record<string, number>,
+    score: raw.score as number,
+  };
+}
+
+/**
+ * 将原始 collection 对象规范化为 `CalendarSubject['collection']` 结构。
+ * 字段缺失或 `undefined` 时统一转为 `null`。
+ *
+ * @param raw - 原始 collection 对象
+ * @returns 规范化后的收藏统计对象
+ */
+function normalizeCollection(
+  raw: Record<string, unknown>,
+): NonNullable<CalendarSubject['collection']> {
+  return {
+    wish: (raw.wish as number | null | undefined) ?? null,
+    collect: (raw.collect as number | null | undefined) ?? null,
+    doing: (raw.doing as number | null | undefined) ?? null,
+    on_hold: (raw.on_hold as number | null | undefined) ?? null,
+    dropped: (raw.dropped as number | null | undefined) ?? null,
+  };
+}
+
+/**
  * 将 `/calendar` 接口返回的原始条目对象规范化为 `CalendarSubject` 结构。
  *
  * 接口返回的字段类型较宽松（部分字段可能缺失或为 `null`），
@@ -116,47 +166,25 @@ export interface GetSubjectsResult {
  * @returns 规范化后的 `CalendarSubject` 对象
  */
 function normalizeSubject(item: Record<string, unknown>): CalendarSubject {
-  const images = (item.images as Record<string, unknown> | undefined) ?? null;
-  const rating = (item.rating as Record<string, unknown> | undefined) ?? null;
-  const collection = (item.collection as Record<string, unknown> | undefined) ?? null;
+  const rawImages = item.images as Record<string, unknown> | null | undefined;
+  const rawRating = item.rating as Record<string, unknown> | null | undefined;
+  const rawCollection = item.collection as Record<string, unknown> | null | undefined;
 
   return {
     id: item.id as number,
     url: item.url as string,
     type: item.type as number,
     name: item.name as string,
-    name_cn: (item.name_cn as string) ?? '',
-    summary: (item.summary as string) ?? '',
+    name_cn: (item.name_cn as string | undefined) ?? '',
+    summary: (item.summary as string | undefined) ?? '',
     air_date: item.air_date as string,
     air_weekday: item.air_weekday as number,
-    images: images
-      ? {
-          large: (images.large as string) ?? null,
-          common: (images.common as string) ?? null,
-          medium: (images.medium as string) ?? null,
-          small: (images.small as string) ?? null,
-          grid: (images.grid as string) ?? null,
-        }
-      : null,
-    eps: (item.eps as number) ?? null,
-    eps_count: (item.eps_count as number) ?? null,
-    rating: rating
-      ? {
-          total: rating.total as number,
-          count: rating.count as Record<string, number>,
-          score: rating.score as number,
-        }
-      : null,
-    rank: (item.rank as number) ?? null,
-    collection: collection
-      ? {
-          wish: (collection.wish as number) ?? null,
-          collect: (collection.collect as number) ?? null,
-          doing: (collection.doing as number) ?? null,
-          on_hold: (collection.on_hold as number) ?? null,
-          dropped: (collection.dropped as number) ?? null,
-        }
-      : null,
+    images: rawImages != null ? normalizeImages(rawImages) : null,
+    eps: (item.eps as number | undefined) ?? null,
+    eps_count: (item.eps_count as number | undefined) ?? null,
+    rating: rawRating != null ? normalizeRating(rawRating) : null,
+    rank: (item.rank as number | undefined) ?? null,
+    collection: rawCollection != null ? normalizeCollection(rawCollection) : null,
   };
 }
 
@@ -213,10 +241,12 @@ export class SubjectAPI {
         }>
       ).map((entry) => ({
         weekday: entry.weekday,
-        items: entry.items.map(normalizeSubject),
+        items: entry.items.map((item) => normalizeSubject(item)),
       }));
-      // eslint-disable-next-line no-console
-      if (this.debug) console.log('[SubjectAPI.getCalendar]', JSON.stringify(result.data, null, 2));
+      if (this.debug) {
+        // eslint-disable-next-line no-console
+        console.log('[SubjectAPI.getCalendar]', JSON.stringify(result.data, null, 2));
+      }
     }
     return result as never;
   }
@@ -228,6 +258,7 @@ export class SubjectAPI {
    *
    * 支持按关键词、条目类型、标签、评分、排名等多维度过滤，并可指定排序方式和分页参数。
    *
+   * @param options         - 搜索参数
    * @param options.keyword - 搜索关键词（必填）
    * @param options.sort    - 排序方式：`match`=相关度 | `heat`=热度 | `rank`=排名 | `score`=评分
    * @param options.filter  - 过滤条件，支持类型、标签、评分、日期等
@@ -247,9 +278,10 @@ export class SubjectAPI {
       body: { keyword, sort, filter },
       query: { limit, offset },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[SubjectAPI.searchSubjects]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -261,6 +293,7 @@ export class SubjectAPI {
    * 可按子分类、年份、月份、平台等条件筛选，支持按日期或排名排序。
    * 无结果时返回 HTTP 200 + 空数组，不返回 404。
    *
+   * @param options          - 浏览参数
    * @param options.type     - 条目类型（必填）：1=书籍 2=动画 3=音乐 4=游戏 6=三次元
    * @param options.cat      - 子分类，不同 type 对应不同可选值
    * @param options.sort     - 排序方式：`date` | `rank`
@@ -281,8 +314,10 @@ export class SubjectAPI {
       url: '/v0/subjects',
       query: { type, cat, series, platform, sort, year, month, limit, offset },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[SubjectAPI.getSubjects]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[SubjectAPI.getSubjects]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -303,9 +338,10 @@ export class SubjectAPI {
       url: '/v0/subjects/{subject_id}',
       path: { subject_id: subjectId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[SubjectAPI.getSubjectById]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -336,8 +372,10 @@ export class SubjectAPI {
       query: { type },
     });
     const imageUrl = result.error ? undefined : result.response?.url;
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[SubjectAPI.getSubjectImageById]', imageUrl);
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[SubjectAPI.getSubjectImageById]', imageUrl);
+    }
     return {
       imageUrl,
       error: result.error,
@@ -366,12 +404,13 @@ export class SubjectAPI {
       url: '/v0/subjects/{subject_id}/persons',
       path: { subject_id: subjectId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[SubjectAPI.getRelatedPersonsBySubjectId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -396,12 +435,13 @@ export class SubjectAPI {
       url: '/v0/subjects/{subject_id}/characters',
       path: { subject_id: subjectId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[SubjectAPI.getRelatedCharactersBySubjectId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -425,12 +465,13 @@ export class SubjectAPI {
       url: '/v0/subjects/{subject_id}/subjects',
       path: { subject_id: subjectId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[SubjectAPI.getRelatedSubjectsBySubjectId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 }

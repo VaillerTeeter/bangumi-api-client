@@ -64,8 +64,10 @@ export class EpisodeAPI {
       url: '/v0/episodes',
       query: { subject_id: subjectId, type, limit, offset },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[EpisodeAPI.getEpisodes]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[EpisodeAPI.getEpisodes]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -90,9 +92,10 @@ export class EpisodeAPI {
       url: '/v0/episodes/{episode_id}',
       path: { episode_id: episodeId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[EpisodeAPI.getEpisodeById]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 }

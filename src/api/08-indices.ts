@@ -54,8 +54,10 @@ export class IndexAPI {
       url: '/v0/indices',
       body: {},
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[IndexAPI.newIndex]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[IndexAPI.newIndex]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -75,8 +77,10 @@ export class IndexAPI {
       url: '/v0/indices/{index_id}',
       path: { index_id: indexId },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[IndexAPI.getIndexById]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[IndexAPI.getIndexById]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -102,8 +106,10 @@ export class IndexAPI {
       body,
       headers: { 'Content-Type': 'application/json' },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[IndexAPI.editIndexById]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[IndexAPI.editIndexById]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -137,9 +143,10 @@ export class IndexAPI {
       path: { index_id: indexId },
       query: options,
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[IndexAPI.getIndexSubjects]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -150,6 +157,7 @@ export class IndexAPI {
    *
    * @param indexId - 目录 ID
    * @param body    - 条目信息（subject_id、sort、comment）
+   * @returns 成功时 `error` 为 `undefined`
    * @throws 400 — 请求参数错误
    * @throws 401 — 未登录
    * @throws 404 — 目录不存在
@@ -158,7 +166,7 @@ export class IndexAPI {
     indexId: number,
     body?: IndexSubjectAddInfo,
   ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
-    const result = await this.client.post<unknown>({
+    const result = await this.client.post({
       url: '/v0/indices/{index_id}/subjects',
       path: { index_id: indexId },
       body,
@@ -178,6 +186,7 @@ export class IndexAPI {
    * @param indexId   - 目录 ID
    * @param subjectId - 条目 ID
    * @param body      - 要修改的字段（sort、comment）
+   * @returns 成功时 `error` 为 `undefined`
    * @throws 400 — 请求参数错误
    * @throws 401 — 未登录
    * @throws 404 — 目录或条目不存在
@@ -187,15 +196,16 @@ export class IndexAPI {
     subjectId: number,
     body?: IndexSubjectEditInfo,
   ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
-    const result = await this.client.put<unknown>({
+    const result = await this.client.put({
       url: '/v0/indices/{index_id}/subjects/{subject_id}',
       path: { index_id: indexId, subject_id: subjectId },
       body,
       headers: { 'Content-Type': 'application/json' },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[IndexAPI.editIndexSubject]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -206,6 +216,7 @@ export class IndexAPI {
    *
    * @param indexId   - 目录 ID
    * @param subjectId - 条目 ID
+   * @returns 成功时 `error` 为 `undefined`
    * @throws 401 — 未登录
    * @throws 404 — 目录或条目不存在
    */
@@ -213,13 +224,14 @@ export class IndexAPI {
     indexId: number,
     subjectId: number,
   ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
-    const result = await this.client.delete<unknown>({
+    const result = await this.client.delete({
       url: '/v0/indices/{index_id}/subjects/{subject_id}',
       path: { index_id: indexId, subject_id: subjectId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[IndexAPI.deleteIndexSubject]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -229,6 +241,7 @@ export class IndexAPI {
    * `POST /v0/indices/{index_id}/collect`
    *
    * @param indexId - 目录 ID
+   * @returns 成功时 `error` 为 `undefined`
    * @throws 401 — 未登录
    * @throws 404 — 目录不存在
    * @throws 500 — 服务器内部错误
@@ -236,14 +249,16 @@ export class IndexAPI {
   async collectIndex(
     indexId: number,
   ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
-    const result = await this.client.post<unknown>({
+    const result = await this.client.post({
       url: '/v0/indices/{index_id}/collect',
       path: { index_id: indexId },
       body: {},
       headers: { 'Content-Type': 'application/json' },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[IndexAPI.collectIndex]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[IndexAPI.collectIndex]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -253,6 +268,7 @@ export class IndexAPI {
    * `DELETE /v0/indices/{index_id}/collect`
    *
    * @param indexId - 目录 ID
+   * @returns 成功时 `error` 为 `undefined`
    * @throws 401 — 未登录
    * @throws 404 — 目录不存在
    * @throws 500 — 服务器内部错误
@@ -260,12 +276,14 @@ export class IndexAPI {
   async uncollectIndex(
     indexId: number,
   ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
-    const result = await this.client.delete<unknown>({
+    const result = await this.client.delete({
       url: '/v0/indices/{index_id}/collect',
       path: { index_id: indexId },
     });
-    // eslint-disable-next-line no-console
-    if (this.debug) console.log('[IndexAPI.uncollectIndex]', JSON.stringify(result.data, null, 2));
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log('[IndexAPI.uncollectIndex]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 }

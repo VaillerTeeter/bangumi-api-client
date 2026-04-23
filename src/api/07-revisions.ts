@@ -65,9 +65,10 @@ export class RevisionAPI {
       url: '/v0/revisions/persons',
       query: { person_id: personId, limit, offset },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[RevisionAPI.getPersonRevisions]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -90,12 +91,13 @@ export class RevisionAPI {
       url: '/v0/revisions/persons/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[RevisionAPI.getPersonRevisionByRevisionId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -123,9 +125,10 @@ export class RevisionAPI {
       url: '/v0/revisions/characters',
       query: { character_id: characterId, limit, offset },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[RevisionAPI.getCharacterRevisions]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -148,12 +151,13 @@ export class RevisionAPI {
       url: '/v0/revisions/characters/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[RevisionAPI.getCharacterRevisionByRevisionId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -181,9 +185,10 @@ export class RevisionAPI {
       url: '/v0/revisions/subjects',
       query: { subject_id: subjectId, limit, offset },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[RevisionAPI.getSubjectRevisions]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -206,12 +211,13 @@ export class RevisionAPI {
       url: '/v0/revisions/subjects/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[RevisionAPI.getSubjectRevisionByRevisionId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 
@@ -239,9 +245,10 @@ export class RevisionAPI {
       url: '/v0/revisions/episodes',
       query: { episode_id: episodeId, limit, offset },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log('[RevisionAPI.getEpisodeRevisions]', JSON.stringify(result.data, null, 2));
+    }
     return result as never;
   }
 
@@ -264,12 +271,13 @@ export class RevisionAPI {
       url: '/v0/revisions/episodes/{revision_id}',
       path: { revision_id: revisionId },
     });
-    if (this.debug)
+    if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(
         '[RevisionAPI.getEpisodeRevisionByRevisionId]',
         JSON.stringify(result.data, null, 2),
       );
+    }
     return result as never;
   }
 }
