@@ -2,8 +2,7 @@
   "root": true,
   "env": {
     "es2022": true,
-    "node": true,
-    "browser": true
+    "node": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

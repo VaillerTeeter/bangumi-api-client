@@ -1,5 +1,26 @@
-version: 2
+﻿version: 2
 updates:
+  # 自动更新 npm (yarn) 依赖
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    open-pull-requests-limit: 5
+    ignore:
+      # 核心 API 包的大版本升级跳过，需手动评估（可能存在破坏性变更）
+      - dependency-name: "@hey-api/openapi-ts"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@hey-api/client-fetch"
+        update-types: ["version-update:semver-major"]
+
   # 自动更新 GitHub Actions 依赖
   - package-ecosystem: "github-actions"
     directory: "/"
