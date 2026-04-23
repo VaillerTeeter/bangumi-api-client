@@ -24,7 +24,15 @@
     "codebase",
     "configs",
     "nonobvious",
-    "unawaited"
+    "unawaited",
+    "Bangumi",
+    "bangumi",
+    "infobox",
+    "uncollect",
+    "airdate",
+    "Geass",
+    "xyzxyz",
+    "xyzxyzxyz"
   ],
 
   "flagWords": [
@@ -64,6 +72,7 @@
   ],
 
   "ignorePaths": [
+    ".git/**",
     "yarn.lock",
     "package-lock.json",
     "LICENSE"

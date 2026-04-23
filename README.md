@@ -185,10 +185,12 @@ npm publish
 ## 相关链接
 
 ### 本项目
+
 - [bangumi-api-client](https://github.com/VaillerTeeter/bangumi-api-client) — 本仓库
 - [模板仓库 0-Example](https://github.com/VaillerTeeter/0-Example) — CI 配置、lint 规则、Issue/PR 模板、行为准则等通用配置均继承自此仓库
 
 ### Bangumi
+
 - [Bangumi 番组计划](https://bgm.tv) — 目标 API 所属平台
 - [bangumi/api](https://github.com/bangumi/api) — Bangumi 官方 API 仓库
 - [OpenAPI v0.yaml](https://github.com/bangumi/api/blob/master/open-api/v0.yaml) — 本库底层代码生成所用的 OpenAPI 规范文件
@@ -196,8 +198,10 @@ npm publish
 - [Bangumi Personal Access Token](https://next.bgm.tv/demo/access-token) — 创建用于认证接口测试的 Access Token（`BGM_TOKEN`）
 
 ### 依赖
+
 - [@hey-api/openapi-ts](https://github.com/hey-api/openapi-ts) — OpenAPI → TypeScript 代码生成器（开发依赖）
 - [@hey-api/client-fetch](https://github.com/hey-api/openapi-ts/tree/main/packages/client-fetch) — 生成代码使用的 Fetch HTTP 客户端（运行时依赖）
 
 ### 作者
+
 - [GitHub Profile](https://github.com/VaillerTeeter)

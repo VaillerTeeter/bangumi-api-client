@@ -1,4 +1,4 @@
-# RevisionAPI — 编辑历史
+﻿# RevisionAPI — 编辑历史
 
 编辑历史（Revision）模块提供对条目、章节、角色、人物编辑记录的查询功能，可用于追溯 Wiki 数据的变更历史。
 
@@ -67,7 +67,7 @@ const bgm = createBangumiClient();
 
 获取指定人物的编辑历史列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getPersonRevisions(
@@ -76,7 +76,7 @@ getPersonRevisions(
 ): Promise<Result<PagedRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -84,13 +84,13 @@ getPersonRevisions(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | 参数有误 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getPersonRevisions(1, { limit: 10 });
@@ -106,26 +106,26 @@ data?.data.forEach(r => {
 
 获取人物的单条编辑历史详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getPersonRevisionByRevisionId(revisionId: number): Promise<Result<PersonRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getPersonRevisionByRevisionId(1234);
@@ -140,7 +140,7 @@ console.log(data?.data); // 本次变更的详细 diff
 
 获取指定角色的编辑历史列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getCharacterRevisions(
@@ -149,7 +149,7 @@ getCharacterRevisions(
 ): Promise<Result<PagedRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -157,7 +157,7 @@ getCharacterRevisions(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getCharacterRevisions(1, { limit: 5 });
@@ -171,26 +171,26 @@ data?.data.forEach(r => console.log(`[${r.id}] ${r.summary}`));
 
 获取角色的单条编辑历史详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getCharacterRevisionByRevisionId(revisionId: number): Promise<Result<CharacterRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getCharacterRevisionByRevisionId(5678);
@@ -204,7 +204,7 @@ console.log(data?.creator.username, data?.created_at);
 
 获取指定条目的编辑历史列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getSubjectRevisions(
@@ -213,7 +213,7 @@ getSubjectRevisions(
 ): Promise<Result<PagedRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -221,7 +221,7 @@ getSubjectRevisions(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getSubjectRevisions(374791, { limit: 20 });
@@ -235,26 +235,26 @@ console.log(`条目共有 ${data?.total} 条编辑历史`);
 
 获取条目的单条编辑历史详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getSubjectRevisionByRevisionId(revisionId: number): Promise<Result<SubjectRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getSubjectRevisionByRevisionId(9999);
@@ -268,7 +268,7 @@ console.log(data?.summary, data?.data);
 
 获取指定章节的编辑历史列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getEpisodeRevisions(
@@ -277,7 +277,7 @@ getEpisodeRevisions(
 ): Promise<Result<PagedRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -285,7 +285,7 @@ getEpisodeRevisions(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getEpisodeRevisions(1077185);
@@ -299,26 +299,26 @@ data?.data.forEach(r => console.log(`[${r.id}] ${r.summary}`));
 
 获取章节的单条编辑历史详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getEpisodeRevisionByRevisionId(revisionId: number): Promise<Result<DetailedRevision>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.revisions.getEpisodeRevisionByRevisionId(8888);

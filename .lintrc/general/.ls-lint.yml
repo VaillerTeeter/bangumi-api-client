@@ -15,7 +15,7 @@ ls:
     .json: kebab-case | camelCase
     .yaml: kebab-case | regex:[A-Z._-]+
     .yml: kebab-case | regex:[A-Z._-]+
-    .md: SCREAMING_SNAKE_CASE | kebab-case
+    .md: SCREAMING_SNAKE_CASE | kebab-case | snake_case
 
   # ============================================================
   # .github 目录
@@ -24,7 +24,7 @@ ls:
     .yml: kebab-case
     .yaml: kebab-case
     .json: kebab-case
-    .md: SCREAMING_SNAKE_CASE | kebab-case
+    .md: SCREAMING_SNAKE_CASE | kebab-case | snake_case
 
 # ============================================================
 # 忽略路径

@@ -1,4 +1,4 @@
-# EpisodeAPI — 章节
+﻿# EpisodeAPI — 章节
 
 章节（Episode）是条目的组成单元，包含本篇、SP、OP、ED 等类型。
 
@@ -30,7 +30,7 @@ const bgm = createBangumiClient();
 
 获取指定条目的章节列表，支持按章节类型过滤和分页。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getEpisodes(
@@ -39,7 +39,7 @@ getEpisodes(
 ): Promise<Result<GetEpisodesResult>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -60,7 +60,7 @@ getEpisodes(
 | `5` | MAD |
 | `6` | 其他 |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -88,14 +88,14 @@ getEpisodes(
 | `disc` | `number` | 所在碟号（音乐类条目） |
 | `comment` | `number` | 评论数 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `subjectId` 为 0 或非法 |
 | 404 | 条目不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 // 获取条目 374791 的所有本篇章节
@@ -120,19 +120,19 @@ const page2 = await bgm.episodes.getEpisodes(374791, { limit: 10, offset: 10 });
 
 根据章节 ID 获取单个章节的完整详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getEpisodeById(episodeId: number): Promise<Result<EpisodeDetail>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `episodeId` | `number` | 是 | 章节 ID（传 0 或负数返回 400） |
 
-**返回**
+#### 返回
 
 `EpisodeDetail` 对象，在 `Episode` 基础上额外包含：
 
@@ -142,14 +142,14 @@ getEpisodeById(episodeId: number): Promise<Result<EpisodeDetail>>
 
 其余字段与 `Episode` 相同（见上方字段表）。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `episodeId` 为 0 或负数 |
 | 404 | 章节不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, error, response } = await bgm.episodes.getEpisodeById(1077185);

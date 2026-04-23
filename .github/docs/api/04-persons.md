@@ -1,4 +1,4 @@
-# PersonAPI — 人物
+﻿# PersonAPI — 人物
 
 人物（Person）是 Bangumi 中的现实人物或组织，包括个人、公司和组合。本模块提供人物搜索、详情查询、图片获取及收藏管理功能。
 
@@ -38,7 +38,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 
 全文搜索人物，支持按职业分类过滤。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 searchPersons(
@@ -47,7 +47,7 @@ searchPersons(
 ): Promise<Result<SearchPersonsResult>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -68,7 +68,7 @@ searchPersons(
 | `"illustrator"` | 插画师 |
 | `"actor"` | 演员 |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -81,7 +81,7 @@ searchPersons(
 
 > 搜索无结果时返回 HTTP 200 + 空数组，不返回 404。
 
-**示例**
+#### 示例
 
 ```ts
 // 搜索声优"神谷浩史"
@@ -99,19 +99,19 @@ data?.data.forEach(p => console.log(`[${p.id}] ${p.name}`));
 
 根据人物 ID 获取完整人物详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getPersonById(personId: number): Promise<Result<PersonDetail>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID（正整数） |
 
-**返回**
+#### 返回
 
 `PersonDetail` 对象，包含：
 
@@ -132,14 +132,14 @@ getPersonById(personId: number): Promise<Result<PersonDetail>>
 | `birth_day` | `number` | 出生日期 |
 | `stat` | `object` | 统计数据（`collect` 收藏数，`comment` 评论数） |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `personId` 为 0 或非法 |
 | 404 | 人物不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgm.persons.getPersonById(1);
@@ -159,7 +159,7 @@ if (response.status === 404) {
 
 > 服务端返回 302 重定向，`fetch` 自动跟随。`response.status` 为最终 CDN 响应状态（200），图片地址取自 `response.url`。
 
-**签名**
+#### 签名
 
 ```ts
 getPersonImageById(
@@ -168,14 +168,14 @@ getPersonImageById(
 ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 | `type` | `string` | 是 | 图片尺寸规格 |
 
-**图片尺寸参考**
+#### 图片尺寸参考
 
 | 值 | 说明 |
 |---|---|
@@ -184,7 +184,7 @@ getPersonImageById(
 | `medium` | 中 |
 | `large` | 最大（原图） |
 
-**返回**
+#### 返回
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -192,7 +192,7 @@ getPersonImageById(
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
 
-**示例**
+#### 示例
 
 ```ts
 const { imageUrl } = await bgm.persons.getPersonImageById(1, 'large');
@@ -208,19 +208,19 @@ if (imageUrl) {
 
 获取人物参与制作的条目列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getRelatedSubjectsByPersonId(personId: number): Promise<Result<V0RelatedSubject[]>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
-**返回**
+#### 返回
 
 `V0RelatedSubject[]`，每项包含：
 
@@ -234,14 +234,14 @@ getRelatedSubjectsByPersonId(personId: number): Promise<Result<V0RelatedSubject[
 | `staff` | `string` | 担任的职位（如 "导演" "原作"） |
 | `eps` | `string` | 参与的章节范围（如 `"1-12"`） |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `personId` 为 0 或非法 |
 | 404 | 人物不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.persons.getRelatedSubjectsByPersonId(1);
@@ -257,19 +257,19 @@ data?.forEach(s => {
 
 获取人物配音的角色列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getRelatedCharactersByPersonId(personId: number): Promise<Result<PersonCharacter[]>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
-**返回**
+#### 返回
 
 `PersonCharacter[]`，每项包含：
 
@@ -285,7 +285,7 @@ getRelatedCharactersByPersonId(personId: number): Promise<Result<PersonCharacter
 | `subject_name_cn` | `string` | 所属条目中文名 |
 | `staff` | `string` | 职位（通常为 "CV"） |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.persons.getRelatedCharactersByPersonId(1);
@@ -301,23 +301,23 @@ data?.forEach(c => {
 
 收藏人物。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 collectPerson(personId: number): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`，`error` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -325,7 +325,7 @@ collectPerson(personId: number): Promise<Result<undefined>>
 | 401 | 未登录或 Token 无效 |
 | 404 | 人物不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const bgmAuth = createBangumiClient({ token: 'your-access-token' });
@@ -345,23 +345,23 @@ if (response.status === 204) {
 
 取消收藏人物。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 uncollectPerson(personId: number): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`，`error` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -369,7 +369,7 @@ uncollectPerson(personId: number): Promise<Result<undefined>>
 | 401 | 未登录或 Token 无效 |
 | 404 | 人物不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { response } = await bgmAuth.persons.uncollectPerson(1);

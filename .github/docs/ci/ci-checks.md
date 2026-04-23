@@ -43,6 +43,7 @@
 
 **工具**：ESLint 8 + Prettier 3 + tsc（`yarn typecheck`）  
 **配置**：
+
 - ESLint：[.lintrc/frontend/typescript/.eslintrc-ts.json](../../../.lintrc/frontend/typescript/.eslintrc-ts.json)
 - Prettier：[.lintrc/frontend/prettier/.prettierrc](../../../.lintrc/frontend/prettier/.prettierrc)
 - tsc：[tsconfig.json](../../../tsconfig.json)（lint 专用：[.lintrc/frontend/typescript/tsconfig-lint.json](../../../.lintrc/frontend/typescript/tsconfig-lint.json)）
@@ -94,7 +95,7 @@
 ## Commit Message Lint
 
 **工具**：[@commitlint/cli](https://commitlint.js.org/) 19.6.0  
-**配置**：[.lintrc/git/.commitlintrc.js](../../../.lintrc/git/.commitlintrc.js)  
+**配置**：[.lintrc/git/.commitlintrc.cjs](../../../.lintrc/git/.commitlintrc.cjs)  
 **触发**：仅在 PR 时运行（不检查直接 push 的提交）
 
 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范：
@@ -116,8 +117,8 @@
 **扫描范围**：全仓库（排除 `node_modules`、`.git`、`dist`、`.lintrc`、`src/client`、锁文件）
 
 - 使用英语词典（`en_US`）+ 软件术语、TypeScript、Node.js、npm 等专业词典
-- 自定义词汇：Bangumi 领域词汇（`bangumi`、`bgm`、`nsfw`、`infobox` 等）及项目使用的工具名
-- `flagWords`：强制标记常见拼写错误（`teh`、`recieve`、`doesnt` 等缩写）
+- 自定义词汇：Bangumi 领域词汇（`Bangumi`、`bangumi`、`bgm`、`nsfw`、`infobox`、`uncollect`、`airdate`、`Geass` 等）及项目使用的工具名
+- 扫描排除：`.git/**`、`node_modules`、`.git`、`dist`、`.lintrc`、`src/client`、锁文件
 - `minWordLength: 4`，不检测 3 字符以下的单词
 
 ---
@@ -148,34 +149,6 @@
 | `.config.ts` | `kebab-case` | `openapi-ts.config.ts` |
 | `.json` | `kebab-case` 或 `camelCase` | `package.json` |
 | `.yml` / `.yaml` | `kebab-case` 或全大写 | `lint.yml` |
-| `.md` | `SCREAMING_SNAKE_CASE` 或 `kebab-case` | `README.md`、`contributing.md` |
+| `.md` | `SCREAMING_SNAKE_CASE` 或 `kebab-case` 或 `snake_case` | `README.md`、`contributing.md`、`bug_report_en.md` |
 
 `.github/` 目录下 YAML 文件仅允许 `kebab-case`。
-
-
-使用 [markdownlint-cli2-action@v23](https://github.com/DavidAnson/markdownlint-cli2-action)（markdownlint v0.40.0）检查所有 `*.md` 文件，规则如下：
-
-| 规则 | 状态 | 说明 |
-| --- | --- | --- |
-| 默认全部规则 | ✅ 启用 | 包含标题格式、列表缩进、空行等 |
-| MD013 行长度限制 | ❌ 关闭 | 允许长行（文档场景不适合限制行长） |
-| MD033 内联 HTML | ❌ 关闭 | 允许在 Markdown 中使用 HTML 标签 |
-| MD041 首行必须是 H1 | ❌ 关闭 | 允许文件不以 H1 开头 |
-| MD060 表格列样式 | ✅ 启用 | 要求表格分隔行与数据行风格一致（compact） |
-
-## YAML Lint
-
-使用 [action-yamllint](https://github.com/ibiqlik/action-yamllint) 检查所有 `.yml` / `.yaml` 文件，规则如下：
-
-| 规则 | 配置 | 说明 |
-| --- | --- | --- |
-| 基础规则 | `extends: default` | yamllint 默认规则集 |
-| 行长度 | 最长 200 字符 | 放宽默认的 80 字符限制 |
-| 布尔值写法 | 仅允许 `true` / `false` | 禁止 `yes` / `no` / `on` / `off` 等写法 |
-
-## 触发时机
-
-- **PR 创建 / 更新**：目标分支为 `master` 时自动触发
-- **直接 push 到 master**（仅管理员可操作）：同样触发检查
-
----

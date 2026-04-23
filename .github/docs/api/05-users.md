@@ -1,4 +1,4 @@
-# UserAPI — 用户
+﻿# UserAPI — 用户
 
 用户（User）模块提供用户信息查询、头像获取和当前登录用户信息获取功能。
 
@@ -36,19 +36,19 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 
 > **注意**：用户名与 UID 不同。用户可修改一次用户名，修改后旧用户名失效，必须传当前有效的字符串用户名，不能传数字 UID。
 
-**签名**
+#### 签名
 
 ```ts
 getUserByName(username: string): Promise<Result<User>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名（非 UID） |
 
-**返回**
+#### 返回
 
 `User` 对象，包含：
 
@@ -61,14 +61,14 @@ getUserByName(username: string): Promise<Result<User>>
 | `avatar` | `object` | 头像 URL（large/medium/small） |
 | `sign` | `string` | 个人签名 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `username` 超过长度限制 |
 | 404 | 用户不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgm.users.getUserByName('sai');
@@ -89,7 +89,7 @@ if (response.status === 404) {
 
 > 服务端返回 302 重定向，`fetch` 自动跟随。`response.status` 为最终 CDN 响应状态（200），图片地址取自 `response.url`。
 
-**签名**
+#### 签名
 
 ```ts
 getUserAvatarByName(
@@ -98,14 +98,14 @@ getUserAvatarByName(
 ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 | `type` | `string` | 是 | 头像尺寸规格 |
 
-**头像尺寸参考**
+#### 头像尺寸参考
 
 | 值 | 说明 |
 |---|---|
@@ -113,7 +113,7 @@ getUserAvatarByName(
 | `medium` | 中 |
 | `large` | 大（原图） |
 
-**返回**
+#### 返回
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -121,14 +121,14 @@ getUserAvatarByName(
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `username` 超过长度限制 |
 | 404 | 用户不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { imageUrl } = await bgm.users.getUserAvatarByName('sai', 'large');
@@ -146,13 +146,13 @@ if (imageUrl) {
 
 返回的字段比 `getUserByName()` 更丰富，包含邮箱、注册时间等私有字段。
 
-**签名**
+#### 签名
 
 ```ts
 getMyself(): Promise<Result<GetMyselfResponse>>
 ```
 
-**返回**
+#### 返回
 
 `GetMyselfResponse` 对象，在 `User` 基础上额外包含：
 
@@ -168,13 +168,13 @@ getMyself(): Promise<Result<GetMyselfResponse>>
 | `reg_time` | `string` | 注册时间（ISO 8601） |
 | `time_offset` | `number` | 时区偏移（小时） |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 401 | 未提供 Token 或 Token 无效 |
 
-**示例**
+#### 示例
 
 ```ts
 const bgmAuth = createBangumiClient({ token: 'your-access-token' });

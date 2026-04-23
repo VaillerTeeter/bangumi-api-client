@@ -1,4 +1,4 @@
-# IndexAPI — 目录
+﻿# IndexAPI — 目录
 
 目录（Index）是用户自建的条目合集，类似于"片单"或"书单"。本模块提供目录的创建、编辑、条目管理及收藏功能。
 
@@ -40,13 +40,13 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 
 创建一个新的空目录。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 newIndex(): Promise<Result<Index>>
 ```
 
-**返回**
+#### 返回
 
 新建的 `Index` 对象，包含：
 
@@ -61,13 +61,13 @@ newIndex(): Promise<Result<Index>>
 | `creator` | `object` | 创建者信息（含 `username`） |
 | `ban` | `number` | 是否被屏蔽 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 401 | 未登录或 Token 无效 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgmAuth.indices.newIndex();
@@ -85,29 +85,29 @@ if (response.status === 401) {
 
 根据目录 ID 获取目录详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getIndexById(indexId: number): Promise<Result<Index>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `indexId` | `number` | 是 | 目录 ID |
 
-**返回**
+#### 返回
 
 `Index` 对象（字段同上）。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 404 | 目录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgm.indices.getIndexById(12345);
@@ -125,7 +125,7 @@ if (response.status === 404) {
 
 编辑目录的标题和描述。**需要认证，且必须是目录创建者**。
 
-**签名**
+#### 签名
 
 ```ts
 editIndexById(
@@ -134,7 +134,7 @@ editIndexById(
 ): Promise<Result<Index>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -142,11 +142,11 @@ editIndexById(
 | `body.title` | `string` | 否 | 新标题 |
 | `body.description` | `string` | 否 | 新描述 |
 
-**返回**
+#### 返回
 
 更新后的 `Index` 对象。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -154,7 +154,7 @@ editIndexById(
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgmAuth.indices.editIndexById(12345, {
@@ -171,7 +171,7 @@ console.log(data?.title);
 
 获取目录中的条目列表（分页）。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getIndexSubjects(
@@ -180,7 +180,7 @@ getIndexSubjects(
 ): Promise<Result<{ total: number; limit: number; offset: number; data: IndexSubject[] }>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -189,7 +189,7 @@ getIndexSubjects(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -212,14 +212,14 @@ getIndexSubjects(
 | `date` | `string` | 放送/发售日期 |
 | `comment` | `string` | 创建者为该条目添加的留言 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | 参数有误 |
 | 404 | 目录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.indices.getIndexSubjects(12345, { limit: 20 });
@@ -236,7 +236,7 @@ data?.data.forEach(s => {
 
 向目录添加一个条目。**需要认证，且必须是目录创建者**。
 
-**签名**
+#### 签名
 
 ```ts
 addSubjectToIndex(
@@ -245,7 +245,7 @@ addSubjectToIndex(
 ): Promise<Result<unknown>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -254,11 +254,11 @@ addSubjectToIndex(
 | `body.sort` | `number` | 否 | 排序权重 |
 | `body.comment` | `string` | 否 | 留言 |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `200`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -266,7 +266,7 @@ addSubjectToIndex(
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 await bgmAuth.indices.addSubjectToIndex(12345, {
@@ -282,7 +282,7 @@ await bgmAuth.indices.addSubjectToIndex(12345, {
 
 修改目录中某条目的排序或留言。**需要认证，且必须是目录创建者**。
 
-**签名**
+#### 签名
 
 ```ts
 editIndexSubject(
@@ -292,7 +292,7 @@ editIndexSubject(
 ): Promise<Result<unknown>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -301,11 +301,11 @@ editIndexSubject(
 | `body.sort` | `number` | 否 | 新排序权重 |
 | `body.comment` | `string` | 否 | 新留言 |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `200`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -313,7 +313,7 @@ editIndexSubject(
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录或条目不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 await bgmAuth.indices.editIndexSubject(12345, 374791, {
@@ -328,7 +328,7 @@ await bgmAuth.indices.editIndexSubject(12345, 374791, {
 
 从目录中删除某条目。**需要认证，且必须是目录创建者**。
 
-**签名**
+#### 签名
 
 ```ts
 deleteIndexSubject(
@@ -337,25 +337,25 @@ deleteIndexSubject(
 ): Promise<Result<unknown>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `indexId` | `number` | 是 | 目录 ID |
 | `subjectId` | `number` | 是 | 条目 ID |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `200`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录或条目不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { response } = await bgmAuth.indices.deleteIndexSubject(12345, 374791);
@@ -369,23 +369,23 @@ console.log(response.status); // 200
 
 收藏目录。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 collectIndex(indexId: number): Promise<Result<unknown>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `indexId` | `number` | 是 | 目录 ID |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `200`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -393,7 +393,7 @@ collectIndex(indexId: number): Promise<Result<unknown>>
 | 404 | 目录不存在 |
 | 500 | 服务器内部错误 |
 
-**示例**
+#### 示例
 
 ```ts
 const { response } = await bgmAuth.indices.collectIndex(12345);
@@ -409,23 +409,23 @@ console.log(response.status); // 200
 
 > **注意**：取消收藏**自己创建**的目录时，服务端可能返回 `500`（"delete index collect failed"），这是已知的服务端行为，并非请求错误。
 
-**签名**
+#### 签名
 
 ```ts
 uncollectIndex(indexId: number): Promise<Result<unknown>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `indexId` | `number` | 是 | 目录 ID |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `200`；取消收藏自建目录时可能返回 `500`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -433,7 +433,7 @@ uncollectIndex(indexId: number): Promise<Result<unknown>>
 | 404 | 目录不存在 |
 | 500 | 服务端已知问题（取消收藏自建目录时） |
 
-**示例**
+#### 示例
 
 ```ts
 const { response } = await bgmAuth.indices.uncollectIndex(12345);

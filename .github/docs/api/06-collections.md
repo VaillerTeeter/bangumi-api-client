@@ -1,4 +1,4 @@
-# CollectionAPI — 收藏
+﻿# CollectionAPI — 收藏
 
 收藏（Collection）模块提供条目收藏的增删改查、章节收藏状态管理，以及角色/人物收藏查询功能。
 
@@ -75,7 +75,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 
 获取指定用户的条目收藏列表。查看私有收藏需要认证。
 
-**签名**
+#### 签名
 
 ```ts
 getUserCollections(
@@ -84,7 +84,7 @@ getUserCollections(
 ): Promise<Result<PagedUserCollection>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -94,7 +94,7 @@ getUserCollections(
 | `options.limit` | `number` | 否 | 每页条数，默认 30 |
 | `options.offset` | `number` | 否 | 分页偏移，默认 0 |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -121,14 +121,14 @@ getUserCollections(
 | `private` | `boolean` | 是否私有收藏 |
 | `subject` | `object` | 条目摘要信息 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | 参数有误 |
 | 404 | 用户不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 // 获取用户所有已看完的动画
@@ -149,7 +149,7 @@ data?.data.forEach(c => {
 
 获取指定用户对某条目的收藏详情。查看私有收藏需要认证。
 
-**签名**
+#### 签名
 
 ```ts
 getUserCollectionBySubjectId(
@@ -158,25 +158,25 @@ getUserCollectionBySubjectId(
 ): Promise<Result<UserSubjectCollection>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 | `subjectId` | `number` | 是 | 条目 ID |
 
-**返回**
+#### 返回
 
 `UserSubjectCollection` 对象（字段同上）。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | 参数有误 |
 | 404 | 用户不存在、条目未收藏或收藏为私有 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgm.collections.getUserCollectionBySubjectId('sai', 374791);
@@ -199,7 +199,7 @@ if (response.status === 404) {
 
 > `ep_status` / `vol_status` 仅对书籍类条目生效，直接修改剧集条目完成度可能产生意料外效果。
 
-**签名**
+#### 签名
 
 ```ts
 postUserCollection(
@@ -208,7 +208,7 @@ postUserCollection(
 ): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -221,11 +221,11 @@ postUserCollection(
 | `payload.ep_status` | `number` | 否 | 已看集数（仅书籍） |
 | `payload.vol_status` | `number` | 否 | 已看卷数（仅书籍） |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -233,7 +233,7 @@ postUserCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 // 标记条目为"看过"并评 9 分
@@ -255,7 +255,7 @@ console.log(response.status); // 204
 
 与 `postUserCollection()` 的区别：条目**必须已有收藏记录**，否则返回 404。
 
-**签名**
+#### 签名
 
 ```ts
 patchUserCollection(
@@ -264,15 +264,15 @@ patchUserCollection(
 ): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 与 `postUserCollection()` 相同（见上）。
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -280,7 +280,7 @@ patchUserCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在或未收藏 |
 
-**示例**
+#### 示例
 
 ```ts
 // 仅更新评分，不改变其他字段
@@ -293,7 +293,7 @@ await bgmAuth.collections.patchUserCollection(374791, { rate: 10 });
 
 获取当前登录用户在某条目下各章节的收藏状态列表。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 getUserSubjectEpisodeCollection(
@@ -302,7 +302,7 @@ getUserSubjectEpisodeCollection(
 ): Promise<Result<Page & { data?: UserEpisodeCollection[] }>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -311,7 +311,7 @@ getUserSubjectEpisodeCollection(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -330,7 +330,7 @@ getUserSubjectEpisodeCollection(
 | `type` | `number` | 收藏状态（EpisodeCollectionType） |
 | `updated_at` | `string` | 最后更新时间（ISO 8601） |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -338,7 +338,7 @@ getUserSubjectEpisodeCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 // 获取条目所有章节的收藏状态
@@ -357,7 +357,7 @@ data?.data?.forEach(ec => {
 
 批量修改当前登录用户在某条目下的章节收藏状态，并自动重新计算条目完成度。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 patchUserSubjectEpisodeCollection(
@@ -366,7 +366,7 @@ patchUserSubjectEpisodeCollection(
 ): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -374,11 +374,11 @@ patchUserSubjectEpisodeCollection(
 | `payload.episode_id` | `number[]` | 是 | 要修改的章节 ID 列表 |
 | `payload.type` | `EpisodeCollectionType` | 是 | 目标收藏状态（1=想看 2=看过 3=抛弃） |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -386,7 +386,7 @@ patchUserSubjectEpisodeCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 // 批量标记多个章节为"看过"
@@ -402,23 +402,23 @@ await bgmAuth.collections.patchUserSubjectEpisodeCollection(374791, {
 
 获取当前登录用户对某章节的收藏信息。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 getUserEpisodeCollection(episodeId: number): Promise<Result<UserEpisodeCollection>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `episodeId` | `number` | 是 | 章节 ID |
 
-**返回**
+#### 返回
 
 `UserEpisodeCollection` 对象（字段同第 5 个接口）。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -426,7 +426,7 @@ getUserEpisodeCollection(episodeId: number): Promise<Result<UserEpisodeCollectio
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目或章节不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgmAuth.collections.getUserEpisodeCollection(1077185);
@@ -442,7 +442,7 @@ console.log(`章节状态：${data?.type}，更新于：${data?.updated_at}`);
 
 > 所属条目必须已在收藏中，否则返回 400。
 
-**签名**
+#### 签名
 
 ```ts
 putUserEpisodeCollection(
@@ -451,18 +451,18 @@ putUserEpisodeCollection(
 ): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `episodeId` | `number` | 是 | 章节 ID |
 | `type` | `EpisodeCollectionType` | 是 | 收藏状态（1=想看 2=看过 3=抛弃） |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -470,7 +470,7 @@ putUserEpisodeCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目或章节不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 // 标记章节为"看过"
@@ -483,29 +483,29 @@ await bgmAuth.collections.putUserEpisodeCollection(1077185, 2);
 
 获取指定用户的角色收藏列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getUserCharacterCollections(username: string): Promise<Result<PagedUserCharacterCollection>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 
-**返回**
+#### 返回
 
 分页的 `UserCharacterCollection` 列表，每项包含角色摘要和收藏时间。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 404 | 用户不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.collections.getUserCharacterCollections('sai');
@@ -519,7 +519,7 @@ console.log(`共收藏角色 ${data?.total} 个`);
 
 获取指定用户对某角色的收藏信息。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getUserCharacterCollection(
@@ -528,21 +528,21 @@ getUserCharacterCollection(
 ): Promise<Result<UserCharacterCollection>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 | `characterId` | `number` | 是 | 角色 ID |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `characterId` 无效 |
 | 404 | 用户或角色不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgm.collections.getUserCharacterCollection('sai', 1);
@@ -560,29 +560,29 @@ if (response.status === 404) {
 
 获取指定用户的人物收藏列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getUserPersonCollections(username: string): Promise<Result<PagedUserPersonCollection>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 
-**返回**
+#### 返回
 
 分页的 `UserPersonCollection` 列表，每项包含人物摘要和收藏时间。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 404 | 用户不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.collections.getUserPersonCollections('sai');
@@ -596,7 +596,7 @@ console.log(`共收藏人物 ${data?.total} 个`);
 
 获取指定用户对某人物的收藏信息。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getUserPersonCollection(
@@ -605,21 +605,21 @@ getUserPersonCollection(
 ): Promise<Result<UserPersonCollection>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 | `personId` | `number` | 是 | 人物 ID |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `personId` 无效 |
 | 404 | 用户或人物不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgm.collections.getUserPersonCollection('sai', 1);

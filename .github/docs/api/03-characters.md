@@ -1,4 +1,4 @@
-# CharacterAPI — 角色
+﻿# CharacterAPI — 角色
 
 角色（Character）是条目中的虚构人物、机体、舰船或组织。本模块提供角色搜索、详情查询、图片获取及收藏管理功能。
 
@@ -38,7 +38,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 
 全文搜索角色（实验性 API，行为可能随时变化）。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 searchCharacters(
@@ -47,7 +47,7 @@ searchCharacters(
 ): Promise<Result<SearchCharactersResult>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -56,7 +56,7 @@ searchCharacters(
 | `options.limit` | `number` | 否 | 每页条数，默认 20 |
 | `options.offset` | `number` | 否 | 分页偏移，默认 0 |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -69,7 +69,7 @@ searchCharacters(
 
 > 搜索无结果时返回 HTTP 200 + 空数组，不会返回 404。
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.characters.searchCharacters('初音未来', { limit: 5 });
@@ -83,19 +83,19 @@ data?.data.forEach(c => console.log(`[${c.id}] ${c.name}`));
 
 根据角色 ID 获取完整角色详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getCharacterById(characterId: number): Promise<Result<Character>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `characterId` | `number` | 是 | 角色 ID（正整数） |
 
-**返回**
+#### 返回
 
 `Character` 对象，包含：
 
@@ -116,14 +116,14 @@ getCharacterById(characterId: number): Promise<Result<Character>>
 | `stat` | `object` | 统计数据（`collect` 收藏数，`comment` 评论数） |
 | `nsfw` | `boolean` | 是否为 NSFW |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `characterId` 为 0 或非法 |
 | 404 | 角色不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, response } = await bgm.characters.getCharacterById(1);
@@ -143,7 +143,7 @@ if (response.status === 404) {
 
 > 服务端返回 302 重定向，`fetch` 自动跟随。`response.status` 为最终 CDN 响应状态（200），图片地址取自 `response.url`。
 
-**签名**
+#### 签名
 
 ```ts
 getCharacterImageById(
@@ -152,14 +152,14 @@ getCharacterImageById(
 ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `characterId` | `number` | 是 | 角色 ID |
 | `type` | `string` | 是 | 图片尺寸规格 |
 
-**图片尺寸参考**
+#### 图片尺寸参考
 
 | 值 | 说明 |
 |---|---|
@@ -168,7 +168,7 @@ getCharacterImageById(
 | `medium` | 中 |
 | `large` | 最大（原图） |
 
-**返回**
+#### 返回
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -176,7 +176,7 @@ getCharacterImageById(
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
 
-**示例**
+#### 示例
 
 ```ts
 const { imageUrl } = await bgm.characters.getCharacterImageById(1, 'large');
@@ -192,19 +192,19 @@ if (imageUrl) {
 
 获取角色关联的条目列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getRelatedSubjectsByCharacterId(characterId: number): Promise<Result<V0RelatedSubject[]>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `characterId` | `number` | 是 | 角色 ID |
 
-**返回**
+#### 返回
 
 `V0RelatedSubject[]`，每项包含：
 
@@ -217,14 +217,14 @@ getRelatedSubjectsByCharacterId(characterId: number): Promise<Result<V0RelatedSu
 | `image` | `string` | 封面图 URL |
 | `staff` | `string` | 角色在该条目中的身份（如 "主角"） |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 400 | `characterId` 为 0 或非法 |
 | 404 | 角色不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.characters.getRelatedSubjectsByCharacterId(1);
@@ -240,19 +240,19 @@ data?.forEach(s => {
 
 获取为该角色配音的现实人物（CV）列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getRelatedPersonsByCharacterId(characterId: number): Promise<Result<CharacterPerson[]>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `characterId` | `number` | 是 | 角色 ID |
 
-**返回**
+#### 返回
 
 `CharacterPerson[]`，每项包含：
 
@@ -266,7 +266,7 @@ getRelatedPersonsByCharacterId(characterId: number): Promise<Result<CharacterPer
 | `subject_type` | `number` | 所属条目类型 |
 | `staff` | `string` | 角色职位（通常为 "CV"） |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.characters.getRelatedPersonsByCharacterId(1);
@@ -282,23 +282,23 @@ data?.forEach(p => {
 
 收藏角色。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 collectCharacter(characterId: number): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `characterId` | `number` | 是 | 角色 ID |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`，`error` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -306,7 +306,7 @@ collectCharacter(characterId: number): Promise<Result<undefined>>
 | 401 | 未登录或 Token 无效 |
 | 404 | 角色不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const bgmAuth = createBangumiClient({ token: 'your-access-token' });
@@ -326,23 +326,23 @@ if (response.status === 204) {
 
 取消收藏角色。**需要认证**。
 
-**签名**
+#### 签名
 
 ```ts
 uncollectCharacter(characterId: number): Promise<Result<undefined>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `characterId` | `number` | 是 | 角色 ID |
 
-**返回**
+#### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`，`error` 为 `undefined`。
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -350,7 +350,7 @@ uncollectCharacter(characterId: number): Promise<Result<undefined>>
 | 401 | 未登录或 Token 无效 |
 | 404 | 角色不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { response } = await bgmAuth.characters.uncollectCharacter(1);

@@ -1,4 +1,4 @@
-# SubjectAPI — 条目
+﻿# SubjectAPI — 条目
 
 条目（Subject）是 Bangumi 的核心资源，涵盖动画、书籍、音乐、游戏、三次元等五种类型。
 
@@ -38,13 +38,13 @@ const bgm = createBangumiClient();
 
 获取每日放送时间表，返回按星期分组的正在放送条目列表。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getCalendar(): Promise<Result<CalendarEntry[]>>
 ```
 
-**返回**
+#### 返回
 
 `data` 是长度为 7 的数组，每项包含：
 
@@ -58,7 +58,7 @@ getCalendar(): Promise<Result<CalendarEntry[]>>
 
 每个 `CalendarSubject` 包含 `id`、`name`、`name_cn`、`type`、`air_date`、`images`、`rating`、`rank`、`collection` 等字段。
 
-**示例**
+#### 示例
 
 ```ts
 const { data, error, response } = await bgm.subjects.getCalendar();
@@ -82,13 +82,13 @@ for (const entry of data!) {
 
 全文搜索条目，支持多维度过滤和排序。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 searchSubjects(options: SearchSubjectsOptions): Promise<Result<SearchSubjectsResult>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -109,7 +109,7 @@ searchSubjects(options: SearchSubjectsOptions): Promise<Result<SearchSubjectsRes
 | `rank` | `string[]` | 排名范围，格式 `"<100"` |
 | `nsfw` | `boolean` | 是否包含 NSFW 内容，默认 `false` |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -120,7 +120,7 @@ searchSubjects(options: SearchSubjectsOptions): Promise<Result<SearchSubjectsRes
 }
 ```
 
-**示例**
+#### 示例
 
 ```ts
 // 搜索 2023 年评分 8 分以上的动画，按评分排序
@@ -148,13 +148,13 @@ if (data) {
 
 按条件浏览条目列表（非全文搜索），支持按类型、子分类、年月、平台等条件筛选。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getSubjects(options: GetSubjectsOptions): Promise<Result<GetSubjectsResult>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
@@ -178,7 +178,7 @@ getSubjects(options: GetSubjectsOptions): Promise<Result<GetSubjectsResult>>
 | `4` | 游戏 |
 | `6` | 三次元 |
 
-**返回**
+#### 返回
 
 ```ts
 {
@@ -189,7 +189,7 @@ getSubjects(options: GetSubjectsOptions): Promise<Result<GetSubjectsResult>>
 }
 ```
 
-**示例**
+#### 示例
 
 ```ts
 // 浏览 2024 年 4 月新番，按排名排序
@@ -210,19 +210,19 @@ data?.data.forEach(s => console.log(`#${s.rating?.rank} ${s.name_cn || s.name}`)
 
 根据条目 ID 获取完整条目详情。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getSubjectById(subjectId: number): Promise<Result<Subject>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | `subjectId` | `number` | 条目 ID（正整数） |
 
-**返回**
+#### 返回
 
 完整 `Subject` 对象，包含：
 
@@ -244,14 +244,14 @@ getSubjectById(subjectId: number): Promise<Result<Subject>>
 | `nsfw` | `boolean` | 是否为 NSFW |
 | `platform` | `string` | 播出平台 |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 404 | 条目不存在 |
 | 400 | `subjectId` 为 0 或负数 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data, error, response } = await bgm.subjects.getSubjectById(374791);
@@ -272,7 +272,7 @@ if (response.status === 404) {
 
 > 服务端返回 302 重定向，`fetch` 自动跟随。`response.status` 为最终 CDN 响应状态（200），图片地址取自 `response.url`。
 
-**签名**
+#### 签名
 
 ```ts
 getSubjectImageById(
@@ -281,14 +281,14 @@ getSubjectImageById(
 ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | `subjectId` | `number` | 条目 ID |
 | `type` | `string` | 图片尺寸规格 |
 
-**图片尺寸参考**
+#### 图片尺寸参考
 
 | 值 | 尺寸 |
 |---|---|
@@ -298,7 +298,7 @@ getSubjectImageById(
 | `common` | 标准 |
 | `large` | 最大（原图） |
 
-**返回**
+#### 返回
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -306,7 +306,7 @@ getSubjectImageById(
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
 
-**示例**
+#### 示例
 
 ```ts
 const { imageUrl } = await bgm.subjects.getSubjectImageById(374791, 'large');
@@ -323,19 +323,19 @@ if (imageUrl) {
 
 获取条目关联的真实人物或组织（如导演、声优、音乐等制作人员）。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getRelatedPersonsBySubjectId(subjectId: number): Promise<Result<RelatedPerson[]>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | `subjectId` | `number` | 条目 ID |
 
-**返回**
+#### 返回
 
 `RelatedPerson[]`，每项包含：
 
@@ -349,13 +349,13 @@ getRelatedPersonsBySubjectId(subjectId: number): Promise<Result<RelatedPerson[]>
 | `career` | `string[]` | 职业分类 |
 | `images` | `object` | 头像 URL |
 
-**错误**
+#### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 404 | 条目不存在 |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.subjects.getRelatedPersonsBySubjectId(374791);
@@ -371,19 +371,19 @@ data?.forEach(p => {
 
 获取条目的虚构角色列表及其对应声优。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getRelatedCharactersBySubjectId(subjectId: number): Promise<Result<RelatedCharacter[]>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | `subjectId` | `number` | 条目 ID |
 
-**返回**
+#### 返回
 
 `RelatedCharacter[]`，每项包含：
 
@@ -399,7 +399,7 @@ getRelatedCharactersBySubjectId(subjectId: number): Promise<Result<RelatedCharac
 
 > 部分条目没有角色录入，此时返回空数组（HTTP 200）。
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.subjects.getRelatedCharactersBySubjectId(374791);
@@ -416,19 +416,19 @@ data?.forEach(c => {
 
 获取与该条目存在关联关系的其他条目（如续集、前传、番外篇等）。无需认证。
 
-**签名**
+#### 签名
 
 ```ts
 getRelatedSubjectsBySubjectId(subjectId: number): Promise<Result<V0SubjectRelation[]>>
 ```
 
-**参数**
+#### 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | `subjectId` | `number` | 条目 ID |
 
-**返回**
+#### 返回
 
 `V0SubjectRelation[]`，每项包含：
 
@@ -441,7 +441,7 @@ getRelatedSubjectsBySubjectId(subjectId: number): Promise<Result<V0SubjectRelati
 | `images` | `object` | 封面图 URL |
 | `relation` | `string` | 关联类型（"续集" "前传" "番外篇" "主题曲" 等） |
 
-**示例**
+#### 示例
 
 ```ts
 const { data } = await bgm.subjects.getRelatedSubjectsBySubjectId(374791);
