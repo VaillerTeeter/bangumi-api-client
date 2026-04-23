@@ -80,9 +80,7 @@ export class RevisionAPI {
    * @returns `PersonRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getPersonRevisionByRevisionId(
-    revisionId: number,
-  ): Promise<{
+  async getPersonRevisionByRevisionId(revisionId: number): Promise<{
     data: PersonRevision | undefined;
     error: unknown;
     response: Response;
@@ -140,9 +138,7 @@ export class RevisionAPI {
    * @returns `CharacterRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getCharacterRevisionByRevisionId(
-    revisionId: number,
-  ): Promise<{
+  async getCharacterRevisionByRevisionId(revisionId: number): Promise<{
     data: CharacterRevision | undefined;
     error: unknown;
     response: Response;
@@ -200,9 +196,7 @@ export class RevisionAPI {
    * @returns `SubjectRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getSubjectRevisionByRevisionId(
-    revisionId: number,
-  ): Promise<{
+  async getSubjectRevisionByRevisionId(revisionId: number): Promise<{
     data: SubjectRevision | undefined;
     error: unknown;
     response: Response;
@@ -260,9 +254,7 @@ export class RevisionAPI {
    * @returns `DetailedRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getEpisodeRevisionByRevisionId(
-    revisionId: number,
-  ): Promise<{
+  async getEpisodeRevisionByRevisionId(revisionId: number): Promise<{
     data: DetailedRevision | undefined;
     error: unknown;
     response: Response;

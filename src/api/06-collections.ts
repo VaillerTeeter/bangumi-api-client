@@ -269,9 +269,7 @@ export class CollectionAPI {
    * @returns `UserEpisodeCollection`（含 `episode`、`type`、`updated_at`）
    * @throws 400 — episode ID 无效；401 — 未登录；404 — 条目或章节不存在
    */
-  async getUserEpisodeCollection(
-    episodeId: number,
-  ): Promise<{
+  async getUserEpisodeCollection(episodeId: number): Promise<{
     data: UserEpisodeCollection | undefined;
     error: unknown;
     response: Response;
@@ -322,9 +320,7 @@ export class CollectionAPI {
    * @returns 分页的 `UserCharacterCollection` 列表
    * @throws 404 — 用户不存在
    */
-  async getUserCharacterCollections(
-    username: string,
-  ): Promise<{
+  async getUserCharacterCollections(username: string): Promise<{
     data: PagedUserCharacterCollection | undefined;
     error: unknown;
     response: Response;
@@ -384,9 +380,7 @@ export class CollectionAPI {
    * @returns `PagedUserPersonCollection`
    * @throws 404 — 用户不存在
    */
-  async getUserPersonCollections(
-    username: string,
-  ): Promise<{
+  async getUserPersonCollections(username: string): Promise<{
     data: PagedUserPersonCollection | undefined;
     error: unknown;
     response: Response;

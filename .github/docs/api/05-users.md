@@ -89,6 +89,7 @@ if (response.status === 404) {
 
 > 服务端返回 302 重定向，`fetch` 自动跟随。`response.status` 为最终 CDN 响应状态（200），图片地址取自 `response.url`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -98,6 +99,7 @@ getUserAvatarByName(
 ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -113,6 +115,7 @@ getUserAvatarByName(
 | `medium` | 中 |
 | `large` | 大（原图） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 | 字段 | 类型 | 说明 |
@@ -121,6 +124,7 @@ getUserAvatarByName(
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -128,6 +132,7 @@ getUserAvatarByName(
 | 400 | `username` 超过长度限制 |
 | 404 | 用户不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -146,12 +151,14 @@ if (imageUrl) {
 
 返回的字段比 `getUserByName()` 更丰富，包含邮箱、注册时间等私有字段。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getMyself(): Promise<Result<GetMyselfResponse>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 `GetMyselfResponse` 对象，在 `User` 基础上额外包含：
@@ -168,12 +175,14 @@ getMyself(): Promise<Result<GetMyselfResponse>>
 | `reg_time` | `string` | 注册时间（ISO 8601） |
 | `time_offset` | `number` | 时区偏移（小时） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 401 | 未提供 Token 或 Token 无效 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts

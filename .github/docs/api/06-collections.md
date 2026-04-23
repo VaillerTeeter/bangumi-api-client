@@ -149,6 +149,7 @@ data?.data.forEach(c => {
 
 获取指定用户对某条目的收藏详情。查看私有收藏需要认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -158,6 +159,7 @@ getUserCollectionBySubjectId(
 ): Promise<Result<UserSubjectCollection>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -165,10 +167,12 @@ getUserCollectionBySubjectId(
 | `username` | `string` | 是 | 用户名 |
 | `subjectId` | `number` | 是 | 条目 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 `UserSubjectCollection` 对象（字段同上）。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -176,6 +180,7 @@ getUserCollectionBySubjectId(
 | 400 | 参数有误 |
 | 404 | 用户不存在、条目未收藏或收藏为私有 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -199,6 +204,7 @@ if (response.status === 404) {
 
 > `ep_status` / `vol_status` 仅对书籍类条目生效，直接修改剧集条目完成度可能产生意料外效果。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -208,6 +214,7 @@ postUserCollection(
 ): Promise<Result<undefined>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -221,10 +228,12 @@ postUserCollection(
 | `payload.ep_status` | `number` | 否 | 已看集数（仅书籍） |
 | `payload.vol_status` | `number` | 否 | 已看卷数（仅书籍） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -233,6 +242,7 @@ postUserCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -255,6 +265,7 @@ console.log(response.status); // 204
 
 与 `postUserCollection()` 的区别：条目**必须已有收藏记录**，否则返回 404。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -264,14 +275,17 @@ patchUserCollection(
 ): Promise<Result<undefined>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 与 `postUserCollection()` 相同（见上）。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -280,6 +294,7 @@ patchUserCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在或未收藏 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -293,6 +308,7 @@ await bgmAuth.collections.patchUserCollection(374791, { rate: 10 });
 
 获取当前登录用户在某条目下各章节的收藏状态列表。**需要认证**。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -302,6 +318,7 @@ getUserSubjectEpisodeCollection(
 ): Promise<Result<Page & { data?: UserEpisodeCollection[] }>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -311,6 +328,7 @@ getUserSubjectEpisodeCollection(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 ```ts
@@ -330,6 +348,7 @@ getUserSubjectEpisodeCollection(
 | `type` | `number` | 收藏状态（EpisodeCollectionType） |
 | `updated_at` | `string` | 最后更新时间（ISO 8601） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -338,6 +357,7 @@ getUserSubjectEpisodeCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -357,6 +377,7 @@ data?.data?.forEach(ec => {
 
 批量修改当前登录用户在某条目下的章节收藏状态，并自动重新计算条目完成度。**需要认证**。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -366,6 +387,7 @@ patchUserSubjectEpisodeCollection(
 ): Promise<Result<undefined>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -374,10 +396,12 @@ patchUserSubjectEpisodeCollection(
 | `payload.episode_id` | `number[]` | 是 | 要修改的章节 ID 列表 |
 | `payload.type` | `EpisodeCollectionType` | 是 | 目标收藏状态（1=想看 2=看过 3=抛弃） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -386,6 +410,7 @@ patchUserSubjectEpisodeCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -402,22 +427,26 @@ await bgmAuth.collections.patchUserSubjectEpisodeCollection(374791, {
 
 获取当前登录用户对某章节的收藏信息。**需要认证**。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getUserEpisodeCollection(episodeId: number): Promise<Result<UserEpisodeCollection>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `episodeId` | `number` | 是 | 章节 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 `UserEpisodeCollection` 对象（字段同第 5 个接口）。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -426,6 +455,7 @@ getUserEpisodeCollection(episodeId: number): Promise<Result<UserEpisodeCollectio
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目或章节不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -442,6 +472,7 @@ console.log(`章节状态：${data?.type}，更新于：${data?.updated_at}`);
 
 > 所属条目必须已在收藏中，否则返回 400。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -451,6 +482,7 @@ putUserEpisodeCollection(
 ): Promise<Result<undefined>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -458,10 +490,12 @@ putUserEpisodeCollection(
 | `episodeId` | `number` | 是 | 章节 ID |
 | `type` | `EpisodeCollectionType` | 是 | 收藏状态（1=想看 2=看过 3=抛弃） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -470,6 +504,7 @@ putUserEpisodeCollection(
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目或章节不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -483,28 +518,33 @@ await bgmAuth.collections.putUserEpisodeCollection(1077185, 2);
 
 获取指定用户的角色收藏列表。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getUserCharacterCollections(username: string): Promise<Result<PagedUserCharacterCollection>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 分页的 `UserCharacterCollection` 列表，每项包含角色摘要和收藏时间。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 404 | 用户不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -519,6 +559,7 @@ console.log(`共收藏角色 ${data?.total} 个`);
 
 获取指定用户对某角色的收藏信息。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -528,6 +569,7 @@ getUserCharacterCollection(
 ): Promise<Result<UserCharacterCollection>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -535,6 +577,7 @@ getUserCharacterCollection(
 | `username` | `string` | 是 | 用户名 |
 | `characterId` | `number` | 是 | 角色 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -542,6 +585,7 @@ getUserCharacterCollection(
 | 400 | `characterId` 无效 |
 | 404 | 用户或角色不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -560,28 +604,33 @@ if (response.status === 404) {
 
 获取指定用户的人物收藏列表。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getUserPersonCollections(username: string): Promise<Result<PagedUserPersonCollection>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `username` | `string` | 是 | 用户名 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 分页的 `UserPersonCollection` 列表，每项包含人物摘要和收藏时间。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
 |---|---|
 | 404 | 用户不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -596,6 +645,7 @@ console.log(`共收藏人物 ${data?.total} 个`);
 
 获取指定用户对某人物的收藏信息。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -605,6 +655,7 @@ getUserPersonCollection(
 ): Promise<Result<UserPersonCollection>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -612,6 +663,7 @@ getUserPersonCollection(
 | `username` | `string` | 是 | 用户名 |
 | `personId` | `number` | 是 | 人物 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -619,6 +671,7 @@ getUserPersonCollection(
 | 400 | `personId` 无效 |
 | 404 | 用户或人物不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts

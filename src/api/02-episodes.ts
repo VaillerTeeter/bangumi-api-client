@@ -80,9 +80,7 @@ export class EpisodeAPI {
    * @param episodeId - 章节 ID（正整数）
    * @returns `data` — `EpisodeDetail` 对象，含 `subject_id` 字段
    */
-  async getEpisodeById(
-    episodeId: number,
-  ): Promise<{
+  async getEpisodeById(episodeId: number): Promise<{
     data: EpisodeDetail | undefined;
     error: unknown;
     response: Response;

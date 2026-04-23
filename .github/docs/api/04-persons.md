@@ -99,18 +99,21 @@ data?.data.forEach(p => console.log(`[${p.id}] ${p.name}`));
 
 根据人物 ID 获取完整人物详情。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getPersonById(personId: number): Promise<Result<PersonDetail>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID（正整数） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 `PersonDetail` 对象，包含：
@@ -139,6 +142,7 @@ getPersonById(personId: number): Promise<Result<PersonDetail>>
 | 400 | `personId` 为 0 或非法 |
 | 404 | 人物不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -159,6 +163,7 @@ if (response.status === 404) {
 
 > 服务端返回 302 重定向，`fetch` 自动跟随。`response.status` 为最终 CDN 响应状态（200），图片地址取自 `response.url`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -168,6 +173,7 @@ getPersonImageById(
 ): Promise<{ imageUrl: string | undefined; error: unknown; response: Response; request: Request }>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -184,6 +190,7 @@ getPersonImageById(
 | `medium` | 中 |
 | `large` | 最大（原图） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 | 字段 | 类型 | 说明 |
@@ -192,6 +199,7 @@ getPersonImageById(
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -208,18 +216,21 @@ if (imageUrl) {
 
 获取人物参与制作的条目列表。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getRelatedSubjectsByPersonId(personId: number): Promise<Result<V0RelatedSubject[]>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 `V0RelatedSubject[]`，每项包含：
@@ -234,6 +245,7 @@ getRelatedSubjectsByPersonId(personId: number): Promise<Result<V0RelatedSubject[
 | `staff` | `string` | 担任的职位（如 "导演" "原作"） |
 | `eps` | `string` | 参与的章节范围（如 `"1-12"`） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -241,6 +253,7 @@ getRelatedSubjectsByPersonId(personId: number): Promise<Result<V0RelatedSubject[
 | 400 | `personId` 为 0 或非法 |
 | 404 | 人物不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -257,18 +270,21 @@ data?.forEach(s => {
 
 获取人物配音的角色列表。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getRelatedCharactersByPersonId(personId: number): Promise<Result<PersonCharacter[]>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 `PersonCharacter[]`，每项包含：
@@ -285,6 +301,7 @@ getRelatedCharactersByPersonId(personId: number): Promise<Result<PersonCharacter
 | `subject_name_cn` | `string` | 所属条目中文名 |
 | `staff` | `string` | 职位（通常为 "CV"） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -301,22 +318,26 @@ data?.forEach(c => {
 
 收藏人物。**需要认证**。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 collectPerson(personId: number): Promise<Result<undefined>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`，`error` 为 `undefined`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -325,6 +346,7 @@ collectPerson(personId: number): Promise<Result<undefined>>
 | 401 | 未登录或 Token 无效 |
 | 404 | 人物不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -345,22 +367,26 @@ if (response.status === 204) {
 
 取消收藏人物。**需要认证**。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 uncollectPerson(personId: number): Promise<Result<undefined>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `personId` | `number` | 是 | 人物 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 成功时 `response.status` 为 `204`，`data` 为 `undefined`，`error` 为 `undefined`。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -369,6 +395,7 @@ uncollectPerson(personId: number): Promise<Result<undefined>>
 | 401 | 未登录或 Token 无效 |
 | 404 | 人物不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts

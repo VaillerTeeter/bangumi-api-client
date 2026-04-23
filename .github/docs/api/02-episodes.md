@@ -120,18 +120,21 @@ const page2 = await bgm.episodes.getEpisodes(374791, { limit: 10, offset: 10 });
 
 根据章节 ID 获取单个章节的完整详情。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getEpisodeById(episodeId: number): Promise<Result<EpisodeDetail>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `episodeId` | `number` | 是 | 章节 ID（传 0 或负数返回 400） |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 返回
 
 `EpisodeDetail` 对象，在 `Episode` 基础上额外包含：
@@ -142,6 +145,7 @@ getEpisodeById(episodeId: number): Promise<Result<EpisodeDetail>>
 
 其余字段与 `Episode` 相同（见上方字段表）。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -149,6 +153,7 @@ getEpisodeById(episodeId: number): Promise<Result<EpisodeDetail>>
 | 400 | `episodeId` 为 0 或负数 |
 | 404 | 章节不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts

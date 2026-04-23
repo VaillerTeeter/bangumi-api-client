@@ -235,9 +235,7 @@ export class SubjectAPI {
    * @param options.offset  - 分页偏移（默认 0）
    * @returns `data.total` — 符合条件的总数；`data.data` — 当页条目列表
    */
-  async searchSubjects(
-    options: SearchSubjectsOptions,
-  ): Promise<{
+  async searchSubjects(options: SearchSubjectsOptions): Promise<{
     data: SearchSubjectsResult | undefined;
     error: unknown;
     response: Response;
@@ -272,9 +270,7 @@ export class SubjectAPI {
    * @param options.offset   - 分页偏移（默认 0）
    * @returns `data.total` — 符合条件的总数；`data.data` — 当页条目列表
    */
-  async getSubjects(
-    options: GetSubjectsOptions,
-  ): Promise<{
+  async getSubjects(options: GetSubjectsOptions): Promise<{
     data: GetSubjectsResult | undefined;
     error: unknown;
     response: Response;
@@ -360,9 +356,7 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `RelatedPerson[]`，含 id / name / type / career / relation / eps
    */
-  async getRelatedPersonsBySubjectId(
-    subjectId: number,
-  ): Promise<{
+  async getRelatedPersonsBySubjectId(subjectId: number): Promise<{
     data: RelatedPerson[] | undefined;
     error: unknown;
     response: Response;
@@ -392,9 +386,7 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `RelatedCharacter[]`，含 id / name / summary / type / images / relation / actors
    */
-  async getRelatedCharactersBySubjectId(
-    subjectId: number,
-  ): Promise<{
+  async getRelatedCharactersBySubjectId(subjectId: number): Promise<{
     data: RelatedCharacter[] | undefined;
     error: unknown;
     response: Response;
@@ -423,9 +415,7 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `V0SubjectRelation[]`，含 id / type / name / name_cn / images / relation
    */
-  async getRelatedSubjectsBySubjectId(
-    subjectId: number,
-  ): Promise<{
+  async getRelatedSubjectsBySubjectId(subjectId: number): Promise<{
     data: V0SubjectRelation[] | undefined;
     error: unknown;
     response: Response;

@@ -1,3 +1,4 @@
+---
 version: 2
 updates:
   # 自动更新 npm (yarn) 依赖

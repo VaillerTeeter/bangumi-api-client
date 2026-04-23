@@ -106,18 +106,21 @@ data?.data.forEach(r => {
 
 获取人物的单条编辑历史详情。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getPersonRevisionByRevisionId(revisionId: number): Promise<Result<PersonRevision>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -125,6 +128,7 @@ getPersonRevisionByRevisionId(revisionId: number): Promise<Result<PersonRevision
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -140,6 +144,7 @@ console.log(data?.data); // 本次变更的详细 diff
 
 获取指定角色的编辑历史列表。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -149,6 +154,7 @@ getCharacterRevisions(
 ): Promise<Result<PagedRevision>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -157,6 +163,7 @@ getCharacterRevisions(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -171,18 +178,21 @@ data?.data.forEach(r => console.log(`[${r.id}] ${r.summary}`));
 
 获取角色的单条编辑历史详情。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getCharacterRevisionByRevisionId(revisionId: number): Promise<Result<CharacterRevision>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -190,6 +200,7 @@ getCharacterRevisionByRevisionId(revisionId: number): Promise<Result<CharacterRe
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -204,6 +215,7 @@ console.log(data?.creator.username, data?.created_at);
 
 获取指定条目的编辑历史列表。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -213,6 +225,7 @@ getSubjectRevisions(
 ): Promise<Result<PagedRevision>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -221,6 +234,7 @@ getSubjectRevisions(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -235,18 +249,21 @@ console.log(`条目共有 ${data?.total} 条编辑历史`);
 
 获取条目的单条编辑历史详情。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getSubjectRevisionByRevisionId(revisionId: number): Promise<Result<SubjectRevision>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -254,6 +271,7 @@ getSubjectRevisionByRevisionId(revisionId: number): Promise<Result<SubjectRevisi
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -268,6 +286,7 @@ console.log(data?.summary, data?.data);
 
 获取指定章节的编辑历史列表。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
@@ -277,6 +296,7 @@ getEpisodeRevisions(
 ): Promise<Result<PagedRevision>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -285,6 +305,7 @@ getEpisodeRevisions(
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts
@@ -299,18 +320,21 @@ data?.data.forEach(r => console.log(`[${r.id}] ${r.summary}`));
 
 获取章节的单条编辑历史详情。无需认证。
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 签名
 
 ```ts
 getEpisodeRevisionByRevisionId(revisionId: number): Promise<Result<DetailedRevision>>
 ```
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
@@ -318,6 +342,7 @@ getEpisodeRevisionByRevisionId(revisionId: number): Promise<Result<DetailedRevis
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
+<!-- markdownlint-disable-next-line MD024 -->
 ### 示例
 
 ```ts

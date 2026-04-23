@@ -94,9 +94,7 @@ export class CharacterAPI {
    * @returns 角色详情对象
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getCharacterById(
-    characterId: number,
-  ): Promise<{
+  async getCharacterById(characterId: number): Promise<{
     data: Character | undefined;
     error: unknown;
     response: Response;
@@ -158,9 +156,7 @@ export class CharacterAPI {
    * @returns `data` — `V0RelatedSubject[]`，含 id / type / staff / name / name_cn / image
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getRelatedSubjectsByCharacterId(
-    characterId: number,
-  ): Promise<{
+  async getRelatedSubjectsByCharacterId(characterId: number): Promise<{
     data: V0RelatedSubject[] | undefined;
     error: unknown;
     response: Response;
@@ -188,9 +184,7 @@ export class CharacterAPI {
    * @returns `data` — `CharacterPerson[]`，含 id / name / type / subject_id / subject_type / staff
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getRelatedPersonsByCharacterId(
-    characterId: number,
-  ): Promise<{
+  async getRelatedPersonsByCharacterId(characterId: number): Promise<{
     data: CharacterPerson[] | undefined;
     error: unknown;
     response: Response;
