@@ -1,5 +1,5 @@
-import type { Client } from '../generated/client/index.js';
 import type { ClientResult } from '../client.js';
+import type { Client } from '../generated/client/index.js';
 import type {
   PagedRevision,
   PersonRevision,
@@ -8,8 +8,8 @@ import type {
   DetailedRevision,
 } from '../generated/types.gen.js';
 
-/** `getPersonRevisions` 的可选参数。 */
-export interface GetPersonRevisionsOptions {
+/** 编辑历史列表查询的可选参数。 */
+export interface GetRevisionsOptions {
   limit?: number;
   offset?: number;
 }
@@ -54,7 +54,7 @@ export class RevisionAPI {
    */
   async getPersonRevisions(
     personId: number,
-    options: GetPersonRevisionsOptions = {},
+    options: GetRevisionsOptions = {},
   ): Promise<{
     data: PagedRevision | undefined;
     error: unknown;
@@ -114,7 +114,7 @@ export class RevisionAPI {
    */
   async getCharacterRevisions(
     characterId: number,
-    options: GetPersonRevisionsOptions = {},
+    options: GetRevisionsOptions = {},
   ): Promise<{
     data: PagedRevision | undefined;
     error: unknown;
@@ -174,7 +174,7 @@ export class RevisionAPI {
    */
   async getSubjectRevisions(
     subjectId: number,
-    options: GetPersonRevisionsOptions = {},
+    options: GetRevisionsOptions = {},
   ): Promise<{
     data: PagedRevision | undefined;
     error: unknown;
@@ -234,7 +234,7 @@ export class RevisionAPI {
    */
   async getEpisodeRevisions(
     episodeId: number,
-    options: GetPersonRevisionsOptions = {},
+    options: GetRevisionsOptions = {},
   ): Promise<{
     data: PagedRevision | undefined;
     error: unknown;
