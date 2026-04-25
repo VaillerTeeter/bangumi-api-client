@@ -23,7 +23,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ## 接口列表
 
 | # | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `getUserCollections()` | GET | `/v0/users/{username}/collections` | 否（查私有需要） |
 | 2 | `getUserCollectionBySubjectId()` | GET | `/v0/users/{username}/collections/{subject_id}` | 否（查私有需要） |
 | 3 | `postUserCollection()` | POST | `/v0/users/-/collections/{subject_id}` | **是** |
@@ -44,7 +44,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ### SubjectType（条目类型）
 
 | 值 | 含义 |
-|---|---|
+| --- | --- |
 | `1` | 书籍 |
 | `2` | 动画 |
 | `3` | 音乐 |
@@ -54,7 +54,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ### SubjectCollectionType（条目收藏状态）
 
 | 值 | 含义 |
-|---|---|
+| --- | --- |
 | `1` | 想看 |
 | `2` | 看过 |
 | `3` | 在看 |
@@ -64,7 +64,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ### EpisodeCollectionType（章节收藏状态）
 
 | 值 | 含义 |
-|---|---|
+| --- | --- |
 | `1` | 想看 |
 | `2` | 看过 |
 | `3` | 抛弃 |
@@ -87,7 +87,7 @@ getUserCollections(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名 |
 | `options.subject_type` | `SubjectType` | 否 | 按条目类型过滤 |
 | `options.type` | `SubjectCollectionType` | 否 | 按收藏状态过滤 |
@@ -108,7 +108,7 @@ getUserCollections(
 每个 `UserSubjectCollection` 包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `subject_id` | `number` | 条目 ID |
 | `subject_type` | `number` | 条目类型 |
 | `rate` | `number` | 评分（0=未评分，1-10） |
@@ -124,7 +124,7 @@ getUserCollections(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 404 | 用户不存在 |
 
@@ -163,7 +163,7 @@ getUserCollectionBySubjectId(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名 |
 | `subjectId` | `number` | 是 | 条目 ID |
 
@@ -176,7 +176,7 @@ getUserCollectionBySubjectId(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 404 | 用户不存在、条目未收藏或收藏为私有 |
 
@@ -218,7 +218,7 @@ postUserCollection(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `subjectId` | `number` | 是 | 条目 ID |
 | `payload.type` | `SubjectCollectionType` | 否 | 收藏状态 |
 | `payload.rate` | `number` | 否 | 评分（0=清除，1-10） |
@@ -237,7 +237,7 @@ postUserCollection(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
@@ -289,7 +289,7 @@ patchUserCollection(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在或未收藏 |
@@ -322,7 +322,7 @@ getUserSubjectEpisodeCollection(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `subjectId` | `number` | 是 | 条目 ID |
 | `options.episode_type` | `EpType` | 否 | 章节类型过滤（见 EpisodeAPI 文档） |
 | `options.limit` | `number` | 否 | 每页条数 |
@@ -343,7 +343,7 @@ getUserSubjectEpisodeCollection(
 每个 `UserEpisodeCollection` 包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `episode` | `Episode` | 章节详情 |
 | `type` | `number` | 收藏状态（EpisodeCollectionType） |
 | `updated_at` | `string` | 最后更新时间（ISO 8601） |
@@ -352,7 +352,7 @@ getUserSubjectEpisodeCollection(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
@@ -391,7 +391,7 @@ patchUserSubjectEpisodeCollection(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `subjectId` | `number` | 是 | 条目 ID |
 | `payload.episode_id` | `number[]` | 是 | 要修改的章节 ID 列表 |
 | `payload.type` | `EpisodeCollectionType` | 是 | 目标收藏状态（1=想看 2=看过 3=抛弃） |
@@ -405,7 +405,7 @@ patchUserSubjectEpisodeCollection(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目不存在 |
@@ -438,7 +438,7 @@ getUserEpisodeCollection(episodeId: number): Promise<ClientResult<UserEpisodeCol
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `episodeId` | `number` | 是 | 章节 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -450,7 +450,7 @@ getUserEpisodeCollection(episodeId: number): Promise<ClientResult<UserEpisodeCol
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 章节 ID 无效 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目或章节不存在 |
@@ -486,7 +486,7 @@ putUserEpisodeCollection(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `episodeId` | `number` | 是 | 章节 ID |
 | `type` | `EpisodeCollectionType` | 是 | 收藏状态（1=想看 2=看过 3=抛弃） |
 
@@ -499,7 +499,7 @@ putUserEpisodeCollection(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 章节 ID 无效或所属条目未收藏 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 条目或章节不存在 |
@@ -529,7 +529,7 @@ getUserCharacterCollections(username: string): Promise<ClientResult<PagedUserCha
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名 |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -541,7 +541,7 @@ getUserCharacterCollections(username: string): Promise<ClientResult<PagedUserCha
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 404 | 用户不存在 |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -573,7 +573,7 @@ getUserCharacterCollection(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名 |
 | `characterId` | `number` | 是 | 角色 ID |
 
@@ -581,7 +581,7 @@ getUserCharacterCollection(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `characterId` 无效 |
 | 404 | 用户或角色不存在 |
 
@@ -615,7 +615,7 @@ getUserPersonCollections(username: string): Promise<ClientResult<PagedUserPerson
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名 |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -627,7 +627,7 @@ getUserPersonCollections(username: string): Promise<ClientResult<PagedUserPerson
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 404 | 用户不存在 |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -659,7 +659,7 @@ getUserPersonCollection(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名 |
 | `personId` | `number` | 是 | 人物 ID |
 
@@ -667,7 +667,7 @@ getUserPersonCollection(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `personId` 无效 |
 | 404 | 用户或人物不存在 |
 

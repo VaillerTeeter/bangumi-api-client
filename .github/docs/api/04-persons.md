@@ -23,7 +23,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ## 接口列表
 
 | # | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `searchPersons()` | POST | `/v0/search/persons` | 否 |
 | 2 | `getPersonById()` | GET | `/v0/persons/{person_id}` | 否 |
 | 3 | `getPersonImageById()` | GET | `/v0/persons/{person_id}/image` | 否 |
@@ -50,7 +50,7 @@ searchPersons(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `keyword` | `string` | 是 | 搜索关键词 |
 | `options.career` | `string[]` | 否 | 按职业过滤（见下表，可多选） |
 | `options.limit` | `number` | 否 | 每页条数，默认 20 |
@@ -59,7 +59,7 @@ searchPersons(
 **`career` 可选值**
 
 | 值 | 含义 |
-|---|---|
+| --- | --- |
 | `"producer"` | 制作人 |
 | `"mangaka"` | 漫画家 |
 | `"artist"` | 音乐人 |
@@ -110,7 +110,7 @@ getPersonById(personId: number): Promise<ClientResult<PersonDetail>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `personId` | `number` | 是 | 人物 ID（正整数） |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -119,7 +119,7 @@ getPersonById(personId: number): Promise<ClientResult<PersonDetail>>
 `PersonDetail` 对象，包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 人物 ID |
 | `name` | `string` | 姓名 |
 | `type` | `number` | 类型：1=个人 2=公司 3=组合 |
@@ -138,7 +138,7 @@ getPersonById(personId: number): Promise<ClientResult<PersonDetail>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `personId` 为 0 或非法 |
 | 404 | 人物不存在 |
 
@@ -177,14 +177,14 @@ getPersonImageById(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `personId` | `number` | 是 | 人物 ID |
 | `type` | `string` | 是 | 图片尺寸规格 |
 
 ### 图片尺寸参考
 
 | 值 | 说明 |
-|---|---|
+| --- | --- |
 | `grid` | 最小（列表缩略图） |
 | `small` | 小 |
 | `medium` | 中 |
@@ -194,7 +194,7 @@ getPersonImageById(
 ### 返回
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `imageUrl` | `string \| undefined` | 图片最终 URL；失败时为 `undefined` |
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
@@ -227,7 +227,7 @@ getRelatedSubjectsByPersonId(personId: number): Promise<ClientResult<V0RelatedSu
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `personId` | `number` | 是 | 人物 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -236,7 +236,7 @@ getRelatedSubjectsByPersonId(personId: number): Promise<ClientResult<V0RelatedSu
 `V0RelatedSubject[]`，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 条目 ID |
 | `type` | `number` | 条目类型 |
 | `name` | `string` | 原名 |
@@ -249,7 +249,7 @@ getRelatedSubjectsByPersonId(personId: number): Promise<ClientResult<V0RelatedSu
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `personId` 为 0 或非法 |
 | 404 | 人物不存在 |
 
@@ -281,7 +281,7 @@ getRelatedCharactersByPersonId(personId: number): Promise<ClientResult<PersonCha
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `personId` | `number` | 是 | 人物 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -290,7 +290,7 @@ getRelatedCharactersByPersonId(personId: number): Promise<ClientResult<PersonCha
 `PersonCharacter[]`，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 角色 ID |
 | `name` | `string` | 角色名 |
 | `type` | `number` | 角色类型（1=角色 2=机体 3=舰船 4=组织） |
@@ -329,7 +329,7 @@ collectPerson(personId: number): Promise<ClientResult<undefined>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `personId` | `number` | 是 | 人物 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -341,7 +341,7 @@ collectPerson(personId: number): Promise<ClientResult<undefined>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 人物不存在 |
@@ -378,7 +378,7 @@ uncollectPerson(personId: number): Promise<ClientResult<undefined>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `personId` | `number` | 是 | 人物 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -390,7 +390,7 @@ uncollectPerson(personId: number): Promise<ClientResult<undefined>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 人物不存在 |

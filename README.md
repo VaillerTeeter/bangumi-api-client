@@ -209,7 +209,7 @@ npm publish
 各模块的详细说明和示例代码已独立维护，请点击对应链接查阅：
 
 | 模块 | 接口数 | 文档 |
-|---|---|---|
+| --- | --- | --- |
 | SubjectAPI — 条目 | 8 | [01-subjects.md](.github/docs/api/01-subjects.md) |
 | EpisodeAPI — 章节 | 2 | [02-episodes.md](.github/docs/api/02-episodes.md) |
 | CharacterAPI — 角色 | 7 | [03-characters.md](.github/docs/api/03-characters.md) |

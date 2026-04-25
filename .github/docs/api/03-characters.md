@@ -23,7 +23,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ## 接口列表
 
 | # | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `searchCharacters()` | POST | `/v0/search/characters` | 否 |
 | 2 | `getCharacterById()` | GET | `/v0/characters/{character_id}` | 否 |
 | 3 | `getCharacterImageById()` | GET | `/v0/characters/{character_id}/image` | 否 |
@@ -50,7 +50,7 @@ searchCharacters(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `keyword` | `string` | 是 | 搜索关键词 |
 | `options.nsfw` | `boolean` | 否 | NSFW 过滤：`true`=仅 R18，`false`=仅非 R18，不传=全部（无权限用户始终过滤 R18） |
 | `options.limit` | `number` | 否 | 每页条数，默认 20 |
@@ -94,7 +94,7 @@ getCharacterById(characterId: number): Promise<ClientResult<Character>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `characterId` | `number` | 是 | 角色 ID（正整数） |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -103,7 +103,7 @@ getCharacterById(characterId: number): Promise<ClientResult<Character>>
 `Character` 对象，包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 角色 ID |
 | `name` | `string` | 角色名 |
 | `type` | `number` | 类型：1=角色 2=机体 3=舰船 4=组织 |
@@ -122,7 +122,7 @@ getCharacterById(characterId: number): Promise<ClientResult<Character>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `characterId` 为 0 或非法 |
 | 404 | 角色不存在 |
 
@@ -161,14 +161,14 @@ getCharacterImageById(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `characterId` | `number` | 是 | 角色 ID |
 | `type` | `string` | 是 | 图片尺寸规格 |
 
 ### 图片尺寸参考
 
 | 值 | 说明 |
-|---|---|
+| --- | --- |
 | `grid` | 最小（列表缩略图） |
 | `small` | 小 |
 | `medium` | 中 |
@@ -178,7 +178,7 @@ getCharacterImageById(
 ### 返回
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `imageUrl` | `string \| undefined` | 图片最终 URL；失败时为 `undefined` |
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
@@ -211,7 +211,7 @@ getRelatedSubjectsByCharacterId(characterId: number): Promise<ClientResult<V0Rel
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `characterId` | `number` | 是 | 角色 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -220,7 +220,7 @@ getRelatedSubjectsByCharacterId(characterId: number): Promise<ClientResult<V0Rel
 `V0RelatedSubject[]`，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 条目 ID |
 | `type` | `number` | 条目类型 |
 | `name` | `string` | 原名 |
@@ -232,7 +232,7 @@ getRelatedSubjectsByCharacterId(characterId: number): Promise<ClientResult<V0Rel
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `characterId` 为 0 或非法 |
 | 404 | 角色不存在 |
 
@@ -264,7 +264,7 @@ getRelatedPersonsByCharacterId(characterId: number): Promise<ClientResult<Charac
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `characterId` | `number` | 是 | 角色 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -273,7 +273,7 @@ getRelatedPersonsByCharacterId(characterId: number): Promise<ClientResult<Charac
 `CharacterPerson[]`，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 人物 ID |
 | `name` | `string` | 人物名 |
 | `type` | `number` | 类型（1=个人 2=公司 3=组合） |
@@ -310,7 +310,7 @@ collectCharacter(characterId: number): Promise<ClientResult<undefined>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `characterId` | `number` | 是 | 角色 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -322,7 +322,7 @@ collectCharacter(characterId: number): Promise<ClientResult<undefined>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 角色不存在 |
@@ -359,7 +359,7 @@ uncollectCharacter(characterId: number): Promise<ClientResult<undefined>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `characterId` | `number` | 是 | 角色 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -371,7 +371,7 @@ uncollectCharacter(characterId: number): Promise<ClientResult<undefined>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 角色不存在 |

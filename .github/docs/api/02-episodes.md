@@ -20,7 +20,7 @@ const bgm = createBangumiClient();
 ## 接口列表
 
 | # | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `getEpisodes()` | GET | `/v0/episodes` | 否 |
 | 2 | `getEpisodeById()` | GET | `/v0/episodes/{episode_id}` | 否 |
 
@@ -42,7 +42,7 @@ getEpisodes(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `subjectId` | `number` | 是 | 条目 ID（传 0 返回 400） |
 | `options.type` | `EpType` | 否 | 章节类型（见下表），不传则返回所有类型 |
 | `options.limit` | `number` | 否 | 每页条数，默认 100 |
@@ -51,7 +51,7 @@ getEpisodes(
 **`EpType` 枚举值**
 
 | 值 | 含义 |
-|---|---|
+| --- | --- |
 | `0` | 本篇 |
 | `1` | SP |
 | `2` | OP |
@@ -74,7 +74,7 @@ getEpisodes(
 每个 `Episode` 包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 章节 ID |
 | `subject_id` | `number` | 所属条目 ID |
 | `type` | `number` | 章节类型（同 EpType） |
@@ -91,7 +91,7 @@ getEpisodes(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `subjectId` 为 0 或非法 |
 | 404 | 条目不存在 |
 
@@ -131,7 +131,7 @@ getEpisodeById(episodeId: number): Promise<ClientResult<EpisodeDetail>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `episodeId` | `number` | 是 | 章节 ID（传 0 或负数返回 400） |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -140,7 +140,7 @@ getEpisodeById(episodeId: number): Promise<ClientResult<EpisodeDetail>>
 `EpisodeDetail` 对象，在 `Episode` 基础上额外包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `subject_id` | `number` | 所属条目 ID |
 
 其余字段与 `Episode` 相同（见上方字段表）。
@@ -149,7 +149,7 @@ getEpisodeById(episodeId: number): Promise<ClientResult<EpisodeDetail>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `episodeId` 为 0 或负数 |
 | 404 | 章节不存在 |
 

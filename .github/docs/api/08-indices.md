@@ -23,7 +23,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ## 接口列表
 
 | # | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `newIndex()` | POST | `/v0/indices` | **是** |
 | 2 | `getIndexById()` | GET | `/v0/indices/{index_id}` | 否 |
 | 3 | `editIndexById()` | PUT | `/v0/indices/{index_id}` | **是**（须为创建者） |
@@ -51,7 +51,7 @@ newIndex(): Promise<ClientResult<Index>>
 新建的 `Index` 对象，包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 目录 ID |
 | `title` | `string` | 标题（新建时为空字符串） |
 | `desc` | `string` | 描述 |
@@ -64,7 +64,7 @@ newIndex(): Promise<ClientResult<Index>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 401 | 未登录或 Token 无效 |
 
 ### 示例
@@ -95,7 +95,7 @@ getIndexById(indexId: number): Promise<ClientResult<Index>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -107,7 +107,7 @@ getIndexById(indexId: number): Promise<ClientResult<Index>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 404 | 目录不存在 |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -143,7 +143,7 @@ editIndexById(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 | `body.title` | `string` | 否 | 新标题 |
 | `body.description` | `string` | 否 | 新描述 |
@@ -157,7 +157,7 @@ editIndexById(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录不存在 |
@@ -194,7 +194,7 @@ getIndexSubjects(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 | `options.type` | `number` | 否 | 按条目类型过滤（SubjectType） |
 | `options.limit` | `number` | 否 | 每页条数 |
@@ -215,7 +215,7 @@ getIndexSubjects(
 每个 `IndexSubject` 包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 条目 ID |
 | `type` | `number` | 条目类型 |
 | `name` | `string` | 原名 |
@@ -228,7 +228,7 @@ getIndexSubjects(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 404 | 目录不存在 |
 
@@ -264,7 +264,7 @@ addSubjectToIndex(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 | `body.subject_id` | `number` | 否 | 要添加的条目 ID |
 | `body.sort` | `number` | 否 | 排序权重 |
@@ -279,7 +279,7 @@ addSubjectToIndex(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录不存在 |
@@ -316,7 +316,7 @@ editIndexSubject(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 | `subjectId` | `number` | 是 | 条目 ID |
 | `body.sort` | `number` | 否 | 新排序权重 |
@@ -331,7 +331,7 @@ editIndexSubject(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录或条目不存在 |
@@ -366,7 +366,7 @@ deleteIndexSubject(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 | `subjectId` | `number` | 是 | 条目 ID |
 
@@ -379,7 +379,7 @@ deleteIndexSubject(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录或条目不存在 |
 
@@ -409,7 +409,7 @@ collectIndex(indexId: number): Promise<ClientResult<unknown>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -421,7 +421,7 @@ collectIndex(indexId: number): Promise<ClientResult<unknown>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录不存在 |
 | 500 | 服务器内部错误 |
@@ -454,7 +454,7 @@ uncollectIndex(indexId: number): Promise<ClientResult<unknown>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `indexId` | `number` | 是 | 目录 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -466,7 +466,7 @@ uncollectIndex(indexId: number): Promise<ClientResult<unknown>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 401 | 未登录或 Token 无效 |
 | 404 | 目录不存在 |
 | 500 | 服务端已知问题（取消收藏自建目录时） |
