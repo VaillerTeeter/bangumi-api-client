@@ -230,6 +230,20 @@ npm publish
 
 > 详细的 CI 检查规则文档已独立维护，请参阅 [ci-checks.md](.github/docs/ci/ci-checks.md)。
 
+## AI Agent 开发说明
+
+本项目主要通过 AI Agent（GitHub Copilot / Claude）进行日常开发和维护工作。
+
+在每次会话开始时，请发送以下提示词，让 AI 优先读取项目规范后再开始工作：
+
+> 开始工作前，先读取 `.github/instructions/` 目录下所有 `.instructions.md` 文件，完全理解其中的规则后再响应。
+
+目前包含的指令文件：
+
+| 文件 | 说明 |
+|---|---|
+| [git-workflow.instructions.md](.github/instructions/git-workflow.instructions.md) | AI git 操作行为规范（授权要求、分支命名、提交规范、PR 工作流） |
+
 ## 相关链接
 
 ### 本项目
