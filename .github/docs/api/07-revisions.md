@@ -20,7 +20,7 @@ const bgm = createBangumiClient();
 ## 接口列表
 
 | # | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `getPersonRevisions()` | GET | `/v0/revisions/persons` | 否 |
 | 2 | `getPersonRevisionByRevisionId()` | GET | `/v0/revisions/persons/{revision_id}` | 否 |
 | 3 | `getCharacterRevisions()` | GET | `/v0/revisions/characters` | 否 |
@@ -50,7 +50,7 @@ const bgm = createBangumiClient();
 每个 `Revision` 条目包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 历史版本 ID（revision_id） |
 | `type` | `number` | 修改类型 |
 | `summary` | `string` | 编辑摘要（编辑者填写的备注） |
@@ -79,7 +79,7 @@ getPersonRevisions(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `personId` | `number` | 是 | 人物 ID |
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
@@ -87,7 +87,7 @@ getPersonRevisions(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | 参数有误 |
 
 ### 示例
@@ -117,14 +117,14 @@ getPersonRevisionByRevisionId(revisionId: number): Promise<ClientResult<PersonRe
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
@@ -158,7 +158,7 @@ getCharacterRevisions(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `characterId` | `number` | 是 | 角色 ID |
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
@@ -189,14 +189,14 @@ getCharacterRevisionByRevisionId(revisionId: number): Promise<ClientResult<Chara
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
@@ -229,7 +229,7 @@ getSubjectRevisions(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `subjectId` | `number` | 是 | 条目 ID |
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
@@ -260,14 +260,14 @@ getSubjectRevisionByRevisionId(revisionId: number): Promise<ClientResult<Subject
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
@@ -300,7 +300,7 @@ getEpisodeRevisions(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `episodeId` | `number` | 是 | 章节 ID |
 | `options.limit` | `number` | 否 | 每页条数 |
 | `options.offset` | `number` | 否 | 分页偏移 |
@@ -331,14 +331,14 @@ getEpisodeRevisionByRevisionId(revisionId: number): Promise<ClientResult<Detaile
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `revisionId` | `number` | 是 | 历史版本 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `revisionId` 无效 |
 | 404 | 记录不存在 |
 
