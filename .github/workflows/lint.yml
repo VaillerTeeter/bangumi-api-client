@@ -108,7 +108,7 @@ jobs:
             "src/index.ts" "src/client.ts" "src/api/**/*.ts"
 
       - name: TypeScript — type check
-        run: yarn typecheck
+        run: npx tsc --noEmit
 
   # ============================================================
   # Secret scanning

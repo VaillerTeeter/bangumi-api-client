@@ -27,5 +27,5 @@
     "removeComments": false
   },
   "include": ["../../../src/**/*.ts"],
-  "exclude": []
+  "exclude": ["../../../src/generated/**", "../../../src/version.ts"]
 }
