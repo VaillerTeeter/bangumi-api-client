@@ -36,9 +36,7 @@ export class UserAPI {
    * @returns 用户信息对象，含 id / username / nickname / user_group / avatar / sign
    * @throws 400 — username 太长；404 — 对应用户不存在
    */
-  async getUserByName(
-    username: string,
-  ): Promise<ClientResult<User>> {
+  async getUserByName(username: string): Promise<ClientResult<User>> {
     const result = await this.client.get<User>({
       url: '/v0/users/{username}',
       path: { username },

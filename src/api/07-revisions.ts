@@ -127,7 +127,9 @@ export class RevisionAPI {
    * @returns `CharacterRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getCharacterRevisionByRevisionId(revisionId: number): Promise<ClientResult<CharacterRevision>> {
+  async getCharacterRevisionByRevisionId(
+    revisionId: number,
+  ): Promise<ClientResult<CharacterRevision>> {
     const result = await this.client.get<CharacterRevision>({
       url: '/v0/revisions/characters/{revision_id}',
       path: { revision_id: revisionId },
@@ -227,7 +229,9 @@ export class RevisionAPI {
    * @returns `DetailedRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getEpisodeRevisionByRevisionId(revisionId: number): Promise<ClientResult<DetailedRevision>> {
+  async getEpisodeRevisionByRevisionId(
+    revisionId: number,
+  ): Promise<ClientResult<DetailedRevision>> {
     const result = await this.client.get<DetailedRevision>({
       url: '/v0/revisions/episodes/{revision_id}',
       path: { revision_id: revisionId },

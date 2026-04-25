@@ -151,7 +151,9 @@ export class CharacterAPI {
    * @returns `data` — `V0RelatedSubject[]`，含 id / type / staff / name / name_cn / image
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getRelatedSubjectsByCharacterId(characterId: number): Promise<ClientResult<V0RelatedSubject[]>> {
+  async getRelatedSubjectsByCharacterId(
+    characterId: number,
+  ): Promise<ClientResult<V0RelatedSubject[]>> {
     const result = await this.client.get<V0RelatedSubject[]>({
       url: '/v0/characters/{character_id}/subjects',
       path: { character_id: characterId },
@@ -175,7 +177,9 @@ export class CharacterAPI {
    * @returns `data` — `CharacterPerson[]`，含 id / name / type / subject_id / subject_type / staff
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getRelatedPersonsByCharacterId(characterId: number): Promise<ClientResult<CharacterPerson[]>> {
+  async getRelatedPersonsByCharacterId(
+    characterId: number,
+  ): Promise<ClientResult<CharacterPerson[]>> {
     const result = await this.client.get<CharacterPerson[]>({
       url: '/v0/characters/{character_id}/persons',
       path: { character_id: characterId },
@@ -202,9 +206,7 @@ export class CharacterAPI {
    * @returns 成功时 `error` 为 `undefined`，`response.status` 为 204
    * @throws 400 — 参数有误；401 — 未登录；404 — 角色不存在
    */
-  async collectCharacter(
-    characterId: number,
-  ): Promise<ClientResult<undefined>> {
+  async collectCharacter(characterId: number): Promise<ClientResult<undefined>> {
     const result = await this.client.post<undefined>({
       url: '/v0/characters/{character_id}/collect',
       path: { character_id: characterId },
@@ -228,9 +230,7 @@ export class CharacterAPI {
    * @returns 成功时 `error` 为 `undefined`，`response.status` 为 204
    * @throws 400 — 参数有误；401 — 未登录；404 — 角色不存在
    */
-  async uncollectCharacter(
-    characterId: number,
-  ): Promise<ClientResult<undefined>> {
+  async uncollectCharacter(characterId: number): Promise<ClientResult<undefined>> {
     const result = await this.client.delete<undefined>({
       url: '/v0/characters/{character_id}/collect',
       path: { character_id: characterId },

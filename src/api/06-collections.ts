@@ -207,7 +207,7 @@ export class CollectionAPI {
   async getUserSubjectEpisodeCollection(
     subjectId: number,
     options: GetUserSubjectEpisodeCollectionOptions = {},
-  ): Promise<ClientResult<(Page & { data?: UserEpisodeCollection[] })>> {
+  ): Promise<ClientResult<Page & { data?: UserEpisodeCollection[] }>> {
     const { offset, limit, episode_type } = options;
     const result = await this.client.get<Page & { data?: UserEpisodeCollection[] }>({
       url: '/v0/users/-/collections/{subject_id}/episodes',
@@ -312,7 +312,9 @@ export class CollectionAPI {
    * @returns 分页的 `UserCharacterCollection` 列表
    * @throws 404 — 用户不存在
    */
-  async getUserCharacterCollections(username: string): Promise<ClientResult<PagedUserCharacterCollection>> {
+  async getUserCharacterCollections(
+    username: string,
+  ): Promise<ClientResult<PagedUserCharacterCollection>> {
     const result = await this.client.get<PagedUserCharacterCollection>({
       url: '/v0/users/{username}/collections/-/characters',
       path: { username },
@@ -364,7 +366,9 @@ export class CollectionAPI {
    * @returns `PagedUserPersonCollection`
    * @throws 404 — 用户不存在
    */
-  async getUserPersonCollections(username: string): Promise<ClientResult<PagedUserPersonCollection>> {
+  async getUserPersonCollections(
+    username: string,
+  ): Promise<ClientResult<PagedUserPersonCollection>> {
     const result = await this.client.get<PagedUserPersonCollection>({
       url: '/v0/users/{username}/collections/-/persons',
       path: { username },

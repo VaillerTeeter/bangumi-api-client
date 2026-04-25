@@ -66,9 +66,7 @@ export class IndexAPI {
    * @returns `Index`
    * @throws 404 — 目录不存在
    */
-  async getIndexById(
-    indexId: number,
-  ): Promise<ClientResult<Index>> {
+  async getIndexById(indexId: number): Promise<ClientResult<Index>> {
     const result = await this.client.get<Index>({
       url: '/v0/indices/{index_id}',
       path: { index_id: indexId },
@@ -92,10 +90,7 @@ export class IndexAPI {
    * @throws 401 — 未登录
    * @throws 404 — 目录不存在
    */
-  async editIndexById(
-    indexId: number,
-    body?: IndexBasicInfo,
-  ): Promise<ClientResult<Index>> {
+  async editIndexById(indexId: number, body?: IndexBasicInfo): Promise<ClientResult<Index>> {
     const result = await this.client.put<Index>({
       url: '/v0/indices/{index_id}',
       path: { index_id: indexId },
@@ -220,10 +215,7 @@ export class IndexAPI {
    * @throws 401 — 未登录
    * @throws 404 — 目录或条目不存在
    */
-  async deleteIndexSubject(
-    indexId: number,
-    subjectId: number,
-  ): Promise<ClientResult<unknown>> {
+  async deleteIndexSubject(indexId: number, subjectId: number): Promise<ClientResult<unknown>> {
     const result = await this.client.delete({
       url: '/v0/indices/{index_id}/subjects/{subject_id}',
       path: { index_id: indexId, subject_id: subjectId },
@@ -246,9 +238,7 @@ export class IndexAPI {
    * @throws 404 — 目录不存在
    * @throws 500 — 服务器内部错误
    */
-  async collectIndex(
-    indexId: number,
-  ): Promise<ClientResult<unknown>> {
+  async collectIndex(indexId: number): Promise<ClientResult<unknown>> {
     const result = await this.client.post({
       url: '/v0/indices/{index_id}/collect',
       path: { index_id: indexId },
@@ -273,9 +263,7 @@ export class IndexAPI {
    * @throws 404 — 目录不存在
    * @throws 500 — 服务器内部错误
    */
-  async uncollectIndex(
-    indexId: number,
-  ): Promise<ClientResult<unknown>> {
+  async uncollectIndex(indexId: number): Promise<ClientResult<unknown>> {
     const result = await this.client.delete({
       url: '/v0/indices/{index_id}/collect',
       path: { index_id: indexId },

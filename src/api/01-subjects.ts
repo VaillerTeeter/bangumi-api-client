@@ -265,7 +265,9 @@ export class SubjectAPI {
    * @param options.offset  - 分页偏移（默认 0）
    * @returns `data.total` — 符合条件的总数；`data.data` — 当页条目列表
    */
-  async searchSubjects(options: SearchSubjectsOptions): Promise<ClientResult<SearchSubjectsResult>> {
+  async searchSubjects(
+    options: SearchSubjectsOptions,
+  ): Promise<ClientResult<SearchSubjectsResult>> {
     const { limit, offset, keyword, sort, filter } = options;
     const result = await this.client.post<SearchSubjectsResult>({
       url: '/v0/search/subjects',
@@ -320,9 +322,7 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID（正整数，传 0 或负数将返回 HTTP 400）
    * @returns `data` — 完整 `Subject` 对象；不存在时返回 HTTP 404
    */
-  async getSubjectById(
-    subjectId: number,
-  ): Promise<ClientResult<Subject>> {
+  async getSubjectById(subjectId: number): Promise<ClientResult<Subject>> {
     const result = await this.client.get<Subject>({
       url: '/v0/subjects/{subject_id}',
       path: { subject_id: subjectId },
@@ -409,7 +409,9 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `RelatedCharacter[]`，含 id / name / summary / type / images / relation / actors
    */
-  async getRelatedCharactersBySubjectId(subjectId: number): Promise<ClientResult<RelatedCharacter[]>> {
+  async getRelatedCharactersBySubjectId(
+    subjectId: number,
+  ): Promise<ClientResult<RelatedCharacter[]>> {
     const result = await this.client.get<RelatedCharacter[]>({
       url: '/v0/subjects/{subject_id}/characters',
       path: { subject_id: subjectId },
@@ -434,7 +436,9 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `V0SubjectRelation[]`，含 id / type / name / name_cn / images / relation
    */
-  async getRelatedSubjectsBySubjectId(subjectId: number): Promise<ClientResult<V0SubjectRelation[]>> {
+  async getRelatedSubjectsBySubjectId(
+    subjectId: number,
+  ): Promise<ClientResult<V0SubjectRelation[]>> {
     const result = await this.client.get<V0SubjectRelation[]>({
       url: '/v0/subjects/{subject_id}/subjects',
       path: { subject_id: subjectId },

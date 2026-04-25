@@ -192,9 +192,7 @@ export class PersonAPI {
    * @returns 成功时 `error` 为 `undefined`，`response.status` 为 204
    * @throws 400 — 参数有误；401 — 未登录；404 — 人物不存在
    */
-  async collectPerson(
-    personId: number,
-  ): Promise<ClientResult<undefined>> {
+  async collectPerson(personId: number): Promise<ClientResult<undefined>> {
     const result = await this.client.post<undefined>({
       url: '/v0/persons/{person_id}/collect',
       path: { person_id: personId },
@@ -218,9 +216,7 @@ export class PersonAPI {
    * @returns 成功时 `error` 为 `undefined`，`response.status` 为 204
    * @throws 400 — 参数有误；401 — 未登录；404 — 人物不存在
    */
-  async uncollectPerson(
-    personId: number,
-  ): Promise<ClientResult<undefined>> {
+  async uncollectPerson(personId: number): Promise<ClientResult<undefined>> {
     const result = await this.client.delete<undefined>({
       url: '/v0/persons/{person_id}/collect',
       path: { person_id: personId },
