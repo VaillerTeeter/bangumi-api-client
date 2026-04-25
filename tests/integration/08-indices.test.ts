@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+﻿import { describe, it, expect, beforeAll } from 'vitest';
 import { createBangumiClient } from '../../src/client.js';
 
 /**
@@ -10,7 +10,7 @@ describe('IndexAPI 集成测试', () => {
 
   describe('newIndex() — 创建新目录', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(async () => {
@@ -72,7 +72,7 @@ describe('IndexAPI 集成测试', () => {
 
   describe('editIndexById() — 编辑目录', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(async () => {
@@ -151,7 +151,7 @@ describe('IndexAPI 集成测试', () => {
 
   describe('addSubjectToIndex() — 向目录添加条目', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(async () => {
@@ -190,7 +190,7 @@ describe('IndexAPI 集成测试', () => {
 
   describe('editIndexSubject() — 编辑目录中的条目', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(async () => {
@@ -232,7 +232,7 @@ describe('IndexAPI 集成测试', () => {
 
   describe('deleteIndexSubject() — 从目录中删除条目', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(async () => {
@@ -274,7 +274,7 @@ describe('IndexAPI 集成测试', () => {
 
   describe('collectIndex() — 收藏目录', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(async () => {
@@ -313,7 +313,7 @@ describe('IndexAPI 集成测试', () => {
 
   describe('uncollectIndex() — 取消收藏目录', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(async () => {

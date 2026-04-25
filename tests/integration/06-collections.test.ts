@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+﻿import { describe, it, expect, beforeAll } from 'vitest';
 import { createBangumiClient } from '../../src/client.js';
 
 /**
@@ -90,7 +90,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('getUserCollections() — 带 token 查看私有收藏', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
     let selfUsername!: string;
 
@@ -195,7 +195,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('getUserCollectionBySubjectId() — 带 token 查看私有收藏', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
     let selfUsername!: string;
     let selfSubjectId = 0;
@@ -231,7 +231,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('postUserCollection() — 新增或修改用户单个条目收藏', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     // 使用一个已知存在的动画条目（凉宫春日的忧郁 subject_id=976）
@@ -289,7 +289,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('patchUserCollection() — 修改用户单个收藏', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     // 使用一个已知已收藏的条目（先通过 POST 保证存在）
@@ -348,7 +348,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('getUserSubjectEpisodeCollection() — 获取条目章节收藏信息', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     // 凉宫春日的忧郁 subject_id=976（已通过 postUserCollection 确保在收藏中）
@@ -430,7 +430,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('patchUserSubjectEpisodeCollection() — 批量修改条目章节收藏', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
     let episodeIds: number[] = [];
 
@@ -504,7 +504,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('getUserEpisodeCollection() — 获取单章节收藏信息', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
     let knownEpisodeId = 0;
 
@@ -564,7 +564,7 @@ describe('CollectionAPI 集成测试', () => {
 
   describe('putUserEpisodeCollection() — 更新单章节收藏状态', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
     let knownEpisodeId = 0;
 

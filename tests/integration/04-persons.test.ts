@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+﻿import { describe, it, expect, beforeAll } from 'vitest';
 import { createBangumiClient } from '../../src/client.js';
 
 /**
@@ -216,7 +216,7 @@ describe('PersonAPI 集成测试', () => {
 
   describe('collectPerson() — 收藏人物', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(() => {
@@ -263,7 +263,7 @@ describe('PersonAPI 集成测试', () => {
     // 与 API 文档（204/400/401）不符，判断该端点在生产环境尚未完整实现。
     // 以下测试记录当前实际行为，待服务端修复后再更新断言。
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(() => {

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+﻿import { describe, it, expect, beforeAll } from 'vitest';
 import { createBangumiClient } from '../../src/client.js';
 
 /**
@@ -92,7 +92,7 @@ describe('UserAPI 集成测试', () => {
 
   describe('getMyself() — 获取当前登录用户信息', () => {
     const token = process.env['BGM_TOKEN'];
-    const hasToken = !!token;
+    const hasToken = (token?.trim().length ?? 0) > 0;
     let bgmAuth!: ReturnType<typeof createBangumiClient>;
 
     beforeAll(() => {
