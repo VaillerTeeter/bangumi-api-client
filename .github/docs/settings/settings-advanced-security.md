@@ -12,7 +12,7 @@
 | 作用 | 允许社区成员通过私密渠道向维护者报告安全漏洞，报告内容不公开，维护者修复后再披露，避免漏洞在修复前被攻击者利用 |
 | 适用场景 | 所有公开仓库均建议启用 |
 
-```powershell
+```bash
 # 启用
 gh api repos/{owner}/{repo}/private-vulnerability-reporting --method PUT
 # 查询状态
@@ -99,7 +99,7 @@ gh api repos/{owner}/{repo}/private-vulnerability-reporting --jq '.enabled'
 
 本仓库为示例模板，暂无需配置 Code scanning。实际项目可通过 Actions 启用：
 
-```powershell
+```bash
 gh api repos/{owner}/{repo}/code-scanning/default-setup --method PATCH \
   --field state=configured
 ```
@@ -130,7 +130,7 @@ gh api repos/{owner}/{repo}/code-scanning/default-setup --method PATCH \
 | 基础功能 | GitHub 对所有公开仓库自动扫描已知格式的 Secret（API Keys、Token 等），发现后通知合作伙伴（partner pattern scanning） |
 | Push protection | **已启用** ✅ — 在 `git push` 阶段即时拦截包含 Secret 的提交，阻止其进入仓库 |
 
-```powershell
+```bash
 # 启用 Secret scanning
 gh api repos/{owner}/{repo} --method PATCH \
   --field "security_and_analysis[secret_scanning][status]=enabled"

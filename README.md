@@ -19,7 +19,6 @@
 ├── .env.example                           # 环境变量模板（GH_TOKEN / BGM_TOKEN）
 ├── .gitignore                             # Git 忽略规则
 ├── .github/                               # GitHub 仓库配置与文档
-│   ├── copilot-instructions.md            # GitHub Copilot 项目规范约束
 │   ├── dependabot.yml                     # Dependabot 自动依赖更新配置
 │   ├── docs/                              # 项目文档
 │   │   ├── api/                           # API 使用文档（各模块方法说明与示例）
@@ -33,7 +32,17 @@
 │   │   │   └── 08-indices.md              # IndexAPI — 目录（9 个接口）
 │   │   ├── ci/                            # CI 文档
 │   │   │   └── ci-checks.md               # CI 检查规则说明
+│   │   ├── hooks/                         # Git Hook 文档
+│   │   │   └── git-guard.md               # git-guard PreToolUse hook 说明
+│   │   ├── mcp/                           # MCP 工具文档
+│   │   │   └── github-tools.md            # GitHub MCP Server 工具清单（26 个工具）
 │   │   └── settings/                      # 仓库 Settings 配置操作记录
+│   ├── hooks/                             # Git Hook 脚本
+│   │   ├── git-guard.json                 # Claude Code PreToolUse hook 注册配置
+│   │   └── scripts/                       # Hook 脚本目录
+│   │       └── git-guard.sh               # git/gh 危险写操作拦截脚本
+│   ├── instructions/                      # GitHub Copilot 指令文件
+│   │   └── git-workflow.instructions.md   # AI git 操作行为规范（授权要求/分支/提交/PR）
 │   ├── ISSUE_TEMPLATE/                    # Issue 模板
 │   │   ├── bug_report_en.md               # Bug 报告模板（英文）
 │   │   ├── bug_report_zh.md               # Bug 报告模板（中文）
@@ -43,6 +52,9 @@
 │   ├── PULL_REQUEST_TEMPLATE.md           # PR 描述模板
 │   └── workflows/                         # GitHub Actions 工作流
 │       └── lint.yml                       # CI Lint 工作流
+├── .vscode/                               # VS Code 工作区配置
+│   ├── mcp.json                           # MCP Server 配置（GitHub MCP）
+│   └── settings.json                      # 工作区设置（工具审批策略 / cSpell 词典）
 ├── .lintrc/                               # 各工具 Lint 配置
 │   ├── docs/                              # 文档相关
 │   │   └── markdown/                      # Markdown 相关
@@ -124,8 +136,8 @@
 
 1. 复制 Token 模板文件：
 
-   ```powershell
-   Copy-Item .env.example .env
+   ```bash
+   cp .env.example .env
    ```
 
 2. 编辑 `.env`，填入对应 Token：
@@ -143,61 +155,56 @@
 
 3. 加载环境变量（每次新开终端执行一次）：
 
-   ```powershell
-   $content = Get-Content .env; foreach ($line in $content) { if ($line -match "^(GH_TOKEN|BGM_TOKEN)=(.+)$") { Set-Item "Env:$($Matches[1])" $Matches[2] } }
+   ```bash
+   export $(grep -E "^(GH_TOKEN|BGM_TOKEN)=" .env | xargs)
    ```
 
 4. 验证配置：
 
-   ```powershell
+   ```bash
    gh auth status
    ```
 
 ## 开发工作流
 
-### 安装依赖
+### 初次克隆后
 
-```powershell
+```bash
+# 安装所有依赖
 yarn install
 ```
 
-### 生成底层代码
+之后直接运行任意命令即可，底层代码会在需要时**自动生成**（见下文说明）。
 
-从官方 OpenAPI YAML 重新生成 `src/generated/` 下的所有文件：
+---
 
-```powershell
+### 日常开发
+
+`build` / `typecheck` / `test` 均配置了 `pre*` 钩子，执行前会自动调用 `yarn generate` 重新生成 `src/generated/`，无需手动触发：
+
+```bash
+yarn build        # 生成 → 编译 TypeScript 到 dist/
+yarn typecheck    # 生成 → 仅类型检查，不输出产物
+yarn test         # 生成 → 运行集成测试（需联网访问 api.bgm.tv）
+```
+
+> 认证相关测试须在 `.env` 中配置 `BGM_TOKEN`。
+
+如果只想单独刷新生成代码（例如官方 OpenAPI YAML 有更新）：
+
+```bash
 yarn generate
 ```
 
-> 生成的文件不要手动修改，每次执行后会被完全覆盖。
+> `src/generated/` 下所有文件均为自动生成产物，不要手动修改，每次执行后会被完全覆盖。
 
-### 类型检查
-
-```powershell
-yarn typecheck
-```
-
-### 构建
-
-编译 TypeScript 到 `dist/`：
-
-```powershell
-yarn build
-```
-
-### 运行集成测试
-
-需要联网访问 `api.bgm.tv`，认证相关测试须在 `.env` 中配置 `BGM_TOKEN`：
-
-```powershell
-yarn test
-```
+---
 
 ### 发布新版本
 
-```powershell
+```bash
 # 1. 更新 package.json 中的 version 字段
-# 2. 生成 + 构建（prepare 脚本会自动执行两步）
+# 2. 生成 + 构建（prepare 脚本自动完成两步）
 yarn prepare
 
 # 3. 发布到 npm
@@ -222,6 +229,20 @@ npm publish
 ## CI 检查说明
 
 > 详细的 CI 检查规则文档已独立维护，请参阅 [ci-checks.md](.github/docs/ci/ci-checks.md)。
+
+## AI Agent 开发说明
+
+本项目主要通过 AI Agent（GitHub Copilot / Claude）进行日常开发和维护工作。
+
+在每次会话开始时，请发送以下提示词，让 AI 优先读取项目规范后再开始工作：
+
+> 开始工作前，先读取 `.github/instructions/` 目录下所有 `.instructions.md` 文件，完全理解其中的规则后再响应。
+
+目前包含的指令文件：
+
+| 文件 | 说明 |
+| --- | --- |
+| [git-workflow.instructions.md](.github/instructions/git-workflow.instructions.md) | AI git 操作行为规范（授权要求、分支命名、提交规范、PR 工作流） |
 
 ## 相关链接
 

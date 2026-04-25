@@ -46,7 +46,37 @@
     "Semgrep",
     "SARIF",
     "CODEOWNERS",
-    "automations"
+    "automations",
+    "modelcontextprotocol",
+    "adsf",
+    "apikey",
+    "applescript",
+    "codegen",
+    "confbox",
+    "defu",
+    "destr",
+    "emnapi",
+    "exsolve",
+    "fdir",
+    "giget",
+    "gnueabihf",
+    "isexe",
+    "jridgewell",
+    "jsdevtools",
+    "lightningcss",
+    "msvc",
+    "napi",
+    "obug",
+    "ohash",
+    "openharmony",
+    "pluginutils",
+    "readdirp",
+    "tinyrainbow",
+    "tybys",
+    "libc",
+    "stackback",
+    "tinyexec",
+    "AKIAIOSFODNN"
   ],
 
   "flagWords": [
@@ -116,7 +146,6 @@
 
   "enableGlobDot": true,
   "useGitignore": true,
-  "reportUnknownWords": true,
   "maxNumberOfProblems": 50,
   "minWordLength": 4
 }

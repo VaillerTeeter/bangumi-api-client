@@ -50,7 +50,7 @@ Deploy key 是绑定到**单个仓库**的 SSH 公钥，用于让外部服务器
 
 ## 管理方式
 
-```powershell
+```bash
 # 列出所有 Deploy keys
 gh api repos/{owner}/{repo}/keys --jq '.[] | {id, title, read_only}'
 

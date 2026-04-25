@@ -8,7 +8,7 @@ module.exports = {
   // Ignore commits whose message starts with a UTF-8 BOM (\uFEFF).
   // Such commits may have been created using Windows tools that write
   // BOM-prefixed files, causing the header to fail header-trim validation.
-  ignores: [(commit) => /^\uFEFF/.test(commit)],
+  ignores: [(/** @type {string} */ commit) => /^\uFEFF/.test(commit)],
 
   rules: {
     'type-enum': [

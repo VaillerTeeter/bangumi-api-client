@@ -33,6 +33,7 @@
     "@hey-api/client-fetch": "^0.13.1"
   },
   "devDependencies": {
+    "@commitlint/types": "^20.5.0",
     "@hey-api/openapi-ts": "^0.96.1",
     "@types/node": "^25.6.0",
     "typescript": "^6.0.3",

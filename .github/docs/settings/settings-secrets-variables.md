@@ -52,7 +52,7 @@ steps:
 
 ### CLI 管理
 
-```powershell
+```bash
 # 设置 Repository secret
 gh secret set MY_SECRET --body "value"
 

@@ -13,17 +13,17 @@
 
 ## 本地开发环境
 
-```powershell
+```bash
 # 1. Fork 本仓库到你的账号，然后克隆
 git clone git@github.com:<your-username>/Example-of-Github-Repo.git
 cd Example-of-Github-Repo
 
 # 2. 配置 GitHub Token
-Copy-Item .env.example .env
+cp .env.example .env
 # 编辑 .env，填入你的 GH_TOKEN
 
 # 3. 加载 Token
-$content = Get-Content .env; foreach ($line in $content) { if ($line -match "^GH_TOKEN=(.+)$") { $env:GH_TOKEN = $Matches[1] } }
+export GH_TOKEN=$(grep "^GH_TOKEN=" .env | cut -d= -f2)
 ```
 
 ---
@@ -32,7 +32,7 @@ $content = Get-Content .env; foreach ($line in $content) { if ($line -match "^GH
 
 本仓库所有变更必须通过 Pull Request 合并，**禁止直接 push 到 `master`**。
 
-```powershell
+```bash
 # 1. 基于 master 创建功能分支
 git checkout master
 git pull origin master
@@ -40,7 +40,7 @@ git checkout -b feat/your-feature-name
 
 # 2. 完成修改，提交
 git add .
-git commit -m "feat: 描述本次改动"
+git commit -m "feat: describe your change"
 
 # 3. 推送
 git push origin feat/your-feature-name
@@ -65,7 +65,7 @@ gh pr create --title "标题" --body "内容" --base master
 | `style:` | 代码格式调整（不影响逻辑） |
 | `test:` | 添加或修改测试 |
 
-示例：`feat: 添加 Python 示例代码`
+示例：`feat: add Python example code`
 
 ---
 
