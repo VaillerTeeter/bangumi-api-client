@@ -1,4 +1,4 @@
-﻿# CI 检查说明
+# CI 检查说明
 
 所有 Pull Request 合并到 `master` 前，必须通过以下自动检查（定义于 [.github/workflows/lint.yml](../../workflows/lint.yml)）。
 

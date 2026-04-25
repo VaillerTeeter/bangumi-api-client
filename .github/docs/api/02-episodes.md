@@ -1,4 +1,4 @@
-﻿# EpisodeAPI — 章节
+# EpisodeAPI — 章节
 
 章节（Episode）是条目的组成单元，包含本篇、SP、OP、ED 等类型。
 

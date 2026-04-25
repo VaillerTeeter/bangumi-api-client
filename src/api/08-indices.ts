@@ -45,12 +45,7 @@ export class IndexAPI {
    * @returns `Index`
    * @throws 401 — 未登录
    */
-  async newIndex(): Promise<{
-    data: Index | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async newIndex(): Promise<ClientResult<Index>> {
     const result = await this.client.post<Index>({
       url: '/v0/indices',
       body: {},
@@ -73,7 +68,7 @@ export class IndexAPI {
    */
   async getIndexById(
     indexId: number,
-  ): Promise<{ data: Index | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<Index>> {
     const result = await this.client.get<Index>({
       url: '/v0/indices/{index_id}',
       path: { index_id: indexId },
@@ -100,7 +95,7 @@ export class IndexAPI {
   async editIndexById(
     indexId: number,
     body?: IndexBasicInfo,
-  ): Promise<{ data: Index | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<Index>> {
     const result = await this.client.put<Index>({
       url: '/v0/indices/{index_id}',
       path: { index_id: indexId },
@@ -131,12 +126,7 @@ export class IndexAPI {
   async getIndexSubjects(
     indexId: number,
     options?: { type?: number; limit?: number; offset?: number },
-  ): Promise<{
-    data: { total: number; limit: number; offset: number; data: IndexSubject[] } | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<{ total: number; limit: number; offset: number; data: IndexSubject[] }>> {
     const result = await this.client.get<{
       total: number;
       limit: number;
@@ -174,7 +164,7 @@ export class IndexAPI {
   async addSubjectToIndex(
     indexId: number,
     body?: IndexSubjectAddInfo,
-  ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<unknown>> {
     const result = await this.client.post({
       url: '/v0/indices/{index_id}/subjects',
       path: { index_id: indexId },
@@ -205,7 +195,7 @@ export class IndexAPI {
     indexId: number,
     subjectId: number,
     body?: IndexSubjectEditInfo,
-  ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<unknown>> {
     const result = await this.client.put({
       url: '/v0/indices/{index_id}/subjects/{subject_id}',
       path: { index_id: indexId, subject_id: subjectId },
@@ -233,7 +223,7 @@ export class IndexAPI {
   async deleteIndexSubject(
     indexId: number,
     subjectId: number,
-  ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<unknown>> {
     const result = await this.client.delete({
       url: '/v0/indices/{index_id}/subjects/{subject_id}',
       path: { index_id: indexId, subject_id: subjectId },
@@ -258,7 +248,7 @@ export class IndexAPI {
    */
   async collectIndex(
     indexId: number,
-  ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<unknown>> {
     const result = await this.client.post({
       url: '/v0/indices/{index_id}/collect',
       path: { index_id: indexId },
@@ -285,7 +275,7 @@ export class IndexAPI {
    */
   async uncollectIndex(
     indexId: number,
-  ): Promise<{ data: unknown; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<unknown>> {
     const result = await this.client.delete({
       url: '/v0/indices/{index_id}/collect',
       path: { index_id: indexId },

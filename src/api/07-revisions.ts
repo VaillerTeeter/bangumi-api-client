@@ -55,12 +55,7 @@ export class RevisionAPI {
   async getPersonRevisions(
     personId: number,
     options: GetRevisionsOptions = {},
-  ): Promise<{
-    data: PagedRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<PagedRevision>> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/persons',
@@ -82,12 +77,7 @@ export class RevisionAPI {
    * @returns `PersonRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getPersonRevisionByRevisionId(revisionId: number): Promise<{
-    data: PersonRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getPersonRevisionByRevisionId(revisionId: number): Promise<ClientResult<PersonRevision>> {
     const result = await this.client.get<PersonRevision>({
       url: '/v0/revisions/persons/{revision_id}',
       path: { revision_id: revisionId },
@@ -115,12 +105,7 @@ export class RevisionAPI {
   async getCharacterRevisions(
     characterId: number,
     options: GetRevisionsOptions = {},
-  ): Promise<{
-    data: PagedRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<PagedRevision>> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/characters',
@@ -142,12 +127,7 @@ export class RevisionAPI {
    * @returns `CharacterRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getCharacterRevisionByRevisionId(revisionId: number): Promise<{
-    data: CharacterRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getCharacterRevisionByRevisionId(revisionId: number): Promise<ClientResult<CharacterRevision>> {
     const result = await this.client.get<CharacterRevision>({
       url: '/v0/revisions/characters/{revision_id}',
       path: { revision_id: revisionId },
@@ -175,12 +155,7 @@ export class RevisionAPI {
   async getSubjectRevisions(
     subjectId: number,
     options: GetRevisionsOptions = {},
-  ): Promise<{
-    data: PagedRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<PagedRevision>> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/subjects',
@@ -202,12 +177,7 @@ export class RevisionAPI {
    * @returns `SubjectRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getSubjectRevisionByRevisionId(revisionId: number): Promise<{
-    data: SubjectRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getSubjectRevisionByRevisionId(revisionId: number): Promise<ClientResult<SubjectRevision>> {
     const result = await this.client.get<SubjectRevision>({
       url: '/v0/revisions/subjects/{revision_id}',
       path: { revision_id: revisionId },
@@ -235,12 +205,7 @@ export class RevisionAPI {
   async getEpisodeRevisions(
     episodeId: number,
     options: GetRevisionsOptions = {},
-  ): Promise<{
-    data: PagedRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<PagedRevision>> {
     const { limit, offset } = options;
     const result = await this.client.get<PagedRevision>({
       url: '/v0/revisions/episodes',
@@ -262,12 +227,7 @@ export class RevisionAPI {
    * @returns `DetailedRevision`
    * @throws 400 — revision ID 无效；404 — 记录不存在
    */
-  async getEpisodeRevisionByRevisionId(revisionId: number): Promise<{
-    data: DetailedRevision | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getEpisodeRevisionByRevisionId(revisionId: number): Promise<ClientResult<DetailedRevision>> {
     const result = await this.client.get<DetailedRevision>({
       url: '/v0/revisions/episodes/{revision_id}',
       path: { revision_id: revisionId },

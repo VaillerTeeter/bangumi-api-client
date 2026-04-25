@@ -1,4 +1,4 @@
-﻿# SubjectAPI — 条目
+# SubjectAPI — 条目
 
 条目（Subject）是 Bangumi 的核心资源，涵盖动画、书籍、音乐、游戏、三次元等五种类型。
 

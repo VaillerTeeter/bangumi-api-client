@@ -67,12 +67,7 @@ export class CharacterAPI {
   async searchCharacters(
     keyword: string,
     options: SearchCharactersOptions = {},
-  ): Promise<{
-    data: SearchCharactersResult | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<SearchCharactersResult>> {
     const { nsfw, limit, offset } = options;
     const filter = nsfw === undefined ? undefined : { nsfw };
     const result = await this.client.post<SearchCharactersResult>({
@@ -96,12 +91,7 @@ export class CharacterAPI {
    * @returns 角色详情对象
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getCharacterById(characterId: number): Promise<{
-    data: Character | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getCharacterById(characterId: number): Promise<ClientResult<Character>> {
     const result = await this.client.get<Character>({
       url: '/v0/characters/{character_id}',
       path: { character_id: characterId },
@@ -161,12 +151,7 @@ export class CharacterAPI {
    * @returns `data` — `V0RelatedSubject[]`，含 id / type / staff / name / name_cn / image
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getRelatedSubjectsByCharacterId(characterId: number): Promise<{
-    data: V0RelatedSubject[] | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getRelatedSubjectsByCharacterId(characterId: number): Promise<ClientResult<V0RelatedSubject[]>> {
     const result = await this.client.get<V0RelatedSubject[]>({
       url: '/v0/characters/{character_id}/subjects',
       path: { character_id: characterId },
@@ -190,12 +175,7 @@ export class CharacterAPI {
    * @returns `data` — `CharacterPerson[]`，含 id / name / type / subject_id / subject_type / staff
    * @throws 400 — 请求参数有误；404 — 角色不存在
    */
-  async getRelatedPersonsByCharacterId(characterId: number): Promise<{
-    data: CharacterPerson[] | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getRelatedPersonsByCharacterId(characterId: number): Promise<ClientResult<CharacterPerson[]>> {
     const result = await this.client.get<CharacterPerson[]>({
       url: '/v0/characters/{character_id}/persons',
       path: { character_id: characterId },
@@ -224,7 +204,7 @@ export class CharacterAPI {
    */
   async collectCharacter(
     characterId: number,
-  ): Promise<{ data: undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<undefined>> {
     const result = await this.client.post<undefined>({
       url: '/v0/characters/{character_id}/collect',
       path: { character_id: characterId },
@@ -250,7 +230,7 @@ export class CharacterAPI {
    */
   async uncollectCharacter(
     characterId: number,
-  ): Promise<{ data: undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<undefined>> {
     const result = await this.client.delete<undefined>({
       url: '/v0/characters/{character_id}/collect',
       path: { character_id: characterId },

@@ -230,12 +230,7 @@ export class SubjectAPI {
    *
    * @returns `data` — 按星期排列的放送数据数组（共 7 项）
    */
-  async getCalendar(): Promise<{
-    data: CalendarEntry[] | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getCalendar(): Promise<ClientResult<CalendarEntry[]>> {
     const result = await this.client.get<CalendarEntry[]>({ url: '/calendar' });
     if (result.data) {
       result.data = (
@@ -270,12 +265,7 @@ export class SubjectAPI {
    * @param options.offset  - 分页偏移（默认 0）
    * @returns `data.total` — 符合条件的总数；`data.data` — 当页条目列表
    */
-  async searchSubjects(options: SearchSubjectsOptions): Promise<{
-    data: SearchSubjectsResult | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async searchSubjects(options: SearchSubjectsOptions): Promise<ClientResult<SearchSubjectsResult>> {
     const { limit, offset, keyword, sort, filter } = options;
     const result = await this.client.post<SearchSubjectsResult>({
       url: '/v0/search/subjects',
@@ -307,12 +297,7 @@ export class SubjectAPI {
    * @param options.offset   - 分页偏移（默认 0）
    * @returns `data.total` — 符合条件的总数；`data.data` — 当页条目列表
    */
-  async getSubjects(options: GetSubjectsOptions): Promise<{
-    data: GetSubjectsResult | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getSubjects(options: GetSubjectsOptions): Promise<ClientResult<GetSubjectsResult>> {
     const { type, cat, series, platform, sort, year, month, limit, offset } = options;
     const result = await this.client.get<GetSubjectsResult>({
       url: '/v0/subjects',
@@ -337,7 +322,7 @@ export class SubjectAPI {
    */
   async getSubjectById(
     subjectId: number,
-  ): Promise<{ data: Subject | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<Subject>> {
     const result = await this.client.get<Subject>({
       url: '/v0/subjects/{subject_id}',
       path: { subject_id: subjectId },
@@ -398,12 +383,7 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `RelatedPerson[]`，含 id / name / type / career / relation / eps
    */
-  async getRelatedPersonsBySubjectId(subjectId: number): Promise<{
-    data: RelatedPerson[] | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getRelatedPersonsBySubjectId(subjectId: number): Promise<ClientResult<RelatedPerson[]>> {
     const result = await this.client.get<RelatedPerson[]>({
       url: '/v0/subjects/{subject_id}/persons',
       path: { subject_id: subjectId },
@@ -429,12 +409,7 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `RelatedCharacter[]`，含 id / name / summary / type / images / relation / actors
    */
-  async getRelatedCharactersBySubjectId(subjectId: number): Promise<{
-    data: RelatedCharacter[] | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getRelatedCharactersBySubjectId(subjectId: number): Promise<ClientResult<RelatedCharacter[]>> {
     const result = await this.client.get<RelatedCharacter[]>({
       url: '/v0/subjects/{subject_id}/characters',
       path: { subject_id: subjectId },
@@ -459,12 +434,7 @@ export class SubjectAPI {
    * @param subjectId - 条目 ID
    * @returns `data` — `V0SubjectRelation[]`，含 id / type / name / name_cn / images / relation
    */
-  async getRelatedSubjectsBySubjectId(subjectId: number): Promise<{
-    data: V0SubjectRelation[] | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getRelatedSubjectsBySubjectId(subjectId: number): Promise<ClientResult<V0SubjectRelation[]>> {
     const result = await this.client.get<V0SubjectRelation[]>({
       url: '/v0/subjects/{subject_id}/subjects',
       path: { subject_id: subjectId },

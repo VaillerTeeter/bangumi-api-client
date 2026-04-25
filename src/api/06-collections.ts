@@ -84,12 +84,7 @@ export class CollectionAPI {
   async getUserCollections(
     username: string,
     options: GetUserCollectionsOptions = {},
-  ): Promise<{
-    data: PagedUserCollection | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<PagedUserCollection>> {
     const { subject_type, type, limit, offset } = options;
     const result = await this.client.get<PagedUserCollection>({
       url: '/v0/users/{username}/collections',
@@ -118,12 +113,7 @@ export class CollectionAPI {
   async getUserCollectionBySubjectId(
     username: string,
     subjectId: number,
-  ): Promise<{
-    data: UserSubjectCollection | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<UserSubjectCollection>> {
     const result = await this.client.get<UserSubjectCollection>({
       url: '/v0/users/{username}/collections/{subject_id}',
       path: { username, subject_id: subjectId },
@@ -157,7 +147,7 @@ export class CollectionAPI {
   async postUserCollection(
     subjectId: number,
     payload: UserSubjectCollectionModifyPayload = {},
-  ): Promise<{ data: undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<undefined>> {
     const result = await this.client.post<undefined>({
       url: '/v0/users/-/collections/{subject_id}',
       path: { subject_id: subjectId },
@@ -189,7 +179,7 @@ export class CollectionAPI {
   async patchUserCollection(
     subjectId: number,
     payload: UserSubjectCollectionModifyPayload = {},
-  ): Promise<{ data: undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<undefined>> {
     const result = await this.client.patch<undefined>({
       url: '/v0/users/-/collections/{subject_id}',
       path: { subject_id: subjectId },
@@ -217,12 +207,7 @@ export class CollectionAPI {
   async getUserSubjectEpisodeCollection(
     subjectId: number,
     options: GetUserSubjectEpisodeCollectionOptions = {},
-  ): Promise<{
-    data: (Page & { data?: UserEpisodeCollection[] }) | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<(Page & { data?: UserEpisodeCollection[] })>> {
     const { offset, limit, episode_type } = options;
     const result = await this.client.get<Page & { data?: UserEpisodeCollection[] }>({
       url: '/v0/users/-/collections/{subject_id}/episodes',
@@ -254,7 +239,7 @@ export class CollectionAPI {
   async patchUserSubjectEpisodeCollection(
     subjectId: number,
     payload: PatchUserSubjectEpisodeCollectionPayload,
-  ): Promise<{ data: undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<undefined>> {
     const result = await this.client.patch<undefined>({
       url: '/v0/users/-/collections/{subject_id}/episodes',
       path: { subject_id: subjectId },
@@ -278,12 +263,7 @@ export class CollectionAPI {
    * @returns `UserEpisodeCollection`（含 `episode`、`type`、`updated_at`）
    * @throws 400 — episode ID 无效；401 — 未登录；404 — 条目或章节不存在
    */
-  async getUserEpisodeCollection(episodeId: number): Promise<{
-    data: UserEpisodeCollection | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getUserEpisodeCollection(episodeId: number): Promise<ClientResult<UserEpisodeCollection>> {
     const result = await this.client.get<UserEpisodeCollection>({
       url: '/v0/users/-/collections/-/episodes/{episode_id}',
       path: { episode_id: episodeId },
@@ -310,7 +290,7 @@ export class CollectionAPI {
   async putUserEpisodeCollection(
     episodeId: number,
     type: EpisodeCollectionType,
-  ): Promise<{ data: undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<undefined>> {
     const result = await this.client.put<undefined>({
       url: '/v0/users/-/collections/-/episodes/{episode_id}',
       path: { episode_id: episodeId },
@@ -332,12 +312,7 @@ export class CollectionAPI {
    * @returns 分页的 `UserCharacterCollection` 列表
    * @throws 404 — 用户不存在
    */
-  async getUserCharacterCollections(username: string): Promise<{
-    data: PagedUserCharacterCollection | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getUserCharacterCollections(username: string): Promise<ClientResult<PagedUserCharacterCollection>> {
     const result = await this.client.get<PagedUserCharacterCollection>({
       url: '/v0/users/{username}/collections/-/characters',
       path: { username },
@@ -365,12 +340,7 @@ export class CollectionAPI {
   async getUserCharacterCollection(
     username: string,
     characterId: number,
-  ): Promise<{
-    data: UserCharacterCollection | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<UserCharacterCollection>> {
     const result = await this.client.get<UserCharacterCollection>({
       url: '/v0/users/{username}/collections/-/characters/{character_id}',
       path: { username, character_id: characterId },
@@ -394,12 +364,7 @@ export class CollectionAPI {
    * @returns `PagedUserPersonCollection`
    * @throws 404 — 用户不存在
    */
-  async getUserPersonCollections(username: string): Promise<{
-    data: PagedUserPersonCollection | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getUserPersonCollections(username: string): Promise<ClientResult<PagedUserPersonCollection>> {
     const result = await this.client.get<PagedUserPersonCollection>({
       url: '/v0/users/{username}/collections/-/persons',
       path: { username },
@@ -424,12 +389,7 @@ export class CollectionAPI {
   async getUserPersonCollection(
     username: string,
     personId: number,
-  ): Promise<{
-    data: UserPersonCollection | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<UserPersonCollection>> {
     const result = await this.client.get<UserPersonCollection>({
       url: '/v0/users/{username}/collections/-/persons/{person_id}',
       path: { username, person_id: personId },

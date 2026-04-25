@@ -1,4 +1,4 @@
-﻿# CollectionAPI — 收藏
+# CollectionAPI — 收藏
 
 收藏（Collection）模块提供条目收藏的增删改查、章节收藏状态管理，以及角色/人物收藏查询功能。
 

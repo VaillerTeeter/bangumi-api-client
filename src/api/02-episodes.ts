@@ -54,12 +54,7 @@ export class EpisodeAPI {
   async getEpisodes(
     subjectId: number,
     options: GetEpisodesOptions = {},
-  ): Promise<{
-    data: GetEpisodesResult | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  ): Promise<ClientResult<GetEpisodesResult>> {
     const { type, limit, offset } = options;
     const result = await this.client.get<GetEpisodesResult>({
       url: '/v0/episodes',
@@ -83,12 +78,7 @@ export class EpisodeAPI {
    * @param episodeId - 章节 ID（正整数）
    * @returns `data` — `EpisodeDetail` 对象，含 `subject_id` 字段
    */
-  async getEpisodeById(episodeId: number): Promise<{
-    data: EpisodeDetail | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getEpisodeById(episodeId: number): Promise<ClientResult<EpisodeDetail>> {
     const result = await this.client.get<EpisodeDetail>({
       url: '/v0/episodes/{episode_id}',
       path: { episode_id: episodeId },

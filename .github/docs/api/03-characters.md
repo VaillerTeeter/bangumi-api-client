@@ -1,4 +1,4 @@
-﻿# CharacterAPI — 角色
+# CharacterAPI — 角色
 
 角色（Character）是条目中的虚构人物、机体、舰船或组织。本模块提供角色搜索、详情查询、图片获取及收藏管理功能。
 

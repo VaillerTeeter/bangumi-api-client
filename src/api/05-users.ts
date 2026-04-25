@@ -38,7 +38,7 @@ export class UserAPI {
    */
   async getUserByName(
     username: string,
-  ): Promise<{ data: User | undefined; error: unknown; response: Response; request: Request }> {
+  ): Promise<ClientResult<User>> {
     const result = await this.client.get<User>({
       url: '/v0/users/{username}',
       path: { username },
@@ -97,12 +97,7 @@ export class UserAPI {
    * @returns 当前登录用户的完整信息
    * @throws 401 — 未提供有效 Token
    */
-  async getMyself(): Promise<{
-    data: GetMyselfResponse | undefined;
-    error: unknown;
-    response: Response;
-    request: Request;
-  }> {
+  async getMyself(): Promise<ClientResult<GetMyselfResponse>> {
     const result = await this.client.get<GetMyselfResponse>({
       url: '/v0/me',
     });

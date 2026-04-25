@@ -5,7 +5,7 @@
 ## 特性
 
 - **双层架构** — 底层由 `@hey-api/openapi-ts` 从官方 OpenAPI YAML 自动生成，顶层提供面向对象的高层封装
-- **完整类型支持** — 所有请求参数与响应数据均有完整 TypeScript 类型，开箱即用
+- **完整类型支持** — 所有请求参数与响应数据均有完整 TypeScript 类型，方法返回值统一为 `Promise<ClientResult<T>>`，开箱即用
 - **ESM 优先** — 使用 `"type": "module"`，支持 Tree-shaking
 - **认证支持** — 可选传入 Access Token，自动附加 `Authorization: Bearer` 头
 - **User-Agent 合规** — 按 Bangumi API 要求自动设置 `User-Agent` 请求头
@@ -15,66 +15,106 @@
 
 ```text
 .
-├── .gitignore
-├── src/
-│   ├── api/                         # 高层手写封装（Layer 2）
-│   │   ├── 01-subjects.ts           # SubjectAPI — 条目（8 个接口）
-│   │   ├── 02-episodes.ts           # EpisodeAPI — 章节（2 个接口）
-│   │   ├── 03-characters.ts         # CharacterAPI — 角色（7 个接口）
-│   │   ├── 04-persons.ts            # PersonAPI — 人物（7 个接口）
-│   │   ├── 05-users.ts              # UserAPI — 用户（3 个接口）
-│   │   ├── 06-collections.ts        # CollectionAPI — 收藏（12 个接口）
-│   │   ├── 07-revisions.ts          # RevisionAPI — 编辑历史（8 个接口）
-│   │   └── 08-indices.ts            # IndexAPI — 目录（9 个接口）
-│   ├── generated/                   # 自动生成代码，勿手动修改（`yarn generate` 产物）
-│   │   ├── client/                  # 生成的 HTTP 客户端实现
-│   │   │   ├── client.gen.ts        # createClient() 实现（fetch 封装、拦截器、请求生命周期）
-│   │   │   ├── index.ts             # client 层统一导出
-│   │   │   ├── types.gen.ts         # Client/Config/Options 等客户端类型定义
-│   │   │   └── utils.gen.ts         # URL 构建、Header 合并、配置合并等工具函数
-│   │   ├── core/                    # 生成的核心工具（auth/序列化/SSE 等）
-│   │   │   ├── auth.gen.ts          # Bearer/Basic 认证参数处理
-│   │   │   ├── bodySerializer.gen.ts # JSON/FormData/URLSearchParams 请求体序列化
-│   │   │   ├── params.gen.ts        # 请求参数构建工具
-│   │   │   ├── pathSerializer.gen.ts # URL 路径参数序列化
-│   │   │   ├── queryKeySerializer.gen.ts # Query Key 序列化（供 React Query 等使用）
-│   │   │   ├── serverSentEvents.gen.ts   # SSE（Server-Sent Events）客户端实现
-│   │   │   ├── types.gen.ts         # 核心共享类型（HttpMethod/Config 等）
-│   │   │   └── utils.gen.ts         # 请求体校验等通用工具
-│   │   ├── client.gen.ts            # 预配置的默认客户端实例（baseUrl 已设置）
-│   │   ├── index.ts                 # 生成层统一导出
-│   │   ├── sdk.gen.ts               # 所有 API 函数（按 operationId 组织，60+ 个函数）
-│   │   └── types.gen.ts             # 所有请求/响应类型定义（Subject/Episode/Character 等）
-│   ├── client.ts                    # createBangumiClient() 工厂函数
-│   └── index.ts                     # 库公共 API 入口
-├── tests/
-│   ├── integration/                 # 集成测试（需联网访问 api.bgm.tv）
-│   │   ├── 01-subjects.test.ts      # SubjectAPI 集成测试（8 个接口）
-│   │   ├── 02-episodes.test.ts      # EpisodeAPI 集成测试（2 个接口）
-│   │   ├── 03-characters.test.ts    # CharacterAPI 集成测试（7 个接口）
-│   │   ├── 04-persons.test.ts       # PersonAPI 集成测试（7 个接口）
-│   │   ├── 05-users.test.ts         # UserAPI 集成测试（3 个接口）
-│   │   ├── 06-collections.test.ts   # CollectionAPI 集成测试（12 个接口）
-│   │   ├── 07-revisions.test.ts     # RevisionAPI 集成测试（8 个接口）
-│   │   └── 08-indices.test.ts       # IndexAPI 集成测试（9 个接口）
-│   └── tsconfig.json                # 测试专用 TypeScript 配置
-├── .github/
-│   └── docs/
-│       └── api/                     # API 使用文档（各模块方法说明与示例）
-│           ├── 01-subjects.md       # SubjectAPI — 条目（8 个接口）
-│           ├── 02-episodes.md       # EpisodeAPI — 章节（2 个接口）
-│           ├── 03-characters.md     # CharacterAPI — 角色（7 个接口）
-│           ├── 04-persons.md        # PersonAPI — 人物（7 个接口）
-│           ├── 05-users.md          # UserAPI — 用户（3 个接口）
-│           ├── 06-collections.md    # CollectionAPI — 收藏（12 个接口）
-│           ├── 07-revisions.md      # RevisionAPI — 编辑历史（8 个接口）
-│           └── 08-indices.md        # IndexAPI — 目录（9 个接口）
-├── openapi-ts.config.ts             # @hey-api/openapi-ts 代码生成配置
-├── package.json                     # 包定义、scripts、依赖声明
-├── README.md                        # 本文件
-├── tsconfig.json                    # TypeScript 编译配置（ESM/NodeNext/ES2022）
-├── vitest.config.ts                 # Vitest 测试配置
-└── yarn.lock                        # 依赖版本锁定文件
+├── .editorconfig                          # 编辑器通用格式规范（缩进/换行/编码）
+├── .env.example                           # 环境变量模板（GH_TOKEN / BGM_TOKEN）
+├── .gitignore                             # Git 忽略规则
+├── .github/                               # GitHub 仓库配置与文档
+│   ├── copilot-instructions.md            # GitHub Copilot 项目规范约束
+│   ├── dependabot.yml                     # Dependabot 自动依赖更新配置
+│   ├── docs/                              # 项目文档
+│   │   ├── api/                           # API 使用文档（各模块方法说明与示例）
+│   │   │   ├── 01-subjects.md             # SubjectAPI — 条目（8 个接口）
+│   │   │   ├── 02-episodes.md             # EpisodeAPI — 章节（2 个接口）
+│   │   │   ├── 03-characters.md           # CharacterAPI — 角色（7 个接口）
+│   │   │   ├── 04-persons.md              # PersonAPI — 人物（7 个接口）
+│   │   │   ├── 05-users.md                # UserAPI — 用户（3 个接口）
+│   │   │   ├── 06-collections.md          # CollectionAPI — 收藏（12 个接口）
+│   │   │   ├── 07-revisions.md            # RevisionAPI — 编辑历史（8 个接口）
+│   │   │   └── 08-indices.md              # IndexAPI — 目录（9 个接口）
+│   │   ├── ci/                            # CI 文档
+│   │   │   └── ci-checks.md               # CI 检查规则说明
+│   │   └── settings/                      # 仓库 Settings 配置操作记录
+│   ├── ISSUE_TEMPLATE/                    # Issue 模板
+│   │   ├── bug_report_en.md               # Bug 报告模板（英文）
+│   │   ├── bug_report_zh.md               # Bug 报告模板（中文）
+│   │   ├── config.yml                     # Issue 模板配置（禁用空白 Issue）
+│   │   ├── feature_request_en.md          # 功能请求模板（英文）
+│   │   └── feature_request_zh.md          # 功能请求模板（中文）
+│   ├── PULL_REQUEST_TEMPLATE.md           # PR 描述模板
+│   └── workflows/                         # GitHub Actions 工作流
+│       └── lint.yml                       # CI Lint 工作流
+├── .lintrc/                               # 各工具 Lint 配置
+│   ├── docs/                              # 文档相关
+│   │   └── markdown/                      # Markdown 相关
+│   │       └── .markdownlint.json         # Markdown lint 规则
+│   ├── frontend/                          # 前端/TypeScript 相关
+│   │   ├── knip.json                      # Knip 未使用导出检查配置
+│   │   ├── prettier/                      # Prettier 配置
+│   │   │   └── .prettierrc                # Prettier 格式化配置
+│   │   └── typescript/                    # TypeScript 相关
+│   │       ├── .eslintrc-ts.json          # ESLint TypeScript 规则
+│   │       └── tsconfig-lint.json         # ESLint 专用 tsconfig
+│   ├── general/                           # 通用规范
+│   │   ├── .ls-lint.yml                   # 文件命名规范检查
+│   │   ├── .yamllint.yml                  # YAML lint 规则
+│   │   └── cspell.json                    # 拼写检查词典配置
+│   ├── git/                               # Git 提交规范
+│   │   └── .commitlintrc.cjs              # Commit message 规范
+│   └── security/                          # 安全扫描
+│       └── .gitleaks.toml                 # 密钥泄露扫描规则
+├── src/                                   # 源代码
+│   ├── api/                               # 高层手写封装（Layer 2）
+│   │   ├── 01-subjects.ts                 # SubjectAPI — 条目（8 个接口）
+│   │   ├── 02-episodes.ts                 # EpisodeAPI — 章节（2 个接口）
+│   │   ├── 03-characters.ts               # CharacterAPI — 角色（7 个接口）
+│   │   ├── 04-persons.ts                  # PersonAPI — 人物（7 个接口）
+│   │   ├── 05-users.ts                    # UserAPI — 用户（3 个接口）
+│   │   ├── 06-collections.ts              # CollectionAPI — 收藏（12 个接口）
+│   │   ├── 07-revisions.ts                # RevisionAPI — 编辑历史（8 个接口）
+│   │   └── 08-indices.ts                  # IndexAPI — 目录（9 个接口）
+│   ├── generated/                         # 自动生成代码，勿手动修改（`yarn generate` 产物）
+│   │   ├── client/                        # 生成的 HTTP 客户端实现
+│   │   │   ├── client.gen.ts              # createClient() 实现（fetch 封装、拦截器、请求生命周期）
+│   │   │   ├── index.ts                   # client 层统一导出
+│   │   │   ├── types.gen.ts               # Client/Config/Options 等客户端类型定义
+│   │   │   └── utils.gen.ts               # URL 构建、Header 合并、配置合并等工具函数
+│   │   ├── core/                          # 生成的核心工具（auth/序列化/SSE 等）
+│   │   │   ├── auth.gen.ts                # Bearer/Basic 认证参数处理
+│   │   │   ├── bodySerializer.gen.ts      # JSON/FormData/URLSearchParams 请求体序列化
+│   │   │   ├── params.gen.ts              # 请求参数构建工具
+│   │   │   ├── pathSerializer.gen.ts      # URL 路径参数序列化
+│   │   │   ├── queryKeySerializer.gen.ts  # Query Key 序列化（供 React Query 等使用）
+│   │   │   ├── serverSentEvents.gen.ts    # SSE（Server-Sent Events）客户端实现
+│   │   │   ├── types.gen.ts               # 核心共享类型（HttpMethod/Config 等）
+│   │   │   └── utils.gen.ts               # 请求体校验等通用工具
+│   │   ├── client.gen.ts                  # 预配置的默认客户端实例（baseUrl 已设置）
+│   │   ├── index.ts                       # 生成层统一导出
+│   │   ├── sdk.gen.ts                     # 所有 API 函数（按 operationId 组织，60+ 个函数）
+│   │   └── types.gen.ts                   # 所有请求/响应类型定义（Subject/Episode/Character 等）
+│   ├── client.ts                          # createBangumiClient() 工厂函数、ClientResult<T> 接口定义
+│   ├── version.ts                         # 库版本号常量（VERSION）
+│   └── index.ts                           # 库公共 API 入口
+├── tests/                                 # 测试
+│   ├── integration/                       # 集成测试（需联网访问 api.bgm.tv）
+│   │   ├── 01-subjects.test.ts            # SubjectAPI 集成测试（8 个接口）
+│   │   ├── 02-episodes.test.ts            # EpisodeAPI 集成测试（2 个接口）
+│   │   ├── 03-characters.test.ts          # CharacterAPI 集成测试（7 个接口）
+│   │   ├── 04-persons.test.ts             # PersonAPI 集成测试（7 个接口）
+│   │   ├── 05-users.test.ts               # UserAPI 集成测试（3 个接口）
+│   │   ├── 06-collections.test.ts         # CollectionAPI 集成测试（12 个接口）
+│   │   ├── 07-revisions.test.ts           # RevisionAPI 集成测试（8 个接口）
+│   │   └── 08-indices.test.ts             # IndexAPI 集成测试（9 个接口）
+│   └── tsconfig.json                      # 测试专用 TypeScript 配置
+├── CODE_OF_CONDUCT.md                     # 行为准则
+├── CONTRIBUTING.md                        # 贡献指南
+├── LICENSE                                # GPL-3.0 许可证
+├── openapi-ts.config.ts                   # @hey-api/openapi-ts 代码生成配置
+├── package.json                           # 包定义、scripts、依赖声明
+├── README.md                              # 本文件
+├── SECURITY.md                            # 安全漏洞披露政策
+├── tsconfig.json                          # TypeScript 编译配置（ESM/NodeNext/ES2022）
+├── vitest.config.ts                       # Vitest 测试配置
+└── yarn.lock                              # 依赖版本锁定文件
 ```
 
 > `generated/` 下所有文件由 `yarn generate` 自动生成，不要手动修改。

@@ -1,4 +1,4 @@
-﻿# RevisionAPI — 编辑历史
+# RevisionAPI — 编辑历史
 
 编辑历史（Revision）模块提供对条目、章节、角色、人物编辑记录的查询功能，可用于追溯 Wiki 数据的变更历史。
 
