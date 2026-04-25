@@ -9,3 +9,4 @@ dist/
 
 # 自动生成代码（yarn generate 产物，每次生成会完全覆盖）
 src/generated/
+src/version.ts

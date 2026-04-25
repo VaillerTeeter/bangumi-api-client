@@ -20,7 +20,7 @@
     "node": ">=21"
   },
   "scripts": {
-    "generate": "openapi-ts",
+    "generate": "openapi-ts && node scripts/generate-version.js",
     "prebuild": "yarn generate",
     "build": "tsc",
     "pretypecheck": "yarn generate",

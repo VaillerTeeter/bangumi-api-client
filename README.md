@@ -62,6 +62,8 @@
 │   │   └── .commitlintrc.cjs              # Commit message 规范
 │   └── security/                          # 安全扫描
 │       └── .gitleaks.toml                 # 密钥泄露扫描规则
+├── scripts/                               # 构建辅助脚本
+│   └── generate-version.js                # 从 package.json 读取版本号并写入 src/version.ts
 ├── src/                                   # 源代码
 │   ├── api/                               # 高层手写封装（Layer 2）
 │   │   ├── 01-subjects.ts                 # SubjectAPI — 条目（8 个接口）
@@ -92,7 +94,6 @@
 │   │   ├── sdk.gen.ts                     # 所有 API 函数（按 operationId 组织，60+ 个函数）
 │   │   └── types.gen.ts                   # 所有请求/响应类型定义（Subject/Episode/Character 等）
 │   ├── client.ts                          # createBangumiClient() 工厂函数、ClientResult<T> 接口定义
-│   ├── version.ts                         # 库版本号常量（VERSION）
 │   └── index.ts                           # 库公共 API 入口
 ├── tests/                                 # 测试
 │   ├── integration/                       # 集成测试（需联网访问 api.bgm.tv）
