@@ -65,7 +65,7 @@ export function createBangumiClient(options: BangumiClientOptions = {}): Bangumi
   const { baseUrl = DEFAULT_BASE_URL, userAgent = DEFAULT_USER_AGENT } = options;
 
   const headers: Record<string, string> = { 'User-Agent': userAgent };
-  if (options.token !== undefined) {
+  if (options.token !== undefined && options.token.trim().length > 0) {
     headers.Authorization = `Bearer ${options.token}`;
   }
 
