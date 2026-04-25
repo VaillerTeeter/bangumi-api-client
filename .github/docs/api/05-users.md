@@ -123,6 +123,7 @@ getUserAvatarByName(
 | `imageUrl` | `string \| undefined` | 头像最终 URL；失败时为 `undefined` |
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
+| `request` | `Request` | Fetch Request 对象 |
 
 <!-- markdownlint-disable-next-line MD024 -->
 ### 错误
@@ -171,9 +172,11 @@ getMyself(): Promise<ClientResult<GetMyselfResponse>>
 | `user_group` | `number` | 用户组 |
 | `avatar` | `object` | 头像 URL（large/medium/small） |
 | `sign` | `string` | 个人签名 |
-| `email` | `string` | 注册邮箱（私有字段） |
-| `reg_time` | `string` | 注册时间（ISO 8601） |
-| `time_offset` | `number` | 时区偏移（小时） |
+| `email?` | `string` | 注册邮箱（私有字段，可能因账号隐私或 API 返回行为而缺失） |
+| `reg_time?` | `string` | 注册时间（ISO 8601，可能因账号状态或 API 返回行为而缺失） |
+| `time_offset?` | `number` | 时区偏移（小时，可能因账号状态或 API 返回行为而缺失） |
+
+> 注意：`email`、`reg_time` 和 `time_offset` 在部分情况下可能不会返回，请在使用前做好 `undefined` 判断。
 
 <!-- markdownlint-disable-next-line MD024 -->
 ### 错误
