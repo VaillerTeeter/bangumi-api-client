@@ -22,7 +22,7 @@ const bgm = createBangumiClient();
 ## 接口列表
 
 | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `getCalendar()` | GET | `/calendar` | 否 |
 | `searchSubjects()` | POST | `/v0/search/subjects` | 否 |
 | `getSubjects()` | GET | `/v0/subjects` | 否 |
@@ -49,7 +49,7 @@ getCalendar(): Promise<ClientResult<CalendarEntry[]>>
 `data` 是长度为 7 的数组，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `weekday.id` | `number` | 星期编号（1=周一 … 7=周日） |
 | `weekday.cn` | `string` | 星期中文名（"星期一" 等） |
 | `weekday.en` | `string` | 星期英文名（"Mon" 等） |
@@ -92,7 +92,7 @@ searchSubjects(options: SearchSubjectsOptions): Promise<ClientResult<SearchSubje
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `options.keyword` | `string` | 是 | 搜索关键词 |
 | `options.sort` | `'match' \| 'heat' \| 'rank' \| 'score'` | 否 | 排序方式，默认 `match`（相关度） |
 | `options.filter` | `SearchSubjectsFilter` | 否 | 过滤条件（见下表） |
@@ -102,7 +102,7 @@ searchSubjects(options: SearchSubjectsOptions): Promise<ClientResult<SearchSubje
 **过滤条件（`SearchSubjectsFilter`）**
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `type` | `number[]` | 条目类型：1=书籍 2=动画 3=音乐 4=游戏 6=三次元 |
 | `tag` | `string[]` | 按标签过滤（与关系） |
 | `air_date` | `string[]` | 放送日期范围，格式 `">=2020-01-01"` |
@@ -162,7 +162,7 @@ getSubjects(options: GetSubjectsOptions): Promise<ClientResult<GetSubjectsResult
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `options.type` | `SubjectType` | 是 | 条目类型（见下） |
 | `options.cat` | `SubjectCategory` | 否 | 子分类 |
 | `options.series` | `boolean` | 否 | 仅显示系列作品 |
@@ -176,7 +176,7 @@ getSubjects(options: GetSubjectsOptions): Promise<ClientResult<GetSubjectsResult
 **`SubjectType` 枚举值**
 
 | 值 | 含义 |
-|---|---|
+| --- | --- |
 | `1` | 书籍 |
 | `2` | 动画 |
 | `3` | 音乐 |
@@ -228,7 +228,7 @@ getSubjectById(subjectId: number): Promise<ClientResult<Subject>>
 ### 参数
 
 | 参数 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `subjectId` | `number` | 条目 ID（正整数） |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -237,7 +237,7 @@ getSubjectById(subjectId: number): Promise<ClientResult<Subject>>
 完整 `Subject` 对象，包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 条目 ID |
 | `type` | `number` | 类型（见 SubjectType） |
 | `name` | `string` | 原名 |
@@ -257,7 +257,7 @@ getSubjectById(subjectId: number): Promise<ClientResult<Subject>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 404 | 条目不存在 |
 | 400 | `subjectId` 为 0 或负数 |
 
@@ -297,14 +297,14 @@ getSubjectImageById(
 ### 参数
 
 | 参数 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `subjectId` | `number` | 条目 ID |
 | `type` | `string` | 图片尺寸规格 |
 
 ### 图片尺寸参考
 
 | 值 | 尺寸 |
-|---|---|
+| --- | --- |
 | `grid` | 最小（列表缩略图） |
 | `small` | 小 |
 | `medium` | 中 |
@@ -315,7 +315,7 @@ getSubjectImageById(
 ### 返回
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `imageUrl` | `string \| undefined` | 图片最终 URL；失败时为 `undefined` |
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
@@ -349,7 +349,7 @@ getRelatedPersonsBySubjectId(subjectId: number): Promise<ClientResult<RelatedPer
 ### 参数
 
 | 参数 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `subjectId` | `number` | 条目 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -358,7 +358,7 @@ getRelatedPersonsBySubjectId(subjectId: number): Promise<ClientResult<RelatedPer
 `RelatedPerson[]`，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 人物 ID |
 | `name` | `string` | 姓名 |
 | `type` | `number` | 类型（1=个人 2=公司 3=组合） |
@@ -371,7 +371,7 @@ getRelatedPersonsBySubjectId(subjectId: number): Promise<ClientResult<RelatedPer
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 404 | 条目不存在 |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -402,7 +402,7 @@ getRelatedCharactersBySubjectId(subjectId: number): Promise<ClientResult<Related
 ### 参数
 
 | 参数 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `subjectId` | `number` | 条目 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -411,7 +411,7 @@ getRelatedCharactersBySubjectId(subjectId: number): Promise<ClientResult<Related
 `RelatedCharacter[]`，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 角色 ID |
 | `name` | `string` | 角色名 |
 | `type` | `number` | 类型（1=角色 2=机体 3=舰船 4=组织） |
@@ -451,7 +451,7 @@ getRelatedSubjectsBySubjectId(subjectId: number): Promise<ClientResult<V0Subject
 ### 参数
 
 | 参数 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `subjectId` | `number` | 条目 ID |
 
 <!-- markdownlint-disable-next-line MD024 -->
@@ -460,7 +460,7 @@ getRelatedSubjectsBySubjectId(subjectId: number): Promise<ClientResult<V0Subject
 `V0SubjectRelation[]`，每项包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 关联条目 ID |
 | `type` | `number` | 条目类型 |
 | `name` | `string` | 原名 |

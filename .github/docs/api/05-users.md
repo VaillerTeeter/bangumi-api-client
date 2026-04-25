@@ -23,7 +23,7 @@ const bgmAuth = createBangumiClient({ token: 'your-access-token' });
 ## 接口列表
 
 | # | 方法 | HTTP | 路径 | 是否需要认证 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `getUserByName()` | GET | `/v0/users/{username}` | 否 |
 | 2 | `getUserAvatarByName()` | GET | `/v0/users/{username}/avatar` | 否 |
 | 3 | `getMyself()` | GET | `/v0/me` | **是** |
@@ -45,7 +45,7 @@ getUserByName(username: string): Promise<ClientResult<User>>
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名（非 UID） |
 
 ### 返回
@@ -53,7 +53,7 @@ getUserByName(username: string): Promise<ClientResult<User>>
 `User` 对象，包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 用户 UID |
 | `username` | `string` | 用户名 |
 | `nickname` | `string` | 昵称 |
@@ -64,7 +64,7 @@ getUserByName(username: string): Promise<ClientResult<User>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `username` 超过长度限制 |
 | 404 | 用户不存在 |
 
@@ -103,14 +103,14 @@ getUserAvatarByName(
 ### 参数
 
 | 参数 | 类型 | 必填 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `username` | `string` | 是 | 用户名 |
 | `type` | `string` | 是 | 头像尺寸规格 |
 
 ### 头像尺寸参考
 
 | 值 | 说明 |
-|---|---|
+| --- | --- |
 | `small` | 小（列表缩略图） |
 | `medium` | 中 |
 | `large` | 大（原图） |
@@ -119,7 +119,7 @@ getUserAvatarByName(
 ### 返回
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `imageUrl` | `string \| undefined` | 头像最终 URL；失败时为 `undefined` |
 | `error` | `unknown` | 错误信息（成功时为 `undefined`） |
 | `response` | `Response` | Fetch Response 对象 |
@@ -129,7 +129,7 @@ getUserAvatarByName(
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 400 | `username` 超过长度限制 |
 | 404 | 用户不存在 |
 
@@ -165,7 +165,7 @@ getMyself(): Promise<ClientResult<GetMyselfResponse>>
 `GetMyselfResponse` 对象，在 `User` 基础上额外包含：
 
 | 字段 | 类型 | 说明 |
-|---|---|---|
+| --- | --- | --- |
 | `id` | `number` | 用户 UID |
 | `username` | `string` | 用户名 |
 | `nickname` | `string` | 昵称 |
@@ -182,7 +182,7 @@ getMyself(): Promise<ClientResult<GetMyselfResponse>>
 ### 错误
 
 | 状态码 | 含义 |
-|---|---|
+| --- | --- |
 | 401 | 未提供 Token 或 Token 无效 |
 
 <!-- markdownlint-disable-next-line MD024 -->
