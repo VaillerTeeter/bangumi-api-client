@@ -40,7 +40,7 @@ git checkout -b feat/your-feature-name
 
 # 2. 完成修改，提交
 git add .
-git commit -m "feat: 描述本次改动"
+git commit -m "feat: describe your change"
 
 # 3. 推送
 git push origin feat/your-feature-name
@@ -65,7 +65,7 @@ gh pr create --title "标题" --body "内容" --base master
 | `style:` | 代码格式调整（不影响逻辑） |
 | `test:` | 添加或修改测试 |
 
-示例：`feat: 添加 Python 示例代码`
+示例：`feat: add Python example code`
 
 ---
 

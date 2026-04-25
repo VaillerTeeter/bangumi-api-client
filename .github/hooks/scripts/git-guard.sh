@@ -8,7 +8,7 @@ set -euo pipefail
 INPUT=$(cat)
 
 # 提取 toolName 和 command（兼容解析失败的情况）
-TOOL_NAME=$(echo "$INPUT" | python3 -c "
+TOOL_NAME=$(printf '%s' "$INPUT" | python3 -c "
 import sys, json
 try:
     d = json.load(sys.stdin)
@@ -17,7 +17,7 @@ except Exception:
     print('')
 " 2>/dev/null || echo "")
 
-COMMAND=$(echo "$INPUT" | python3 -c "
+COMMAND=$(printf '%s' "$INPUT" | python3 -c "
 import sys, json
 try:
     d = json.load(sys.stdin)
@@ -57,7 +57,7 @@ if [ "$TOOL_NAME" = "run_in_terminal" ]; then
 elif echo "$TOOL_NAME" | grep -qiE '^mcp_github_(create_pull_request|merge_pull_request|push_files|create_or_update_file|create_branch|create_repository|fork_repository|update_pull_request_branch|create_pull_request_review|add_issue_comment|update_issue|create_issue)$'; then
 
   # 提取关键参数作为摘要展示
-  COMMAND=$(echo "$INPUT" | python3 -c "
+  COMMAND=$(printf '%s' "$INPUT" | python3 -c "
 import sys, json
 try:
     d = json.load(sys.stdin)
@@ -75,16 +75,18 @@ else
   exit 0
 fi
 
-python3 -c "
-import json
+REASON="$REASON" COMMAND="$COMMAND" python3 -c "
+import json, os
+reason = os.environ.get('REASON', '')
+command = os.environ.get('COMMAND', '')
 output = {
     'hookSpecificOutput': {
         'hookEventName': 'PreToolUse',
         'permissionDecision': 'ask',
         'permissionDecisionReason': (
             '⛔ 检测到需要用户明确授权的操作\n'
-            '类型: $REASON\n'
-            '命令: $COMMAND\n\n'
+            '类型: ' + reason + '\n'
+            '命令: ' + command + '\n\n'
             '根据项目规范，AI 不得自行发起此类操作。\n'
             '请确认：你是否已明确指示执行此命令？'
         )

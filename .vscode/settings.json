@@ -70,7 +70,7 @@
     // ⚠️ 写操作（create / update / merge / push）故意不加，保持手动确认
   ],
 
-  // Agent 模式单次会话最大自动请求次数（1 = 每次工具调用后必须停下等待用户确认）
+  // Agent 模式单次会话最大自动请求次数（当前设为 1000，允许单次会话连续执行多个工具调用；若设为 1，则每次工具调用后都必须停下等待用户确认）
   "chat.agent.maxRequests": 1000,
 
   // 显式声明远程 JSON Schema，避免 VS Code JSON 语言服务器报"不受信任"警告
@@ -91,7 +91,6 @@
   ],
 
   "cSpell.words": [
-    "AKIAIOSFODNN",
     "airdate",
     "Anson",
     "apikey",
