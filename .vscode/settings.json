@@ -48,21 +48,7 @@
     "mcp_github_list_commits",
     "mcp_github_search_repositories",
     "mcp_github_search_code",
-    "mcp_github_search_users",
-    "list_issues",
-    "get_issue",
-    "search_issues",
-    "list_pull_requests",
-    "get_pull_request",
-    "get_pull_request_files",
-    "get_pull_request_status",
-    "get_pull_request_reviews",
-    "get_pull_request_comments",
-    "get_file_contents",
-    "list_commits",
-    "search_repositories",
-    "search_code",
-    "search_users"
+    "mcp_github_search_users"
     // ⚠️ 写操作（create / update / merge / push）故意不加，保持手动确认
   ],
 
