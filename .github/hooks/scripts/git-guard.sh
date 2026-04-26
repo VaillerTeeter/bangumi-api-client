@@ -61,7 +61,11 @@ def tokenize_segment(seg):
     try:
         return shlex.split(seg, posix=True)
     except ValueError:
-        return seg.split()
+        # 引号不匹配或解析失败时无法安全分词；保守地触发拦截而非降级到 seg.split()
+        # seg.split() 会忽略引号结构，可能导致 bash -c 'git push && echo ok' 中的
+        # git push 被识别错误，从而绕过检测
+        print('命令含不匹配引号或无法安全解析，保守拦截')
+        sys.exit(0)
 
 def strip_env_assignments(tokens):
     idx = 0
