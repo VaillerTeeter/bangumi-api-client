@@ -141,18 +141,18 @@ echo '{"toolName":"run_in_terminal","toolInput":{"command":"npm install"}}' \
 
 ## 维护说明
 
-- 新增 `run_in_terminal` 拦截规则：在 `git-guard.sh` 的 `checks = [...]` 列表中追加一个二元组 `(正则, 原因说明)`，遵循现有条目格式
+- 新增 `run_in_terminal` 拦截规则：在 `git-guard.sh` 中内嵌的 Python 检测逻辑里，在 `for seg in segments` 循环的 `if tool == 'git'` / `elif tool == 'gh'` 分支中，按现有格式追加新的命令匹配条件与对应原因说明
 - 新增 MCP 工具拦截：扩展 `elif printf '%s' "$TOOL_NAME" | grep -qiE '...'` 中的正则，追加新工具名
 - 修改超时：调整 `git-guard.json` 中的 `timeout`（单位：秒，当前 5s）
 - 此 Hook 对全体团队成员生效（配置存于 `.github/hooks/`，随仓库提交）
 
 ## 平台说明
 
-Hook 脚本（`git-guard.sh`）依赖 `bash`，在 Linux / macOS 上开箱即用。
+Hook 脚本（`git-guard.sh`）依赖 `bash` 和 `python3`，在 Linux / macOS 上通常开箱即用。
 
-**Windows 前提条件：** 需要在 PATH 中可用的 `bash`，通过以下任一方式满足：
+**Windows 前提条件：** 需要在 PATH 中同时可用的 `bash` 和 `python3`，可通过以下方式满足：
 
-- [Git for Windows](https://gitforwindows.org/)（安装时勾选"Git Bash"并添加到 PATH）
-- WSL（Windows Subsystem for Linux）
+- [Git for Windows](https://gitforwindows.org/)（安装时勾选"Git Bash"并添加到 PATH），或使用 WSL（Windows Subsystem for Linux）提供 `bash`
+- 安装 [Python 3](https://www.python.org/downloads/windows/) 并勾选添加入 PATH，确保终端中可执行 `python3`（若环境默认提供的是 `py`，请额外配置 `python3` 命令）
 
-如果 `bash` 不在 PATH 中，Claude Code 会在加载 Hook 时报错。
+如果 `bash` 或 `python3` 不在 PATH 中，Claude Code 在加载或执行 Hook 时可能报错。

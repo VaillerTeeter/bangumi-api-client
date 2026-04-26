@@ -36,8 +36,9 @@ if [ "$TOOL_NAME" = "run_in_terminal" ]; then
 import os, re, shlex, sys
 
 cmd = os.environ.get('COMMAND', '')
-# 按常见 shell 操作符拆分
-segments = re.split(r'&&|\|\||[;|\n]', cmd)
+# 按常见 shell 操作符拆分；优先匹配多字符操作符（&&、||），再匹配单字符（;、|、&、换行）
+# 包含单个 & 以阻断 sleep 1 & git push 等后台执行绕过
+segments = re.split(r'&&|\|\||[;|&\n]', cmd)
 
 env_assign_re = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*=.*$')
 
@@ -52,6 +53,23 @@ def strip_env_assignments(tokens):
     while idx < len(tokens) and env_assign_re.match(tokens[idx]):
         idx += 1
     return tokens[idx:]
+
+# env / command / sudo / xargs 等包装命令本身不是目标工具，需剥离后再检测
+WRAPPER_CMDS = {'env', 'command', 'sudo', 'xargs'}
+
+def strip_wrappers(tokens):
+    # 跳过 env/command/sudo/xargs 等包装命令及其标志，找到真正的可执行文件
+    while tokens:
+        if tokens[0].lower() not in WRAPPER_CMDS:
+            break
+        tokens = tokens[1:]
+        # 跳过包装命令自身的标志（以 - 开头）
+        while tokens and tokens[0].startswith('-'):
+            tokens = tokens[1:]
+        # 剥离包装命令后可能跟随的 VAR=val 形式（env VAR=val git push）
+        while tokens and env_assign_re.match(tokens[0]):
+            tokens = tokens[1:]
+    return tokens
 
 def skip_git_global_options(tokens):
     idx = 1
@@ -125,6 +143,7 @@ for seg in segments:
     if not seg:
         continue
     tokens = strip_env_assignments(tokenize_segment(seg))
+    tokens = strip_wrappers(tokens)
     if not tokens:
         continue
     tool = tokens[0].lower()
