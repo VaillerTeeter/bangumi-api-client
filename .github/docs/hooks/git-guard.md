@@ -141,7 +141,7 @@ echo '{"toolName":"run_in_terminal","toolInput":{"command":"npm install"}}' \
 
 ## 维护说明
 
-- 新增 `run_in_terminal` 拦截规则：在 `git-guard.sh` 中内嵌的 Python 检测逻辑里，在 `for seg in segments` 循环的 `if tool == 'git'` / `elif tool == 'gh'` 分支中，按现有格式追加新的命令匹配条件与对应原因说明
+- 新增 `run_in_terminal` 拦截规则：在 `git-guard.sh` 中内嵌的 Python 检测逻辑里，在 `for seg_tokens in split_shell_segments(cmd)` 循环的 `if tool == 'git'` / `elif tool == 'gh'` 分支中，按现有格式追加新的命令匹配条件与对应原因说明
 - 新增 MCP 工具拦截：扩展 `elif printf '%s' "$TOOL_NAME" | grep -qiE '...'` 中的正则，追加新工具名
 - 修改超时：调整 `git-guard.json` 中的 `timeout`（单位：秒，当前 5s）
 - 此 Hook 对全体团队成员生效（配置存于 `.github/hooks/`，随仓库提交）
