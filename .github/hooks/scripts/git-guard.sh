@@ -5,6 +5,21 @@
 
 set -euo pipefail
 
+# python3 是本脚本的硬性依赖；缺失时 fall-back 到保守 ask 而非静默失效
+emit_conservative_ask() {
+  local reason="${1:-python3 is required by git-guard.sh but is unavailable or invalid}"
+  printf '%s\n' "{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"$reason\"}}"
+  exit 0
+}
+
+if ! command -v python3 >/dev/null 2>&1; then
+  emit_conservative_ask "python3 is required by git-guard.sh but is not installed"
+fi
+
+if ! python3 -c 'pass' >/dev/null 2>&1; then
+  emit_conservative_ask "python3 is required by git-guard.sh but failed a runtime check"
+fi
+
 INPUT=$(cat)
 
 # 提取 toolName 和 command（兼容解析失败的情况）
