@@ -56,6 +56,15 @@ if [ "$TOOL_NAME" = "run_in_terminal" ]; then
   REASON=$(COMMAND="$COMMAND" python3 -c "
 import os, re, shlex, sys
 
+def fail_closed_on_unhandled_exception(exc_type, exc, tb):
+    try:
+        sys.stdout.write('命令解析失败，保守拦截\n')
+        sys.stdout.flush()
+    finally:
+        os._exit(0)
+
+sys.excepthook = fail_closed_on_unhandled_exception
+
 cmd = os.environ.get('COMMAND', '')
 
 env_assign_re = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*=.*$')

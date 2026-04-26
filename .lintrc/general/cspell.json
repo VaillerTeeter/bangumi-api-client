@@ -84,7 +84,8 @@
     "itokens",
     "toks",
     "chdir",
-    "procs"
+    "procs",
+    "excepthook"
   ],
 
   "flagWords": [
