@@ -80,10 +80,10 @@
 
 | 类型 | 工具 |
 | --- | --- |
-| PR 写操作 | `create_pull_request` / `merge_pull_request` / `create_pull_request_review` / `update_pull_request_branch` |
-| 文件推送 | `push_files` / `create_or_update_file` |
-| 分支 / 仓库 | `create_branch` / `create_repository` / `fork_repository` |
-| Issue 写操作 | `create_issue` / `update_issue` / `add_issue_comment` |
+| PR 写操作 | `mcp_github_create_pull_request` / `mcp_github_merge_pull_request` / `mcp_github_create_pull_request_review` / `mcp_github_update_pull_request_branch` |
+| 文件推送 | `mcp_github_push_files` / `mcp_github_create_or_update_file` |
+| 分支 / 仓库 | `mcp_github_create_branch` / `mcp_github_create_repository` / `mcp_github_fork_repository` |
+| Issue 写操作 | `mcp_github_create_issue` / `mcp_github_update_issue` / `mcp_github_add_issue_comment` |
 
 只读工具（`get_*` / `list_*` / `search_*`）在 `.vscode/settings.json` 中配置为自动批准，无需确认。
 
