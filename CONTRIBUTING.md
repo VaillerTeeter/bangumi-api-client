@@ -45,8 +45,11 @@ git commit -m "feat: describe your change"
 # 3. 推送
 git push origin feat/your-feature-name
 
-# 4. 创建 PR
-gh pr create --title "标题" --body "内容" --base master
+# 4. 创建 PR（需先写 body 文件，等待确认后再执行）
+# 参考 .github/instructions/git-workflow.instructions.md 中的 PR Workflow 规范
+# a. 将 PR body 写入 tmp/pr-<number>-body.md（按 .github/PULL_REQUEST_TEMPLATE.md 填写）
+# b. 确认内容后执行：
+gh pr create --title "标题" --body-file tmp/pr-<number>-body.md --base master
 ```
 
 ---

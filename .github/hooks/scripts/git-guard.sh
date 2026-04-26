@@ -77,6 +77,15 @@ def strip_env_assignments(tokens):
 WRAPPER_CMDS = {'env', 'command', 'sudo', 'xargs'}
 # bash/sh/zsh 等 shell 包装命令：遇到 -c 时递归解析其后的命令字符串
 SHELL_CMDS = {'bash', 'sh', 'zsh', 'dash'}
+# 每个包装命令中需要跳过其后一个参数的标志（否则参数值会被误识别为工具名）
+WRAPPER_FLAGS_WITH_VALUE = {
+    'sudo':    {'-u', '--user', '-g', '--group', '-p', '--prompt', '-C', '--chdir',
+                '-c', '-r', '--role', '-t', '--type', '-U', '--other-user', '-T'},
+    'env':     {'-u', '--unset', '-C', '--chdir', '-S', '--split-string'},
+    'xargs':   {'-I', '-n', '--max-args', '-P', '--max-procs', '-s', '--max-chars',
+                '-a', '--arg-file', '-d', '--delimiter', '-E', '-L', '--max-lines'},
+    'command': set(),
+}
 
 def strip_wrappers(tokens):
     # 跳过 env/command/sudo/xargs 等包装命令及其标志，找到真正的可执行文件
@@ -107,10 +116,18 @@ def strip_wrappers(tokens):
             return
         if head not in WRAPPER_CMDS:
             break
+        value_flags = WRAPPER_FLAGS_WITH_VALUE.get(head, set())
         tokens = tokens[1:]
-        # 跳过包装命令自身的标志（以 - 开头）
-        while tokens and tokens[0].startswith('-'):
-            tokens = tokens[1:]
+        # 跳过包装命令自身的标志和对应参数就给
+        while tokens:
+            tok = tokens[0]
+            if not tok.startswith('-'):
+                break
+            tokens = tokens[1:]                  # 消耗标志本身
+            if tok in value_flags:
+                if tokens:                       # 消耗该标志的参数值
+                    tokens = tokens[1:]
+            # --flag=value 形式已包含在 tok 中，无需额外处理
         # 剥离包装命令后可能跟随的 VAR=val 形式（env VAR=val git push）
         while tokens and env_assign_re.match(tokens[0]):
             tokens = tokens[1:]
@@ -204,12 +221,17 @@ def inspect_tokens(tokens):
             if tag_next not in tag_readonly_flags and not tag_next.startswith('--sort=') and not tag_next.startswith('--format=') and not tag_next.startswith('--contains='):
                 print('git tag 写操作（创建/删除标签）')
                 sys.exit(0)
-        if subcmd == 'branch' and next_arg in {'-d', '-D', '--delete'}:
-            print('git 删除分支')
-            sys.exit(0)
-        if subcmd == 'stash' and next_arg in {'drop', 'pop', 'clear'}:
-            print('git stash 销毁操作')
-            sys.exit(0)
+        if subcmd == 'branch':
+            branch_args = [a.lower() for a in rest[1:]]
+            if any(a in {'-d', '-D', '--delete'} for a in branch_args):
+                print('git 删除分支')
+                sys.exit(0)
+        if subcmd == 'stash':
+            # 在所有参数中找第一个非标志参数作为 stash 子命令
+            stash_verb = next((a.lower() for a in rest[1:] if not a.startswith('-')), '')
+            if stash_verb in {'drop', 'pop', 'clear'}:
+                print('git stash 销毁操作')
+                sys.exit(0)
     elif tool == 'gh':
         rest = skip_gh_global_options(tokens)
         if len(rest) >= 2 and rest[0].lower() == 'pr' and rest[1].lower() in {'create', 'merge', 'close', 'edit'}:

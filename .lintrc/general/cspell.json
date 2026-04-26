@@ -82,7 +82,9 @@
     "segs",
     "iseg",
     "itokens",
-    "toks"
+    "toks",
+    "chdir",
+    "procs"
   ],
 
   "flagWords": [
