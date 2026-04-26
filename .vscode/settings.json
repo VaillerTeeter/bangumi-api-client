@@ -199,6 +199,10 @@
     "vite",
     "shlex",
     "subcmd",
-    "startswith"
+    "startswith",
+    "segs",
+    "iseg",
+    "itokens",
+    "toks"
   ]
 }

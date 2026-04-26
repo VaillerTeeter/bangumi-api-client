@@ -78,7 +78,11 @@
     "tinyexec",
     "AKIAIOSFODNN",
     "shlex",
-    "subcmd"
+    "subcmd",
+    "segs",
+    "iseg",
+    "itokens",
+    "toks"
   ],
 
   "flagWords": [
