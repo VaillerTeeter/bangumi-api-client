@@ -56,11 +56,37 @@ def strip_env_assignments(tokens):
 
 # env / command / sudo / xargs 等包装命令本身不是目标工具，需剥离后再检测
 WRAPPER_CMDS = {'env', 'command', 'sudo', 'xargs'}
+# bash/sh/zsh 等 shell 包装命令：遇到 -c 时递归解析其后的命令字符串
+SHELL_CMDS = {'bash', 'sh', 'zsh', 'dash'}
 
 def strip_wrappers(tokens):
     # 跳过 env/command/sudo/xargs 等包装命令及其标志，找到真正的可执行文件
     while tokens:
-        if tokens[0].lower() not in WRAPPER_CMDS:
+        head = tokens[0].lower()
+        if head in SHELL_CMDS:
+            # 在剩余 token 中寻找 -c，其后的 token 是要执行的 shell 字符串
+            i = 1
+            while i < len(tokens):
+                tok = tokens[i]
+                # 匹配独立的 -c 或合并标志中含 c（如 -lc、-ic）
+                is_c_flag = (tok == '-c') or (tok.startswith('-') and not tok.startswith('--') and 'c' in tok[1:])
+                if is_c_flag and i + 1 < len(tokens):
+                    # 递归分析 -c 后的命令字符串
+                    inner_cmd = tokens[i + 1]
+                    inner_segs = re.split(r'&&|\|\||[;|&\n]', inner_cmd)
+                    for iseg in inner_segs:
+                        iseg = iseg.strip()
+                        if not iseg:
+                            continue
+                        itokens = strip_env_assignments(tokenize_segment(iseg))
+                        yield from strip_wrappers(itokens)
+                    return
+                if not tokens[i].startswith('-'):
+                    break
+                i += 1
+            # 没有 -c，shell 本身不是写操作目标，停止
+            return
+        if head not in WRAPPER_CMDS:
             break
         tokens = tokens[1:]
         # 跳过包装命令自身的标志（以 - 开头）
@@ -69,7 +95,8 @@ def strip_wrappers(tokens):
         # 剥离包装命令后可能跟随的 VAR=val 形式（env VAR=val git push）
         while tokens and env_assign_re.match(tokens[0]):
             tokens = tokens[1:]
-    return tokens
+    if tokens:
+        yield tokens
 
 def skip_git_global_options(tokens):
     idx = 1
@@ -138,27 +165,26 @@ def skip_gh_global_options(tokens):
         break
     return tokens[idx:]
 
-for seg in segments:
-    seg = seg.strip()
-    if not seg:
-        continue
-    tokens = strip_env_assignments(tokenize_segment(seg))
-    tokens = strip_wrappers(tokens)
-    if not tokens:
-        continue
-    tool = tokens[0].lower()
+def inspect_tokens(tokens):
+    tool = tokens[0].lower() if tokens else ''
+    if not tool:
+        return
     if tool == 'git':
         rest = skip_git_global_options(tokens)
         if not rest:
-            continue
+            return
         subcmd = rest[0].lower()
         next_arg = rest[1].lower() if len(rest) > 1 else ''
         if subcmd in {'add', 'commit', 'push', 'reset', 'restore', 'rm', 'merge', 'rebase', 'cherry-pick'}:
             print('git 写操作 / 历史变更操作')
             sys.exit(0)
         if subcmd == 'tag' and len(rest) > 1:
-            print('git tag 写操作（创建/删除标签）')
-            sys.exit(0)
+            # 只拦截写操作：-a/-d/-f/-s/-m 等标志，或直接是非只读标志的 tag 名
+            tag_readonly_flags = {'-l', '--list', '-v', '--sort', '--format', '--contains', '--merged', '--no-merged', '--points-at', '--column', '--no-column'}
+            tag_next = rest[1].lower()
+            if tag_next not in tag_readonly_flags and not tag_next.startswith('--sort=') and not tag_next.startswith('--format=') and not tag_next.startswith('--contains='):
+                print('git tag 写操作（创建/删除标签）')
+                sys.exit(0)
         if subcmd == 'branch' and next_arg in {'-d', '-D', '--delete'}:
             print('git 删除分支')
             sys.exit(0)
@@ -179,12 +205,21 @@ for seg in segments:
         if len(rest) >= 2 and rest[0].lower() == 'issue' and rest[1].lower() in {'close', 'delete'}:
             print('gh issue close/delete')
             sys.exit(0)
+
+for seg in segments:
+    seg = seg.strip()
+    if not seg:
+        continue
+    tokens = strip_env_assignments(tokenize_segment(seg))
+    # strip_wrappers 是生成器，每次 yield 一组有效 token；shell -c 场景下递归展开内层命令
+    for toks in strip_wrappers(tokens):
+        inspect_tokens(toks)
 " 2>/dev/null)
 
   [ -z "$REASON" ] && exit 0
 
 # ── 分支 2：GitHub MCP 写操作 ──────────────────────────────────────────────────
-elif printf '%s' "$TOOL_NAME" | grep -qiE '^mcp_github_(create_pull_request|merge_pull_request|push_files|create_or_update_file|create_branch|create_repository|fork_repository|update_pull_request_branch|create_pull_request_review|add_issue_comment|update_issue|create_issue)$'; then
+elif printf '%s' "$TOOL_NAME" | grep -qiE '^mcp_github_((create|merge|push|update)_.+|fork_repository|add_issue_comment)$'; then
 
   # 提取关键参数作为摘要展示
   COMMAND=$(printf '%s' "$INPUT" | python3 -c "
