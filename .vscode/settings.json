@@ -86,6 +86,11 @@
   //   1. 该配置项在 VS Code 扩展中不可靠，可能与扩展内部的配置发现逻辑冲突
   //   2. CI 已通过 --config .lintrc/general/cspell.json 显式传参，两者相互独立
   //   3. 避免在根目录创建额外的 cspell.json（保持目录整洁）
+  //
+  // "AKIAIOSFODNN" 保留原因：
+  //   这是 AWS 官方文档示例 Key ID 的前缀，仅用于文档中的示例说明。
+  //   .lintrc/security/.gitleaks.toml 已在 allowlist 中声明 AKIAIOSFODNN7EXAMPLE，
+  //   gitleaks 不会将其误报为真实密钥泄漏。
   "cSpell.ignorePaths": [
     ".lintrc/general/cspell.json",
   ],
