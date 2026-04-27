@@ -9,7 +9,7 @@ export default defineConfig({
         .filter(([k]) => k.startsWith('BGM_'))
         .map(([k, v]) => [k, v ?? '']),
     ),
-    reporter: 'verbose',
+    reporters: ['verbose'],
     fileParallelism: false,
   },
 });
