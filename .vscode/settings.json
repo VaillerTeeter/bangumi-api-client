@@ -74,7 +74,7 @@
 
   // 防止 cSpell 对 cspell.json 文件本身做拼写检查
   "cSpell.ignorePaths": [
-    ".lintrc/general/cspell.json",
+    ".lintrc/general/cspell.json"
   ],
 
   // Trailing Spaces — 保存时自动删除行尾多余空格
