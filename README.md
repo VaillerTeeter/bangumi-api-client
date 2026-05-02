@@ -250,7 +250,7 @@ npm publish
 ### 本项目
 
 - [bangumi-api-client](https://github.com/VaillerTeeter/bangumi-api-client) — 本仓库
-- [模板仓库 Example-of-Github-Repo]([https://github.com/VaillerTeeter/0-Example](https://github.com/VaillerTeeter/Example-of-Github-Repo)) — CI 配置、lint 规则、Issue/PR 模板、行为准则等通用配置均继承自此仓库
+- [模板仓库 Example-of-Github-Repo](https://github.com/VaillerTeeter/Example-of-Github-Repo) — CI 配置、lint 规则、Issue/PR 模板、行为准则等通用配置均继承自此仓库
 
 ### Bangumi
 
