@@ -1,0 +1,41 @@
+---
+name: Test
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ============================================================
+  # Integration tests — real network requests to api.bgm.tv
+  # ============================================================
+  integration-test:
+    name: Integration Test (Vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run integration tests
+        run: yarn test
+        env:
+          BGM_TOKEN: ${{ secrets.BGM_TOKEN }}
