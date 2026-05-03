@@ -1,6 +1,6 @@
 # GitHub MCP 工具清单
 
-本文档列出当前工作区配置的 GitHub MCP Server（`@modelcontextprotocol/server-github`）所提供的全部 26 个工具。
+本文档列出当前工作区配置的 GitHub MCP Server（`@modelcontextprotocol/server-github`）所提供的工具。
 
 配置文件：[`.vscode/mcp.json`](../../../.vscode/mcp.json)
 
@@ -63,7 +63,6 @@
 | --- | --- |
 | `mcp_github_search_repositories` | 搜索 GitHub 上的仓库 |
 | `mcp_github_search_code` | 在 GitHub 上搜索代码片段 |
-| `mcp_github_search_issues` | 搜索 Issues / PR（同上，复用） |
 | `mcp_github_search_users` | 搜索 GitHub 用户 |
 
 ---
@@ -90,4 +89,4 @@
 ### 让 Copilot 优先使用 MCP
 
 在对话中说「用 MCP」或「通过 GitHub MCP」即可触发。
-也可在 `.github/instructions/git-workflow.instructions.md` 中添加规则，让 Copilot 在所有 GitHub 操作中自动优先使用 MCP 工具。
+`.github/instructions/git-workflow.instructions.md` 中已包含相关规则，让 Copilot 在所有 GitHub 操作中优先使用 MCP 工具。

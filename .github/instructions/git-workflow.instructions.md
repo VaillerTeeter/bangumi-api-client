@@ -78,9 +78,15 @@ PR body MUST follow `.github/PULL_REQUEST_TEMPLATE.md` — all sections required
 If a PR body already exists, MUST append, NEVER overwrite.
 <!-- PR 已有 body 时只能追加，禁止覆盖历史内容 -->
 
-Always use merge commit (the only strategy enabled in repo settings):
+Always use merge commit (the only strategy enabled in repo settings).
 <!-- 仓库设置中只开启了 Allow merge commits，禁止使用 squash 或 rebase -->
-```bash
+Prefer MCP; fall back to `gh` only when MCP is unavailable:
+
+```text
+# 1st choice — MCP
+mcp_github_merge_pull_request  number=<number>  merge_method=merge
+
+# 2nd choice — gh CLI fallback
 gh pr merge <number> --merge --delete-branch
 ```
 
@@ -100,7 +106,7 @@ Always prefer GitHub MCP tools over `gh` CLI for any GitHub operation (issues, P
 Always load the auth token from `.env` before running any `gh` command:
 <!-- 执行任何 gh 命令前必须先加载 .env 中的 GH_TOKEN -->
 ```bash
-export GH_TOKEN="$(grep '^GH_TOKEN=' .env | cut -d= -f2-)"
+export GH_TOKEN="$(grep '^GH_TOKEN=' .env | cut -d= -f2- | tr -d '\r')"
 ```
 
 NEVER use `curl https://api.github.com/...` — use `gh api ...` instead.

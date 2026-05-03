@@ -23,7 +23,7 @@ cp .env.example .env
 # 编辑 .env，填入你的 GH_TOKEN
 
 # 3. 加载 Token
-export GH_TOKEN="$(grep "^GH_TOKEN=" .env | cut -d= -f2-)"
+export GH_TOKEN="$(grep "^GH_TOKEN=" .env | cut -d= -f2- | tr -d '\r')"
 ```
 
 ---

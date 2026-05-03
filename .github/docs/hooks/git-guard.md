@@ -14,27 +14,27 @@
 ## 工作原理
 
 ```text
-AI 发起工具调用
+AI invokes a tool call
         │
         ▼
-  git-guard.sh 读取 stdin JSON
+  git-guard.sh reads stdin JSON
         │
-   ┌────┴────────────────────────────────────┐
-   │                                         │
-toolName ==                      toolName 匹配
-run_in_terminal?                 mcp_github_* 写操作?
-   │                                         │
-   ├── 否 → exit 0（放行）       ├── 否 → exit 0（放行）
-   └── 是 → shlex 分词并按段解析  └── 是 → 提取参数摘要
-              command                         │
-              │                               │
-        检查子命令 / 选项是否                   │
-        命中拦截规则?                          │
-              ├── 否 → exit 0（放行）          │
-              └── 是 ──────────────────────►──┘
-                            │
-                返回 permissionDecision: "ask"
-                （Copilot 弹出用户确认框）
+   ┌────┴───────────────────────────────────────┐
+   │                                            │
+toolName ==                                    toolName matches
+run_in_terminal?                               mcp_github_* write op?
+   │                                            │
+   ├── no  → exit 0 (allow)                     ├── no  → exit 0 (allow)
+   └── yes → shlex-split                        └── yes → extract params
+              command                                       │
+              │                                             │
+        check sub-cmd /                                     │
+        options against rules?                              │
+              ├── no  → exit 0 (allow)                      │
+              └── yes ───────────────────────────────────►──┘
+                                 │
+                 return permissionDecision: "ask"
+                 (Copilot prompts for confirmation)
 ```
 
 Hook 返回 `ask` 时，Copilot 会暂停执行并弹窗，由用户决定是否放行。用户拒绝后 AI 不会重试。

@@ -9,9 +9,14 @@ rules:
   line-length:
     max: 200
 
+  # 冒号：允许最多两个空格（用于 YAML 对齐场景）
+  colons:
+    max-spaces-after: 2
+
   # 布尔值：允许 on 用于 GitHub Actions 的 on: 触发器
   truthy:
     allowed-values: ["true", "false", "on"]
+    check-keys: false
 
   # 注释：允许紧贴内容后的注释
   comments:

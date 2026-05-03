@@ -1,6 +1,6 @@
 # CI 检查说明
 
-所有 Pull Request 合并到 `master` 前，必须通过以下自动检查（定义于 [.github/workflows/lint.yml](../../workflows/lint.yml)）。
+所有 Pull Request 合并到 `master` 前，必须通过以下自动检查（定义于 [.github/workflows/lint.yml](../../../.github/workflows/lint.yml)）：
 
 ## 触发时机
 
@@ -11,8 +11,8 @@
 
 ## Markdown Lint
 
-**工具**：[markdownlint-cli2-action@v19](https://github.com/DavidAnson/markdownlint-cli2-action)  
-**配置**：[.lintrc/docs/markdown/.markdownlint.json](../../../.lintrc/docs/markdown/.markdownlint.json)  
+**工具**：[markdownlint-cli2-action@v23](https://github.com/DavidAnson/markdownlint-cli2-action)
+**配置**：[.lintrc/docs/markdown/.markdownlint.json](../../../.lintrc/docs/markdown/.markdownlint.json)
 **扫描范围**：`**/*.md`
 
 | 规则 | 状态 | 说明 |
@@ -26,8 +26,8 @@
 
 ## YAML Lint
 
-**工具**：[yamllint](https://yamllint.readthedocs.io/) 1.35.1  
-**配置**：[.lintrc/general/.yamllint.yml](../../../.lintrc/general/.yamllint.yml)  
+**工具**：[yamllint](https://yamllint.readthedocs.io/) 1.35.1
+**配置**：[.lintrc/general/.yamllint.yml](../../../.lintrc/general/.yamllint.yml)
 **扫描范围**：所有 `*.yml` / `*.yaml`，排除 `node_modules`、`vendor`、`dist`
 
 | 规则 | 配置 | 说明 |
@@ -41,7 +41,7 @@
 
 ## TypeScript Lint
 
-**工具**：ESLint 8 + Prettier 3 + tsc（`yarn typecheck`）  
+**工具**：ESLint 8 + Prettier 3 + tsc（`yarn typecheck`）
 **配置**：
 
 - ESLint：[.lintrc/frontend/typescript/.eslintrc-ts.json](../../../.lintrc/frontend/typescript/.eslintrc-ts.json)
@@ -83,7 +83,7 @@
 
 ## Secret Scan
 
-**工具**：[Gitleaks](https://github.com/gitleaks/gitleaks-action) v2  
+**工具**：[Gitleaks](https://github.com/gitleaks/gitleaks-action) v2
 **配置**：[.lintrc/security/.gitleaks.toml](../../../.lintrc/security/.gitleaks.toml)
 
 - 基于默认规则集（`useDefault = true`）扫描提交历史中的密钥泄漏
@@ -94,8 +94,8 @@
 
 ## Commit Message Lint
 
-**工具**：[@commitlint/cli](https://commitlint.js.org/) 19.6.0  
-**配置**：[.lintrc/git/.commitlintrc.cjs](../../../.lintrc/git/.commitlintrc.cjs)  
+**工具**：[@commitlint/cli](https://commitlint.js.org/) 19.6.0
+**配置**：[.lintrc/git/.commitlintrc.cjs](../../../.lintrc/git/.commitlintrc.cjs)
 **触发**：仅在 PR 时运行（不检查直接 push 的提交）
 
 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范：
@@ -103,8 +103,8 @@
 | 规则 | 配置 | 说明 |
 | --- | --- | --- |
 | type 枚举 | feat/fix/docs/style/refactor/perf/test/build/ci/chore/revert/security/deps | 必须使用规定类型 |
-| subject 长度 | 10–72 字符 | |
-| header 长度 | 最长 100 字符 | |
+| subject 长度 | 10–100 字符 | |
+| header 长度 | 最长 120 字符 | header = type(scope): subject，需为 subject 前缀留出空间 |
 | header 最短 | 15 字符 | 防止过于简短的描述 |
 | subject 大小写 | 禁止首字母大写、PascalCase、全大写 | |
 
@@ -112,8 +112,8 @@
 
 ## Spelling Check
 
-**工具**：[cspell](https://cspell.org/) 8.17.1  
-**配置**：[.lintrc/general/cspell.json](../../../.lintrc/general/cspell.json)  
+**工具**：[cspell](https://cspell.org/) 8.17.1
+**配置**：[.lintrc/general/cspell.json](../../../.lintrc/general/cspell.json)
 **扫描范围**：全仓库（排除 `node_modules`、`.git`、`dist`、`.lintrc`、`src/client`、锁文件）
 
 - 使用英语词典（`en_US`）+ 软件术语、TypeScript、Node.js、npm 等专业词典
@@ -125,7 +125,7 @@
 
 ## Dead Code Detection
 
-**工具**：[Knip](https://knip.dev/) 5.38.0  
+**工具**：[Knip](https://knip.dev/) 5.38.0
 **配置**：[.lintrc/frontend/knip.json](../../../.lintrc/frontend/knip.json)
 
 - **入口**：`src/index.ts`，从入口追溯可达性
@@ -138,7 +138,7 @@
 
 ## File Naming Check
 
-**工具**：[ls-lint](https://ls-lint.org/) 2.3.1  
+**工具**：[ls-lint](https://ls-lint.org/) 2.3.1
 **配置**：[.lintrc/general/.ls-lint.yml](../../../.lintrc/general/.ls-lint.yml)
 
 | 文件类型 | 规则 | 示例 |

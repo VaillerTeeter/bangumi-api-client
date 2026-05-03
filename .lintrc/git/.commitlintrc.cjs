@@ -37,7 +37,9 @@ module.exports = {
     'subject-min-length': [2, 'always', 10],
     'subject-max-length': [2, 'always', 100],
 
-    'header-max-length': [2, 'always', 100],
+    // header = type(scope): subject, so header-max-length must be larger than
+    // subject-max-length to leave room for the type/scope prefix (e.g. "feat(scope): ")
+    'header-max-length': [2, 'always', 120],
     'header-min-length': [2, 'always', 15],
 
     'body-leading-blank': [2, 'always'],

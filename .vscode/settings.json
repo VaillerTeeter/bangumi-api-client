@@ -16,7 +16,7 @@
     "run_in_terminal:git log",
     "run_in_terminal:git diff",
     "run_in_terminal:git status",
-    // git branch 只批准精确列出操作（不加通配符，避免 -v -d 等删除命令被误批）
+    // git branch 只批准精确列出操作（不加通配符，避免 -d / -D / --delete 等删除命令被误批）
     "run_in_terminal:git branch",
     "run_in_terminal:git branch -v",
     "run_in_terminal:git branch -a",
@@ -32,8 +32,6 @@
     // 终端只读命令 — Node / npm
     "run_in_terminal:node --version",
     "run_in_terminal:npm list",
-    "run_in_terminal:npm outdated",
-    "run_in_terminal:npx tsc --noEmit",
     // GitHub MCP — 只读类（查询不修改）
     "mcp_github_list_issues",
     "mcp_github_get_issue",

@@ -140,7 +140,7 @@ def strip_wrappers(tokens):
             break
         value_flags = WRAPPER_FLAGS_WITH_VALUE.get(head, set())
         tokens = tokens[1:]
-        # 跳过包装命令自身的标志和对应参数就给
+        # 跳过包装命令自身的标志和对应参数即可
         while tokens:
             tok = tokens[0]
             if not tok.startswith('-'):
@@ -224,7 +224,16 @@ def skip_gh_global_options(tokens):
     return tokens[idx:]
 
 def inspect_tokens(tokens):
-    tool = tokens[0].lower() if tokens else ''
+    if not tokens:
+        return
+    # Normalize: strip leading backslash, normalize Windows separators,
+    # take basename, then strip .exe suffix.
+    # This prevents bypasses like /usr/bin/git, C:\Program Files\Git\bin\git.exe,
+    # .\git.exe, git.exe, or \git.
+    tool_raw = tokens[0].lstrip('\\').replace('\\', '/')
+    tool = os.path.basename(tool_raw).lower()
+    if tool.endswith('.exe'):
+        tool = tool[:-4]
     if not tool:
         return
     if tool == 'git':
