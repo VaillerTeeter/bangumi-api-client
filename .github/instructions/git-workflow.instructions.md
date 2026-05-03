@@ -100,7 +100,7 @@ Always prefer GitHub MCP tools over `gh` CLI for any GitHub operation (issues, P
 Always load the auth token from `.env` before running any `gh` command:
 <!-- 执行任何 gh 命令前必须先加载 .env 中的 GH_TOKEN -->
 ```bash
-export GH_TOKEN="$(grep '^GH_TOKEN=' .env | cut -d= -f2-)"
+export GH_TOKEN="$(grep '^GH_TOKEN=' .env | cut -d= -f2- | tr -d '\r')"
 ```
 
 NEVER use `curl https://api.github.com/...` — use `gh api ...` instead.
