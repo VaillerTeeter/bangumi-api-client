@@ -12,7 +12,7 @@
 
 ## Lint 工作流
 
-所有 Pull Request 合并到 `master` 前，必须通过以下自动检查（定义于 [.github/workflows/lint.yml](../../../.github/workflows/lint.yml)）：
+所有 Pull Request 合并到 `master` 前，必须通过适用的自动检查工作流，包括 [.github/workflows/lint.yml](../../../.github/workflows/lint.yml) 和 [.github/workflows/test.yml](../../../.github/workflows/test.yml)；以下内容说明的是 `lint.yml` 中定义的检查：
 
 ### 触发时机
 
