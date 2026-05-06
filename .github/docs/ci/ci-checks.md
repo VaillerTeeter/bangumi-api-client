@@ -10,11 +10,11 @@
 
 ---
 
-# Lint 工作流
+## Lint 工作流
 
 所有 Pull Request 合并到 `master` 前，必须通过以下自动检查（定义于 [.github/workflows/lint.yml](../../../.github/workflows/lint.yml)）：
 
-## 触发时机
+### 触发时机
 
 - **PR 创建 / 更新**：目标分支为 `master` 时自动触发
 - **直接 push 到 master**：同样触发检查
@@ -167,16 +167,16 @@
 
 ---
 
-# Test 工作流
+## Test 工作流
 
 定义于 [.github/workflows/test.yml](../../../.github/workflows/test.yml)。
 
-## 触发时机
+### Test 触发时机
 
 - **PR 创建 / 更新**：目标分支为 `master` 时自动触发
 - **直接 push 到 master**：同样触发检查
 
-## Integration Test
+### Integration Test
 
 **工具**：[Vitest](https://vitest.dev/)（`yarn test`）
 **说明**：向 `api.bgm.tv` 发起真实网络请求，覆盖全部 8 个 API 模块（56 个接口）。
@@ -188,15 +188,15 @@
 
 ---
 
-# Release 工作流
+## Release 工作流
 
 定义于 [.github/workflows/release.yml](../../../.github/workflows/release.yml)。
 
-## 触发时机
+### Release 触发时机
 
 - **推送 `v*` tag**：例如 `git push --tags` 推送 `v2026.5.6` 时触发
 
-## 发布步骤
+### 发布步骤
 
 1. `yarn install --frozen-lockfile` — 安装依赖
 2. `yarn build` — 生成代码 + 编译 TypeScript
