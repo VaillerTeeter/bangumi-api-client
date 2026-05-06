@@ -1,5 +1,17 @@
 # CI 检查说明
 
+本项目共有三个 GitHub Actions 工作流：
+
+| 工作流 | 文件 | 说明 |
+| --- | --- | --- |
+| Lint | [lint.yml](../../../.github/workflows/lint.yml) | 代码质量、格式、安全扫描 |
+| Test | [test.yml](../../../.github/workflows/test.yml) | 集成测试（访问 api.bgm.tv） |
+| Release | [release.yml](../../../.github/workflows/release.yml) | 构建并发布到 npm |
+
+---
+
+# Lint 工作流
+
 所有 Pull Request 合并到 `master` 前，必须通过以下自动检查（定义于 [.github/workflows/lint.yml](../../../.github/workflows/lint.yml)）：
 
 ## 触发时机
@@ -152,3 +164,42 @@
 | `.md` | `SCREAMING_SNAKE_CASE` 或 `kebab-case` 或 `snake_case` | `README.md`、`contributing.md`、`bug_report_en.md` |
 
 `.github/` 目录下 YAML 文件仅允许 `kebab-case`。
+
+---
+
+# Test 工作流
+
+定义于 [.github/workflows/test.yml](../../../.github/workflows/test.yml)。
+
+## 触发时机
+
+- **PR 创建 / 更新**：目标分支为 `master` 时自动触发
+- **直接 push 到 master**：同样触发检查
+
+## Integration Test
+
+**工具**：[Vitest](https://vitest.dev/)（`yarn test`）
+**说明**：向 `api.bgm.tv` 发起真实网络请求，覆盖全部 8 个 API 模块（56 个接口）。
+
+| 说明 | 详情 |
+| --- | --- |
+| 认证接口 | 需要 `BGM_TOKEN` Secret；Fork PR 无此 Secret，认证测试自动跳过 |
+| 公开接口 | 无需 Token，任何 PR 均运行 |
+
+---
+
+# Release 工作流
+
+定义于 [.github/workflows/release.yml](../../../.github/workflows/release.yml)。
+
+## 触发时机
+
+- **推送 `v*` tag**：例如 `git push --tags` 推送 `v2026.5.6` 时触发
+
+## 发布步骤
+
+1. `yarn install --frozen-lockfile` — 安装依赖
+2. `yarn build` — 生成代码 + 编译 TypeScript
+3. `npm publish --access public` — 发布到 npm
+
+**所需 Secret**：`NPM_TOKEN`（npm Granular Access Token，需有 `Read and write` packages 权限）

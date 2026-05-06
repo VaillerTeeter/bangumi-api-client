@@ -51,7 +51,9 @@
 │   │   └── feature_request_zh.md          # 功能请求模板（中文）
 │   ├── PULL_REQUEST_TEMPLATE.md           # PR 描述模板
 │   └── workflows/                         # GitHub Actions 工作流
-│       └── lint.yml                       # CI Lint 工作流
+│       ├── lint.yml                       # CI Lint 工作流（代码质量/格式/安全扫描）
+│       ├── release.yml                    # CI Release 工作流（打 tag 时发布到 npm）
+│       └── test.yml                       # CI Test 工作流（集成测试）
 ├── .vscode/                               # VS Code 工作区配置
 │   ├── mcp.json                           # MCP Server 配置（GitHub MCP）
 │   └── settings.json                      # 工作区设置（工具审批策略 / cSpell 词典）
@@ -204,13 +206,15 @@ yarn generate
 ### 发布新版本
 
 ```bash
-# 1. 更新 package.json 中的 version 字段
-# 2. 生成 + 构建（prepare 脚本自动完成两步）
-yarn prepare
-
-# 3. 发布到 npm
-npm publish
+# 1. 更新 package.json 中的 version 字段（例如 "2026.5.6"）
+# 2. 提交版本号变更
+git add package.json && git commit -m "chore: bump version to 2026.5.6"
+# 3. 打 tag（触发 CI 自动构建并发布到 npm）
+git tag v2026.5.6
+git push && git push --tags
 ```
+
+> CI Release 工作流（[release.yml](.github/workflows/release.yml)）在检测到 `v*` tag 时自动执行 `yarn build` 和 `npm publish`，无需手动操作。需在仓库 Settings → Secrets 中配置 `NPM_TOKEN`。
 
 ## API 使用文档
 

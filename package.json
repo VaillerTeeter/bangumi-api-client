@@ -1,6 +1,6 @@
 {
   "name": "bangumi-api-client",
-  "version": "2026.2.22",
+  "version": "2026.5.1",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
