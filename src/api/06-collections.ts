@@ -155,7 +155,7 @@ export class CollectionAPI {
     });
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log('[CollectionAPI.postUserCollection]', result.response.status);
+      console.log('[CollectionAPI.postUserCollection]', result.response?.status);
     }
     return result as unknown as ClientResult<undefined>;
   }
@@ -187,7 +187,7 @@ export class CollectionAPI {
     });
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log('[CollectionAPI.patchUserCollection]', result.response.status);
+      console.log('[CollectionAPI.patchUserCollection]', result.response?.status);
     }
     return result as unknown as ClientResult<undefined>;
   }
@@ -247,7 +247,7 @@ export class CollectionAPI {
     });
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log('[CollectionAPI.patchUserSubjectEpisodeCollection]', result.response.status);
+      console.log('[CollectionAPI.patchUserSubjectEpisodeCollection]', result.response?.status);
     }
     return result as unknown as ClientResult<undefined>;
   }
@@ -298,7 +298,7 @@ export class CollectionAPI {
     });
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log('[CollectionAPI.putUserEpisodeCollection]', result.response.status);
+      console.log('[CollectionAPI.putUserEpisodeCollection]', result.response?.status);
     }
     return result as unknown as ClientResult<undefined>;
   }

@@ -213,7 +213,7 @@ export class CharacterAPI {
     });
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log('[CharacterAPI.collectCharacter]', result.response.status);
+      console.log('[CharacterAPI.collectCharacter]', result.response?.status);
     }
     return result as unknown as ClientResult<undefined>;
   }
@@ -237,7 +237,7 @@ export class CharacterAPI {
     });
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log('[CharacterAPI.uncollectCharacter]', result.response.status);
+      console.log('[CharacterAPI.uncollectCharacter]', result.response?.status);
     }
     return result as unknown as ClientResult<undefined>;
   }
