@@ -194,12 +194,12 @@
 
 ### Release 触发时机
 
-- **推送 `v*` tag**：例如 `git push --tags` 推送 `v2026.5.6` 时触发
+- **推送指定 tag**：例如 `git push origin v<version>` 时触发
 
 ### 发布步骤
 
 1. `yarn install --frozen-lockfile` — 安装依赖
-2. `yarn build` — 生成代码 + 编译 TypeScript
-3. `npm publish --access public` — 发布到 npm
+2. 校验 tag 版本与 `package.json` 中的 `version` 字段一致，不一致则中止
+3. `npm publish --access public` — 发布到 npm（`prepare` 生命周期脚本自动触发构建）
 
 **所需 Secret**：`NPM_TOKEN`（npm Granular Access Token，需有 `Read and write` packages 权限）

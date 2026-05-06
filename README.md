@@ -211,7 +211,8 @@ yarn generate
 git add package.json && git commit -m "chore: bump version to <version>"
 # 3. 打 tag（触发 CI 自动构建并发布到 npm）
 git tag v<version>
-git push && git push --tags
+git push
+git push origin v<version>
 ```
 
 > CI Release 工作流（[release.yml](.github/workflows/release.yml)）在检测到 `v*` tag 时自动执行 `npm publish`，无需手动操作。需在仓库 Settings → Secrets 中配置 `NPM_TOKEN`。
