@@ -207,7 +207,7 @@ yarn generate
 
 ```bash
 # 1. 更新 package.json 中的 version 字段（例如 "<version>"）
-# 2. 提交版本号变更（commit message 和 tag 中的 <version> 必须与 package.json 保持一致）
+# 2. 提交版本号变更（commit message 可选包含 <version>；tag 中的 <version> 必须与 package.json 保持一致）
 git add package.json && git commit -m "chore: bump version to <version>"
 # 3. 打 tag（触发 CI 自动构建并发布到 npm）
 git tag v<version>
