@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@commitlint/types@^20.5.0":
-  version "20.5.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/types/-/types-20.5.0.tgz#65be36ca38183757563bd69451dbe465a5d001ef"
-  integrity sha512-ZJoS8oSq2CAZEpc/YI9SulLrdiIyXeHb/OGqGrkUP6Q7YV+0ouNAa7GjqRdXeQPncHQIDz/jbCTlHScvYvO/gA==
+"@commitlint/types@^21.0.0":
+  version "21.0.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/types/-/types-21.0.0.tgz#3c22abea1300956d594065490131fbecebe171da"
+  integrity sha512-6nEz+M7I90iix4sviA8NLwskOuyt0M98KUU2aYgiKbn46jMSxUm1l2ACtzRd9ec+y38aKyJhW4Fp6NW0z35kJQ==
   dependencies:
     conventional-commits-parser "^6.3.0"
     picocolors "^1.1.1"
